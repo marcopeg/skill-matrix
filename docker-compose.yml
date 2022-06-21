@@ -100,3 +100,22 @@ services:
     depends_on:
       hasura-db:
         condition: service_healthy
+
+  ###
+  ### TESTS
+  ###
+
+  hasura-events-test:
+    build:
+      context: ./hasura-events
+      dockerfile: Dockerfile.dev
+    environment:
+      TEST_URL: http://hasura-events:8080
+    volumes:
+      - ./hasura-events/src:/usr/src/app/src:delegated
+      - ./hasura-events/test:/usr/src/app/test:delegated
+    entrypoint: ["npm", "run", "test"]
+    tty: true
+    depends_on:
+      hasura-events:
+        condition: service_healthy

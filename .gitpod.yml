@@ -6,9 +6,18 @@ tasks:
     command: make start
     openIn: right
 
+  # Hasura Events
+  # ======================
+  - name: Hasura Events
+    init: docker-compose build hasura-events-test
+    command: docker-compose up hasura-events-test && docker-compose logs -f hasura-events
+    openIn: right
+
 ports:
   - port: 8080
     onOpen: open-preview
+  - port: 4010
+    onOpen: ignore
   - port: 5432
     onOpen: ignore
   - port: 8008
