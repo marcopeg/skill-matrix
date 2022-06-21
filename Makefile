@@ -4,7 +4,7 @@ from?=dummy
 
 # HASURA MIGRATION STEPS
 # it is used in the hasura postgres migration scripts to control
-# how many up/down migrations to applu
+# how many up/down migrations to apply
 steps?=1
 
 
@@ -15,7 +15,7 @@ steps?=1
 
 start:
 	@echo "Starting the project..."
-	@docker-compose up -d hasura-engine adminer
+	@docker-compose up -d hasura-cli adminer
 	@docker-compose logs -f
 
 stop:
