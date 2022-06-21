@@ -9,8 +9,10 @@ tasks:
   # Hasura Events
   # ======================
   - name: Hasura Events
-    init: docker-compose build hasura-events-test
-    command: docker-compose up hasura-events-test && docker-compose logs -f hasura-events
+    command:
+      bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:4010/healthz)" != "200" ]]; do sleep 5; done'
+      && docker-compose up hasura-events-test
+      && docker-compose logs -f hasura-events
     openIn: right
 
 ports:
