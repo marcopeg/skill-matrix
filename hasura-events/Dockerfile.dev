@@ -1,0 +1,17 @@
+FROM node:16
+
+# NPM Install for building
+WORKDIR /usr/src/app
+ADD package.json /usr/src/app
+RUN npm install
+
+# Add other files that changes very often
+ADD jest.config.js /usr/src/app
+
+# Default Development Environment
+ENV NODE_ENV="development"
+
+
+# Basic entry point
+WORKDIR /usr/src/app
+ENTRYPOINT [ "npm", "run", "start:docker" ]

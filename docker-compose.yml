@@ -1,6 +1,30 @@
 version: "3.9"
 services:
   ###
+  ### APPS
+  ###
+
+  hasura-events:
+    build:
+      context: ./hasura-events
+      dockerfile: Dockerfile.dev
+    ports:
+      - "${HASURA_EVENTS_PORT:-4010}:8080"
+    volumes:
+      - ./meta:/var/lib/meta
+      - ./hasura-events/src:/usr/src/app/src:delegated
+      - ./hasura-events/package.json:/usr/src/app/package.json
+    environment:
+      HASURA_GRAPHQL_AUTH_TOKEN: "xxx"
+      HASURA_GRAPHQL_ENDPOINT: http://hasura-engine:8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "-", "http://hasura-events:8080/healthz"]
+      interval: 2s
+      timeout: 1s
+      retries: 20
+
+  ###
   ### SERVICES
   ###
 
@@ -16,9 +40,12 @@ services:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@hasura-db:5432/postgres
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_ENABLE_TELEMETRY: "false"
+      HASURA_EVENTS_ENDPOINT: "http://hasura-events:8080"
     restart: unless-stopped
     depends_on:
       hasura-db:
+        condition: service_healthy
+      hasura-events:
         condition: service_healthy
     healthcheck:
       test: timeout 1s bash -c ':> /dev/tcp/127.0.0.1/8080' || exit 1
@@ -72,4 +99,23 @@ services:
     restart: unless-stopped
     depends_on:
       hasura-db:
+        condition: service_healthy
+
+  ###
+  ### TESTS
+  ###
+
+  hasura-events-test:
+    build:
+      context: ./hasura-events
+      dockerfile: Dockerfile.dev
+    environment:
+      TEST_URL: http://hasura-events:8080
+    volumes:
+      - ./hasura-events/src:/usr/src/app/src:delegated
+      - ./hasura-events/test:/usr/src/app/test:delegated
+    entrypoint: ["npm", "run", "test"]
+    tty: true
+    depends_on:
+      hasura-events:
         condition: service_healthy

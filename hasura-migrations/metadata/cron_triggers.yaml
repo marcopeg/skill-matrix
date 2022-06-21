@@ -1,1 +1,10 @@
-[]
+- name: ping
+  webhook: '{{HASURA_EVENTS_ENDPOINT}}/evt/ping'
+  schedule: '* * * * *'
+  include_in_metadata: true
+  payload: {}
+  retry_conf:
+    num_retries: 10
+    retry_interval_seconds: 10
+    timeout_seconds: 1
+    tolerance_seconds: 21600
