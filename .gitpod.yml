@@ -1,8 +1,17 @@
 tasks:
   # Hasura Engine
-  # =============
-  - name: Hasura
+  # ======================
+  - name: Hasura Engine
     command: make start-hasura
+    openIn: right
+
+  # Hasura Migrations
+  # ======================
+  - name: Hasura Migrations
+    init: curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
+    command:
+      bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8080/v1/version)" != "200" ]]; do sleep 5; done'
+      && make init
     openIn: right
 
 ports:
