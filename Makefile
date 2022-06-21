@@ -82,3 +82,10 @@ migrate-create:
 		--down-sql "SELECT NOW();" \
 		--database-name default \
 		--project hasura-migrations
+
+#
+# Metadata Utilities
+#
+
+metadata-export:
+	@hasura metadata export --project hasura-migrations
