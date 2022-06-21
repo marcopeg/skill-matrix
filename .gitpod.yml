@@ -1,0 +1,22 @@
+tasks:
+  # Hasura Engine
+  # =============
+  - name: Hasura
+    command: make start-hasura
+    openIn: right
+
+ports:
+  - port: 8080
+    onOpen: open-preview
+  - port: 5432
+    onOpen: ignore
+  - port: 8008
+    onOpen: ignore
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint@2.1.1:DO6k4GCpqhwZcKo+jY9xjQ==
+    - esbenp.prettier-vscode@3.20.0:37/f4uBlE287wUjENFq1aA==
+    - mikestead.dotenv@1.0.1:SSXjr5hZcbqSF7nMIhTNnA==
+    - wayou.vscode-todo-highlight@1.0.4:8IqxuxCVol2WnScJc5xVzg==
+    - EditorConfig.EditorConfig@0.14.4:EjFaoTaOf8wRmwR0LNY51A==
