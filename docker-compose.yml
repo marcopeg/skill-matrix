@@ -5,7 +5,7 @@ services:
   ###
 
   hasura-engine:
-    image: hasura/graphql-engine:v2.8.0
+    image: hasura/graphql-engine:v2.9.0-beta.1.cli-migrations-v3
     ports:
       - "8080:8080"
     environment:
@@ -44,6 +44,23 @@ services:
   ###
   ### UTILITIES
   ###
+
+  hasura-cli:
+    image: hasura/graphql-engine:v2.9.0-beta.1.cli-migrations-v3
+    volumes:
+      - ./hasura-migrations:/hasura-migrations
+    environment:
+      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_ADMIN_SECRET:-hasura}"
+      HASURA_GRAPHQL_ENDPOINT: http://hasura-engine:8080
+      HASURA_APPLY_MIGRATIONS: "true"
+      HASURA_APPLY_METADATA: "true"
+      HASURA_APPLY_SEEDS: "true"
+      HASURA_VERIFY: "true"
+    depends_on:
+      hasura-engine:
+        condition: service_healthy
+    working_dir: /hasura-migrations
+    entrypoint: ./migrate.sh
 
   adminer:
     image: adminer:4.8.1
