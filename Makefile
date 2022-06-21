@@ -43,7 +43,7 @@ install-cli:
 
 start-hasura:
 	@echo "Starting the project..."
-	@docker-compose up -d hasura adminer
+	@docker-compose up -d hasura-engine adminer
 	@docker-compose logs -f
 
 init:
