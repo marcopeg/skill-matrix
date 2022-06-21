@@ -5,9 +5,7 @@ services:
   ###
 
   hasura-engine:
-    build:
-      context: ./hasura-engine
-      dockerfile: Dockerfile.dev
+    image: hasura/graphql-engine:v2.8.0
     ports:
       - "8080:8080"
     environment:
@@ -23,15 +21,13 @@ services:
       hasura-db:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "-qO", "-", "http://localhost:8080/healthz"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
+      test: timeout 1s bash -c ':> /dev/tcp/127.0.0.1/8080' || exit 1
+      interval: 2s
+      timeout: 1s
+      retries: 10
 
   hasura-db:
-    build:
-      context: ./hasura-db
-      dockerfile: Dockerfile.dev
+    image: postgres:14
     ports:
       - "${HASURA_DB_PORT:-5432}:5432"
     volumes:
@@ -41,8 +37,8 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
+      interval: 2s
+      timeout: 1s
       retries: 20
 
   ###

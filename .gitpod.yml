@@ -2,7 +2,7 @@ tasks:
   # Hasura Engine
   # ======================
   - name: Hasura Engine
-    command: make start-hasura
+    command: make start
     openIn: right
 
   # Hasura Migrations
