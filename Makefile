@@ -15,7 +15,7 @@ steps?=1
 
 start:
 	@echo "Starting the project..."
-	@docker-compose up -d
+	@docker-compose up -d hasura-engine adminer
 	@docker-compose logs -f
 
 stop:
@@ -40,11 +40,6 @@ install-cli:
 #
 # Hasura State Management
 #
-
-start-hasura:
-	@echo "Starting the project..."
-	@docker-compose up -d hasura-engine adminer
-	@docker-compose logs -f
 
 init:
 	@echo "Applying migrations to all databases..."
