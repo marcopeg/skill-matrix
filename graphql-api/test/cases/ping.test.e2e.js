@@ -5,14 +5,14 @@ describe("Ping", () => {
     const res = await global.post("/graphql", {
       query: `
         query Ping { 
-          ping { 
+          ping_remote { 
             message 
             timestamp
           } 
         }
       `
     });
-    expect(res.data.ping).toHaveProperty("message", "+ok");
-    expect(res.data.ping).toHaveProperty("timestamp");
+    expect(res.data.ping_remote).toHaveProperty("message", "+ok");
+    expect(res.data.ping_remote).toHaveProperty("timestamp");
   });
 });

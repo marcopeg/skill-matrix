@@ -7,21 +7,21 @@ const { gql } = require("apollo-server-fastify");
 
 const pingActionHandler = () => {
   const typeDefs = gql`
-    type Ping {
+    type PingRemote {
       message: String
       emotion: String
       timestamp: Float
     }
 
     extend type Query {
-      ping: Ping!
+      ping_remote: PingRemote!
     }
   `;
 
   const resolvers = {
     Query: {
-      ping: () => ({
-        message: "+ok",
+      ping_remote: () => ({
+        message: "ok",
         emotion: "💩",
         timestamp: Date.now()
       })

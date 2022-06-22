@@ -1,9 +1,9 @@
 actions:
-  - name: ping
+  - name: ping_action
     definition:
       kind: ""
       handler: '{{HASURA_ACTIONS_ENDPOINT}}/act/ping'
-    comment: ping
+    comment: ping as action
 custom_types:
   enums: []
   input_objects: []
