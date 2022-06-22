@@ -3,6 +3,10 @@ actions:
     definition:
       kind: ""
       handler: '{{HASURA_ACTIONS_ENDPOINT}}/act/ping'
+    permissions:
+      - role: form
+      - role: backoffice
+      - role: backend
     comment: ping as action
 custom_types:
   enums: []

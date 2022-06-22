@@ -70,6 +70,72 @@ Please extend this App if you want to play with a fully custom GraphQL Server. B
 
 ---
 
+# JWT Tokens
+
+In this project we use the [Hasura JWT Authentication](https://hasura.io/docs/latest/graphql/core/auth/authentication/jwt/) method and we implement 3 roles:
+
+- backend
+- backoffice
+- form
+
+## Backend
+
+This JWT is provided to the Backend Services and allows them to query Hasura on behalf of any user.
+
+🔥 A token like this is quite powerful and dangerous, the Backend Service should generate short-living tokens and rotate them as much as possibile in order to maximize security.
+
+```json
+{
+  "https://hasura.io/jwt/claims": {
+    "x-hasura-allowed-roles": ["backend"],
+    "x-hasura-default-role": "backend"
+  }
+}
+```
+
+---
+
+## Backoffice
+
+This JWT is used as login to the Backoffice App and make super-user changes to the system.
+
+The variable `x-hasura-admin-id` should be used for logging any backoffice activity by any authenticated administrator.
+
+🔥 A token like this is quite powerful and dangerous, any Backoffice sessions should be short-lived (5 minutes?) and traced to an Admin itentity.
+
+👉 Also, Backoffice Apps should be restricted to explicit Actions or Remote Schemas where custom business logic is being used to make sure adequate application logging is performed.
+
+```json
+{
+  "https://hasura.io/jwt/claims": {
+    "x-hasura-allowed-roles": ["backoffice"],
+    "x-hasura-default-role": "backoffice",
+    "x-hasura-admin-id": "xxx"
+  }
+}
+```
+
+---
+
+## FormApp
+
+This JWT is released to a specific user in association with the invite to fill a specific form.
+
+This is the most specific of the JWT we are going to use in this app, and it should provide a very targeted write-only access to the database.
+
+👉 The Authentication Authority that releases this token should take care of syncronizing the token's `nbf` and `exp` to the Form's `open_since` and `open_until` timestamps.
+
+```json
+{
+  "https://hasura.io/jwt/claims": {
+    "x-hasura-allowed-roles": ["form"],
+    "x-hasura-default-role": "form",
+    "x-hasura-user-id": "xxx",
+    "x-hasura-form-id": "xxx"
+  }
+}
+```
+
 [forrestjs]: https://forrestjs.github.io/
 [fastify]: https://www.fastify.io/
 [apollo-server]: https://www.apollographql.com/docs/apollo-server/getting-started/
