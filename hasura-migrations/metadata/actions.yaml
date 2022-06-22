@@ -1,6 +1,12 @@
-actions: []
+actions:
+  - name: ping
+    definition:
+      kind: ""
+      handler: '{{HASURA_ACTIONS_ENDPOINT}}/act/ping'
+    comment: ping
 custom_types:
   enums: []
   input_objects: []
-  objects: []
+  objects:
+    - name: PingInfo
   scalars: []
