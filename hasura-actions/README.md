@@ -1,3 +1,3 @@
-# Hasura Events
+# Hasura Actions
 
 [[TO BE COMPLETED]]
