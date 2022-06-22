@@ -1,10 +1,10 @@
 {
-  "name": "hasura-events",
+  "name": "hasura-actions",
   "version": "0.0.0-alpha.1",
-  "description": "Rest API that receives data events from hasura",
+  "description": "Rest API that offers Hasura Actions implementation",
   "main": "src/index.js",
   "scripts": {
-    "start": "PORT=4010 NODE_ENV=development ./node_modules/.bin/nodemon -L ./src/index.js",
+    "start": "PORT=4020 NODE_ENV=development ./node_modules/.bin/nodemon -L ./src/index.js",
     "start:docker": "./node_modules/.bin/nodemon -L ./src/index.js",
     "___// Testing Utilities //___": "",
     "test": "npm run test:unit && npm run test:e2e",

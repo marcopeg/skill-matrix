@@ -24,6 +24,26 @@ services:
       timeout: 1s
       retries: 20
 
+  hasura-actions:
+    build:
+      context: ./hasura-actions
+      dockerfile: Dockerfile.dev
+    ports:
+      - "${HASURA_ACTIONS_PORT:-4020}:8080"
+    volumes:
+      - ./meta:/var/lib/meta
+      - ./hasura-actions/src:/usr/src/app/src:delegated
+      - ./hasura-actions/package.json:/usr/src/app/package.json
+    environment:
+      HASURA_GRAPHQL_AUTH_TOKEN: "xxx"
+      HASURA_GRAPHQL_ENDPOINT: http://hasura-engine:8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "-", "http://hasura-actions:8080/healthz"]
+      interval: 2s
+      timeout: 1s
+      retries: 20
+
   ###
   ### SERVICES
   ###
@@ -41,11 +61,14 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_ENABLE_TELEMETRY: "false"
       HASURA_EVENTS_ENDPOINT: "http://hasura-events:8080"
+      HASURA_ACTIONS_ENDPOINT: "http://hasura-actions:8080"
     restart: unless-stopped
     depends_on:
       hasura-db:
         condition: service_healthy
       hasura-events:
+        condition: service_healthy
+      hasura-actions:
         condition: service_healthy
     healthcheck:
       test: timeout 1s bash -c ':> /dev/tcp/127.0.0.1/8080' || exit 1
@@ -114,6 +137,21 @@ services:
     volumes:
       - ./hasura-events/src:/usr/src/app/src:delegated
       - ./hasura-events/test:/usr/src/app/test:delegated
+    entrypoint: ["npm", "run", "test"]
+    tty: true
+    depends_on:
+      hasura-events:
+        condition: service_healthy
+
+  hasura-actions-test:
+    build:
+      context: ./hasura-actions
+      dockerfile: Dockerfile.dev
+    environment:
+      TEST_URL: http://hasura-actions:8080
+    volumes:
+      - ./hasura-actions/src:/usr/src/app/src:delegated
+      - ./hasura-actions/test:/usr/src/app/test:delegated
     entrypoint: ["npm", "run", "test"]
     tty: true
     depends_on:

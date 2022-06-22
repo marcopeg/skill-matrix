@@ -1,0 +1,9 @@
+type Query {
+  ping: PingInfo!
+}
+
+type PingInfo {
+  message: String!
+  timestamp: Int!
+}
+
