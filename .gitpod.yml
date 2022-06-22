@@ -15,12 +15,32 @@ tasks:
       && docker-compose logs -f hasura-events
     openIn: right
 
+  # Hasura Actions
+  # ======================
+  - name: Hasura Actions
+    command:
+      bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:4020/healthz)" != "200" ]]; do sleep 5; done'
+      && docker-compose up hasura-actions-test
+      && docker-compose logs -f hasura-actions
+    openIn: right
+
+  # GraphQL API
+  # ======================
+  - name: GraphQL API
+    command:
+      bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:4030/healthz)" != "200" ]]; do sleep 5; done'
+      && docker-compose up graphql-api-test
+      && docker-compose logs -f graphql-api
+    openIn: right
+
 ports:
   - port: 8080
     onOpen: open-preview
   - port: 4010
     onOpen: ignore
   - port: 4020
+    onOpen: ignore
+  - port: 4030
     onOpen: ignore
   - port: 5432
     onOpen: ignore

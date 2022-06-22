@@ -1,1 +1,6 @@
-[]
+- name: graphql-api
+  definition:
+    url: '{{GRAPHQL_API_ENDPOINT}}/graphql'
+    timeout_seconds: 10
+    forward_client_headers: true
+  comment: ""

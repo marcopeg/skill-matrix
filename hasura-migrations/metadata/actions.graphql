@@ -1,5 +1,5 @@
 type Query {
-  ping: PingInfo!
+  ping_action: PingInfo!
 }
 
 type PingInfo {

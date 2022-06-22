@@ -44,6 +44,26 @@ services:
       timeout: 1s
       retries: 20
 
+  graphql-api:
+    build:
+      context: ./graphql-api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "${GRAPHQL_API_PORT:-4030}:8080"
+    volumes:
+      - ./meta:/var/lib/meta
+      - ./graphql-api/src:/usr/src/app/src:delegated
+      - ./graphql-api/package.json:/usr/src/app/package.json
+    environment:
+      HASURA_GRAPHQL_AUTH_TOKEN: "xxx"
+      HASURA_GRAPHQL_ENDPOINT: http://hasura-engine:8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "-", "http://graphql-api:8080/healthz"]
+      interval: 2s
+      timeout: 1s
+      retries: 20
+
   ###
   ### SERVICES
   ###
@@ -62,6 +82,7 @@ services:
       HASURA_GRAPHQL_ENABLE_TELEMETRY: "false"
       HASURA_EVENTS_ENDPOINT: "http://hasura-events:8080"
       HASURA_ACTIONS_ENDPOINT: "http://hasura-actions:8080"
+      GRAPHQL_API_ENDPOINT: "http://graphql-api:8080"
     restart: unless-stopped
     depends_on:
       hasura-db:
@@ -69,6 +90,8 @@ services:
       hasura-events:
         condition: service_healthy
       hasura-actions:
+        condition: service_healthy
+      graphql-api:
         condition: service_healthy
     healthcheck:
       test: timeout 1s bash -c ':> /dev/tcp/127.0.0.1/8080' || exit 1
@@ -152,6 +175,21 @@ services:
     volumes:
       - ./hasura-actions/src:/usr/src/app/src:delegated
       - ./hasura-actions/test:/usr/src/app/test:delegated
+    entrypoint: ["npm", "run", "test"]
+    tty: true
+    depends_on:
+      hasura-events:
+        condition: service_healthy
+
+  graphql-api-test:
+    build:
+      context: ./graphql-api
+      dockerfile: Dockerfile.dev
+    environment:
+      TEST_URL: http://graphql-api:8080
+    volumes:
+      - ./graphql-api/src:/usr/src/app/src:delegated
+      - ./graphql-api/test:/usr/src/app/test:delegated
     entrypoint: ["npm", "run", "test"]
     tty: true
     depends_on:
