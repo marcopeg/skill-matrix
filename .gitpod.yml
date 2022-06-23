@@ -33,6 +33,13 @@ tasks:
       && docker-compose logs -f graphql-api
     openIn: right
 
+  # SQL Unit Tests
+  # ======================
+  - name: SQL Unit Tests
+    init: make test-sql-start && sleep 20
+    command: make test-sql
+    openIn: right
+
 ports:
   - port: 8080
     onOpen: open-preview
