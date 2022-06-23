@@ -7,6 +7,8 @@ from?=dummy
 # how many up/down migrations to apply
 steps?=1
 
+project?=default
+
 
 
 #
@@ -89,3 +91,23 @@ migrate-create:
 
 metadata-export:
 	@hasura metadata export --project hasura-migrations
+
+
+#
+# SQL Unit Test
+#
+
+test-sql-start:
+	(cd hasura-migrations && make start)
+
+test-sql-stop:
+	(cd hasura-migrations && make stop)
+
+test-sql-logs:
+	(cd hasura-migrations && make logs)
+
+test-sql-run:
+	(cd hasura-migrations && make run project=$(project))
+
+test-sql:
+	(cd hasura-migrations && make test project=$(project))

@@ -28,8 +28,6 @@ docker-compose up hasura-cli
 
 [![Open in GitPod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/forrestjs/skill-matrix)
 
----
-
 # Services
 
 This project rotates around Postgres and [Hasura Engine][hasura].
@@ -52,23 +50,17 @@ It's a NodeJS service based on [ForrestJS][forrestjs] and [Fastify][fastify] tha
 
 Please extend this App with all the Event Triggers that you may need to fulfill your **after-write business logic**.
 
----
-
 ## Hasura Actions
 
 It's a NodeJS service based on [ForrestJS][forrestjs] and [Fastify][fastify] that offers _REST APIs_ for the implementation of [Hasura Actions](https://hasura.io/docs/latest/graphql/core/actions/index/).
 
 Please extend this App with all the Actions that you may need to implement custom business logic that should be proxied through Hasura's API.
 
----
-
 ## GraphQL API
 
 It's a NodeJS service based on [ForrestJS][forrestjs] and [Apollo Server][apollo-server] that offers a custom _GraphQL API_. Hasura uses this API via [Remote Schemas](https://hasura.io/docs/latest/graphql/core/remote-schemas/index/).
 
 Please extend this App if you want to play with a fully custom GraphQL Server. But honestly, I believe that Actions are a better implementation of the same goal.
-
----
 
 # JWT Tokens
 
@@ -93,8 +85,6 @@ This JWT is provided to the Backend Services and allows them to query Hasura on 
 }
 ```
 
----
-
 ## Backoffice
 
 This JWT is used as login to the Backoffice App and make super-user changes to the system.
@@ -115,8 +105,6 @@ The variable `x-hasura-admin-id` should be used for logging any backoffice activ
 }
 ```
 
----
-
 ## FormApp
 
 This JWT is released to a specific user in association with the invite to fill a specific form.
@@ -135,6 +123,46 @@ This is the most specific of the JWT we are going to use in this app, and it sho
   }
 }
 ```
+
+# SQL Unit Tests
+
+Inside `hasura-migrations` there is a `Makefile` that helps running _SQL Unit Tests_ written in [PGTap](https://pgtap.org/).
+
+## Setup the Test Database
+
+The unit tests target a dedicated database that ships as a Docker container. Also, the unit test runner container needs to build before it can execute the tests.
+
+```bash
+make test-sql-start
+```
+
+Once you are done testing, run:
+
+```bash
+make test-sql-stop
+```
+
+## Run the Tests
+
+A test run will build an entire Hasura's migration project, and then run the relative tests.
+
+Each project is identified by a name, which corresponds to the subfolder that groups migrations:
+
+- hasura-migrations
+  - migrations/{project-name}/123_migration-name/up.sql
+  - tests/{project-name}/foobar.test.sql
+
+```bash
+make test-sql project=foo
+```
+
+👉 Omit the `project` param to execute the `default` project
+
+## More Actions Available
+
+Please take a look at `hasura-migrations/Makefile` for more scripts and SQL Unit Testing utilites.
+
+If you need inspiration for SQL Unit Testing, take a look at [Amazing Postgres](https://github.com/marcopeg/amazing-postgresql) project.
 
 [forrestjs]: https://forrestjs.github.io/
 [fastify]: https://www.fastify.io/
