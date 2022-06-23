@@ -4,5 +4,7 @@
   "files.eol": "\n",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "typescript.tsc.autoDetect": "off",
+  "npm.autoDetect": "off"
 }

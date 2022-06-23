@@ -1,0 +1,44 @@
+{
+  "version": "2.0.0",
+  "command": "bash",
+  "options": {
+    "cwd": "${workspaceRoot}"
+  },
+  "args": ["-c"],
+  "tasks": [
+    {
+      "label": "start",
+      "type": "shell",
+      "command": "make start",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "close": true
+      }
+    },
+    {
+      "label": "stop",
+      "type": "shell",
+      "command": "make stop",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "revealProblems": "onProblem",
+        "close": true
+      }
+    },
+    {
+      "label": "logs",
+      "type": "shell",
+      "command": "make logs",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "close": true,
+        "focus": true
+      }
+    }
+  ]
+}
