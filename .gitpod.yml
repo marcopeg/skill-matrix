@@ -35,10 +35,10 @@ tasks:
 
   # SQL Unit Tests
   # ======================
-  - name: SQL Unit Tests
-    init: make test-sql-start && sleep 20
-    command: make test-sql
-    openIn: right
+  # - name: SQL Unit Tests
+  #   init: make test-sql-start && sleep 20
+  #   command: make test-sql
+  #   openIn: right
 
 ports:
   - port: 8080
