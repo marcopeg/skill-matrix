@@ -14,6 +14,7 @@ services:
       - ./app-backoffice/public:/usr/src/app/public:delegated
       - ./app-backoffice/src:/usr/src/app/src:delegated
     environment:
+      REACT_APP_HASURA_GRAPHQL_ENDPOINT: http://localhost:${HASURA_ENGINE_PORT:-5432}/v1/graphql
       CHOKIDAR_USEPOLLING: "true"
     stdin_open: true
     tty: true
@@ -85,7 +86,7 @@ services:
   hasura-engine:
     image: hasura/graphql-engine:v2.9.0-beta.1.cli-migrations-v3
     ports:
-      - "8080:8080"
+      - "${HASURA_ENGINE_PORT:-5432}:8080"
     environment:
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
