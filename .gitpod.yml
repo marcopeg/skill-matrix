@@ -3,7 +3,7 @@ tasks:
   # ======================
   - name: Hasura Engine
     init: curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
-    command: make start
+    command: make start-be
     openIn: right
 
   # Hasura Events
@@ -49,6 +49,8 @@ tasks:
       PORT=3010
       REACT_APP_HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
       DANGEROUSLY_DISABLE_HOST_CHECK=true
+      CHOKIDAR_USEPOLLING=true
+      WDS_SOCKET_PORT=0
       npm start
     openIn: right
 
