@@ -46,6 +46,7 @@ tasks:
     before: cd app-backoffice
     init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
     command: HELLO=world
+      PORT=3010
       REACT_APP_HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
       DANGEROUSLY_DISABLE_HOST_CHECK=true
       npm start
@@ -63,9 +64,9 @@ ports:
   - port: 8080
     onOpen: open-preview
   - port: 3000
-    onOpen: ignore
+    onOpen: open-preview
   - port: 3010
-    onOpen: ignore
+    onOpen: open-preview
   - port: 4010
     onOpen: ignore
   - port: 4020
