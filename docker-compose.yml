@@ -4,6 +4,23 @@ services:
   ### APPS
   ###
 
+  app-backoffice:
+    build:
+      context: ./app-backoffice
+      dockerfile: Dockerfile.dev
+    ports:
+      - "${APP_BACKOFFICE_PORT:-3010}:3000"
+    volumes:
+      - ./app-backoffice/public:/usr/src/app/public:delegated
+      - ./app-backoffice/src:/usr/src/app/src:delegated
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    stdin_open: true
+    tty: true
+    depends_on:
+      hasura-engine:
+        condition: service_healthy
+
   hasura-events:
     build:
       context: ./hasura-events

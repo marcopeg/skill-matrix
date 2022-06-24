@@ -40,9 +40,32 @@ tasks:
     command: make test-sql
     openIn: right
 
+  # App Backoffice
+  # ======================
+  - name: App Backoffice
+    before: cd app-backoffice
+    init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
+    command: HELLO=world
+      HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
+      DANGEROUSLY_DISABLE_HOST_CHECK=true
+      npm start
+    openIn: right
+
+  # Unit Tests Backoffice
+  # ======================
+  - name: Unit Tests Backoffice
+    before: cd app-backoffice
+    init: echo "Awaiting NPM install..." && while ! find ./.gitpod.lock 2> /dev/null 1> /dev/null; do sleep 1; done
+    command: npm test
+    openIn: right
+
 ports:
   - port: 8080
     onOpen: open-preview
+  - port: 3000
+    onOpen: ignore
+  - port: 3010
+    onOpen: ignore
   - port: 4010
     onOpen: ignore
   - port: 4020
