@@ -27,7 +27,7 @@ start-be:
 
 start-backoffice:
 	@echo "Starting App Backoffice..."
-	(cd app-backoffice && npm install && npm start)
+	@(cd app-backoffice && npm install && npm start)
 
 stop:
 	@echo "Stopping the project..."
