@@ -1,8 +1,6 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useGetConfig } from "@forrestjs/react-root";
-
-const queryClient = new QueryClient();
 
 export const HasuraClientContext = createContext();
 
@@ -13,6 +11,17 @@ export const HasuraClientProvider = ({
 }) => {
   const endpoint = useGetConfig("hasuraClient.endpoint", receivedEndpoint);
   const token = useGetConfig("hasuraClient.token", receivedToken);
+
+  const [queryClient] = useState(
+    new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+          staleTime: Infinity
+        }
+      }
+    })
+  );
 
   return (
     <HasuraClientContext.Provider

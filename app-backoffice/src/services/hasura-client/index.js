@@ -1,8 +1,9 @@
 import { HasuraClientProvider } from "./HasuraClientProvider";
 export { gql } from "graphql-request";
 export { useQuery } from "./use-query";
+export { HasuraClientProvider } from "./HasuraClientProvider";
 
-const hasuraClient = () => {
+export const hasuraClient = () => {
   return [
     {
       target: "$REACT_ROOT_WRAPPER",
@@ -10,5 +11,3 @@ const hasuraClient = () => {
     }
   ];
 };
-
-export default hasuraClient;
