@@ -4,6 +4,25 @@ services:
   ### APPS
   ###
 
+  app-backoffice:
+    build:
+      context: ./app-backoffice
+      dockerfile: Dockerfile.dev
+    ports:
+      - "${APP_BACKOFFICE_PORT:-3010}:3010"
+    volumes:
+      - ./app-backoffice/public:/usr/src/app/public:delegated
+      - ./app-backoffice/src:/usr/src/app/src:delegated
+    environment:
+      REACT_APP_HASURA_GRAPHQL_ENDPOINT: http://localhost:${HASURA_ENGINE_PORT:-8080}/v1/graphql
+      CHOKIDAR_USEPOLLING: "true"
+      WDS_SOCKET_PORT: 0
+    stdin_open: true
+    tty: true
+    depends_on:
+      hasura-engine:
+        condition: service_healthy
+
   hasura-events:
     build:
       context: ./hasura-events
@@ -68,12 +87,13 @@ services:
   hasura-engine:
     image: hasura/graphql-engine:v2.9.0-beta.1.cli-migrations-v3
     ports:
-      - "8080:8080"
+      - "${HASURA_ENGINE_PORT:-8080}:8080"
     environment:
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_ADMIN_SECRET:-hasura}"
       HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "${HASURA_JWT_SECRET:-phxDHXJjRXEIuUtdTaqzGiW7yb4SaIgn}"}'
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@hasura-db:5432/postgres
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_ENABLE_TELEMETRY: "false"

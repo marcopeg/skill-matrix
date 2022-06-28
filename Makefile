@@ -17,8 +17,17 @@ project?=default
 
 start:
 	@echo "Starting the project..."
+	@docker-compose up -d hasura-cli adminer app-backoffice
+	@docker-compose logs -f
+
+start-be:
+	@echo "Starting the project..."
 	@docker-compose up -d hasura-cli adminer
 	@docker-compose logs -f
+
+start-backoffice:
+	@echo "Starting App Backoffice..."
+	@(cd app-backoffice && npm install && npm start)
 
 stop:
 	@echo "Stopping the project..."
