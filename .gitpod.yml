@@ -83,12 +83,18 @@ tasks:
     openIn: right
 
 ports:
-  - port: 8080
+  - description: Hasura CLI
+    port: 8080
     onOpen: open-preview
-  - port: 3000
+    visibility: public
+  - description: Form App
+    port: 3000
     onOpen: open-preview
-  - port: 3010
+    visibility: public
+  - description: Backoffice App
+    port: 3010
     onOpen: open-preview
+    visibility: public
   - port: 4010
     onOpen: ignore
   - port: 4020
