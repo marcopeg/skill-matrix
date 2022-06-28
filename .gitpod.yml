@@ -46,7 +46,6 @@ tasks:
     before: cd app-backoffice
     init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
     command: HELLO=world
-      PORT=3010
       REACT_APP_HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
       DANGEROUSLY_DISABLE_HOST_CHECK=true
       CHOKIDAR_USEPOLLING=true
@@ -62,13 +61,40 @@ tasks:
     command: npm test
     openIn: right
 
+  # App Form
+  # ======================
+  - name: App Form
+    before: cd app-form
+    init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
+    command: HELLO=world
+      REACT_APP_HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
+      DANGEROUSLY_DISABLE_HOST_CHECK=true
+      CHOKIDAR_USEPOLLING=true
+      WDS_SOCKET_PORT=0
+      npm start
+    openIn: right
+
+  # Unit Tests Form
+  # ======================
+  - name: Unit Tests Form
+    before: cd app-form
+    init: echo "Awaiting NPM install..." && while ! find ./.gitpod.lock 2> /dev/null 1> /dev/null; do sleep 1; done
+    command: npm test
+    openIn: right
+
 ports:
-  - port: 8080
+  - description: Hasura CLI
+    port: 8080
     onOpen: open-preview
-  - port: 3000
+    visibility: public
+  - description: Form App
+    port: 3000
     onOpen: open-preview
-  - port: 3010
+    visibility: public
+  - description: Backoffice App
+    port: 3010
     onOpen: open-preview
+    visibility: public
   - port: 4010
     onOpen: ignore
   - port: 4020
@@ -82,8 +108,9 @@ ports:
 
 vscode:
   extensions:
-    - dbaeumer.vscode-eslint@2.1.1:DO6k4GCpqhwZcKo+jY9xjQ==
-    - esbenp.prettier-vscode@3.20.0:37/f4uBlE287wUjENFq1aA==
-    - mikestead.dotenv@1.0.1:SSXjr5hZcbqSF7nMIhTNnA==
-    - wayou.vscode-todo-highlight@1.0.4:8IqxuxCVol2WnScJc5xVzg==
-    - EditorConfig.EditorConfig@0.14.4:EjFaoTaOf8wRmwR0LNY51A==
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
+    - mikestead.dotenv
+    - wayou.vscode-todo-highlight
+    - EditorConfig.EditorConfig
+    - ms-azuretools.vscode-docker

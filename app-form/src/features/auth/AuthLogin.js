@@ -28,14 +28,14 @@ export const AuthLogin = () => {
       }}
     >
       <Box sx={{ mb: 2 }}>
-        <Typography variant="h4">Backoffice App</Typography>
+        <Typography variant="h4">Form App</Typography>
       </Box>
       <Box sx={{ mb: 2 }}>
         <TextField
           type="text"
           size="small"
           name="token"
-          placeholder="Admin JWT token here..."
+          placeholder="Invitation token"
           fullWidth
         />
       </Box>
@@ -48,7 +48,7 @@ export const AuthLogin = () => {
       <Button
         onClick={() =>
           login(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsiYmFja29mZmljZSJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJiYWNrb2ZmaWNlIiwieC1oYXN1cmEtYWRtaW4taWQiOiJtcGcifX0.wdkjTn5ArXah51yiC2VYi5DivAZSd1N_ITn8ny9Uwt8"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsiZm9ybSJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJmb3JtIiwieC1oYXN1cmEtdXNlci1pZCI6Inh4eCIsIngtaGFzdXJhLWZvcm0taWQiOiJ4eHgifX0.uPC5oicDRxiqV7o8CbQH7lI3mzFilrwW4Ofz9SWfN8o"
           )
         }
         fullWidth
