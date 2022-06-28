@@ -113,4 +113,4 @@ vscode:
     - mikestead.dotenv
     - wayou.vscode-todo-highlight
     - EditorConfig.EditorConfig
-    - ms-azuretools/vscode-docker
+    - ms-azuretools.vscode-docker-1.22.0
