@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 
 import { useAuth } from "./use-auth";
 
@@ -25,9 +26,17 @@ export const AuthLogin = () => {
         p: 5
       }}
     >
-      <h4 sx={{ mb: 2 }}>Login with an Admin JWT Token:</h4>
       <Box sx={{ mb: 2 }}>
-        <TextField type="text" size="small" name="token" fullWidth />
+        <Typography variant="h4">Backoffice App</Typography>
+      </Box>
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          type="text"
+          size="small"
+          name="token"
+          placeholder="Admin JWT token here..."
+          fullWidth
+        />
       </Box>
       <Box sx={{ mb: 2 }}>
         <Button type="submit" variant="contained" fullWidth>
