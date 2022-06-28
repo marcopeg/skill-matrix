@@ -1,27 +1,23 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { PingAction } from "./PingAction";
+import { useQuery, gql } from "../../services/hasura-client";
+import Page from "../../components/Page";
+import { Logout } from "./Logout";
 
-export function App() {
+const PING_ACTION_QUERY = gql`
+  query {
+    ping: ping_action {
+      timestamp
+    }
+  }
+`;
+
+export const App = () => {
+  const { isSuccess, data } = useQuery("PingAction", PING_ACTION_QUERY);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <PingAction />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Page withPadding title={"Backoffice App"} actions={<Logout />}>
+      {isSuccess
+        ? `Computer says: ${new Date(data.ping.timestamp)}`
+        : "loading time..."}
+    </Page>
   );
-}
-
-export default App;
+};

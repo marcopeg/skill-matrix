@@ -1,3 +1,6 @@
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+
 import { gql, useQuery } from "../../services/hasura-client";
 import { useAuth } from "./use-auth";
 
@@ -10,7 +13,7 @@ const AUTH_INFO_QUERY = gql`
 `;
 
 export const AuthInfo = ({ children }) => {
-  const { setToken } = useAuth();
+  const { logout } = useAuth();
   const { isFetching, isFetched, isError, error } = useQuery(
     "authInfo",
     AUTH_INFO_QUERY
@@ -22,12 +25,10 @@ export const AuthInfo = ({ children }) => {
 
   if (isFetched && isError) {
     return (
-      <div style={{ margin: 10 }}>
-        <h3>Auth Error</h3>
-        <p>{error.response.errors[0].message}</p>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
-        <button onClick={() => setToken(null)}>let me try again</button>
-      </div>
+      <Alert severity="error" onClose={logout} sx={{ mb: "60vh" }}>
+        <AlertTitle>Auth Error</AlertTitle>
+        {error.response.errors[0].message}
+      </Alert>
     );
   }
 

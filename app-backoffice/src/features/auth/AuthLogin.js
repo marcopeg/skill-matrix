@@ -1,18 +1,50 @@
-const JWT =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsiYmFja29mZmljZSJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJiYWNrb2ZmaWNlIiwieC1oYXN1cmEtYWRtaW4taWQiOiJtcGcifX0.wdkjTn5ArXah51yiC2VYi5DivAZSd1N_ITn8ny9Uwt8";
+import { useEffect } from "react";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Divider from "@mui/material/Divider";
 
-export const AuthLogin = ({ setToken }) => (
-  <form
-    onSubmit={(evt) => {
-      evt.preventDefault();
-      setToken(evt.target[0].value);
-    }}
-    style={{ margin: 10 }}
-  >
-    <h4>Add the JWT Token:</h4>
-    <input type="text" name="token" />
-    <button type="submit">Login</button>
-    <hr />
-    <p onClick={() => setToken(JWT)}>Login with fake token</p>
-  </form>
-);
+import { useAuth } from "./use-auth";
+
+export const AuthLogin = () => {
+  const { login } = useAuth();
+  useEffect(() => {
+    const token = localStorage.getItem("at");
+    token !== null && login(token);
+  }, []);
+
+  return (
+    <Paper
+      component="form"
+      onSubmit={(evt) => {
+        evt.preventDefault();
+        login(evt.target[0].value);
+      }}
+      sx={{
+        p: 5
+      }}
+    >
+      <h4 sx={{ mb: 2 }}>Login with an Admin JWT Token:</h4>
+      <Box sx={{ mb: 2 }}>
+        <TextField type="text" size="small" name="token" fullWidth />
+      </Box>
+      <Box sx={{ mb: 2 }}>
+        <Button type="submit" variant="contained" fullWidth>
+          Login
+        </Button>
+      </Box>
+      <Divider />
+      <Button
+        onClick={() =>
+          login(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsiYmFja29mZmljZSJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJiYWNrb2ZmaWNlIiwieC1oYXN1cmEtYWRtaW4taWQiOiJtcGcifX0.wdkjTn5ArXah51yiC2VYi5DivAZSd1N_ITn8ny9Uwt8"
+          )
+        }
+        fullWidth
+      >
+        Login with fake token
+      </Button>
+    </Paper>
+  );
+};

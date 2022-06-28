@@ -8,11 +8,22 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
 
+  const login = (token) => {
+    localStorage.setItem("at", token);
+    setToken(token);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("at");
+    setToken(null);
+  };
+
   return (
     <AuthContext.Provider
       value={{
         token,
-        setToken
+        login,
+        logout
       }}
     >
       {token ? (
