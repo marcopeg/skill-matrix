@@ -9,7 +9,7 @@ services:
       context: ./app-backoffice
       dockerfile: Dockerfile.dev
     ports:
-      - "${APP_BACKOFFICE_PORT:-3010}:3000"
+      - "${APP_BACKOFFICE_PORT:-3010}:3010"
     volumes:
       - ./app-backoffice/public:/usr/src/app/public:delegated
       - ./app-backoffice/src:/usr/src/app/src:delegated
