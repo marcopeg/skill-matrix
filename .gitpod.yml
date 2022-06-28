@@ -46,7 +46,6 @@ tasks:
     before: cd app-backoffice
     init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
     command: HELLO=world
-      PORT=3010
       REACT_APP_HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
       DANGEROUSLY_DISABLE_HOST_CHECK=true
       CHOKIDAR_USEPOLLING=true
@@ -58,6 +57,27 @@ tasks:
   # ======================
   - name: Unit Tests Backoffice
     before: cd app-backoffice
+    init: echo "Awaiting NPM install..." && while ! find ./.gitpod.lock 2> /dev/null 1> /dev/null; do sleep 1; done
+    command: npm test
+    openIn: right
+
+  # App Form
+  # ======================
+  - name: App Form
+    before: cd app-form
+    init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
+    command: HELLO=world
+      REACT_APP_HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
+      DANGEROUSLY_DISABLE_HOST_CHECK=true
+      CHOKIDAR_USEPOLLING=true
+      WDS_SOCKET_PORT=0
+      npm start
+    openIn: right
+
+  # Unit Tests Form
+  # ======================
+  - name: Unit Tests Form
+    before: cd app-form
     init: echo "Awaiting NPM install..." && while ! find ./.gitpod.lock 2> /dev/null 1> /dev/null; do sleep 1; done
     command: npm test
     openIn: right
