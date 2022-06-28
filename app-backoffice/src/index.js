@@ -16,7 +16,9 @@ forrest
   .run({
     settings: {
       hasuraClient: {
-        endpoint: `http://localhost:8080/v1/graphql`
+        endpoint:
+          process.env.REACT_APP_HASURA_GRAPHQL_ENDPOINT ||
+          `http://localhost:8080/v1/graphql`
       }
     },
     services: [reactRoot, reactMUI, reactRouter, hasuraClient],
