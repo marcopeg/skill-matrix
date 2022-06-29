@@ -53,7 +53,7 @@ services:
       - ./hasura-events/package.json:/usr/src/app/package.json
     environment:
       HASURA_GRAPHQL_AUTH_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsiYmFja2VuZCJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJiYWNrZW5kIn19.Ugd7z4nKHqSh1vQi5HQBisOwpefbDg8wQ9pHKBw2GtY"
-      HASURA_GRAPHQL_ENDPOINT: http://hasura-engine:8080
+      HASURA_GRAPHQL_ENDPOINT: http://hasura-engine:8080/v1/graphql
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "-", "http://hasura-events:8080/healthz"]
@@ -72,7 +72,7 @@ services:
       - ./hasura-actions/package.json:/usr/src/app/package.json
     environment:
       HASURA_GRAPHQL_AUTH_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsiYmFja2VuZCJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJiYWNrZW5kIn19.Ugd7z4nKHqSh1vQi5HQBisOwpefbDg8wQ9pHKBw2GtY"
-      HASURA_GRAPHQL_ENDPOINT: http://hasura-engine:8080
+      HASURA_GRAPHQL_ENDPOINT: http://hasura-engine:8080/v1/graphql
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "-", "http://hasura-actions:8080/healthz"]
@@ -91,7 +91,7 @@ services:
       - ./graphql-api/package.json:/usr/src/app/package.json
     environment:
       HASURA_GRAPHQL_AUTH_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsiYmFja2VuZCJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJiYWNrZW5kIn19.Ugd7z4nKHqSh1vQi5HQBisOwpefbDg8wQ9pHKBw2GtY"
-      HASURA_GRAPHQL_ENDPOINT: http://hasura-engine:8080
+      HASURA_GRAPHQL_ENDPOINT: http://hasura-engine:8080/v1/graphql
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "-", "http://graphql-api:8080/healthz"]
