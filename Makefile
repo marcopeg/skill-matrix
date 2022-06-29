@@ -50,7 +50,7 @@ reset: stop clear start
 install-cli:
 	@curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
 
-
+test: test-hasura-actions test-hasura-events test-graphql-api
 
 #
 # Hasura State Management
@@ -124,3 +124,17 @@ test-sql-run:
 
 test-sql:
 	(cd hasura-migrations && make test project=$(project))
+
+
+#
+# Testing Backend Services
+#
+
+test-hasura-actions:
+	(cd hasura-actions && npm i && npm test)
+
+test-hasura-events:
+	(cd hasura-events && npm i && npm test)
+
+test-graphql-api:
+	(cd graphql-api && npm i && npm test)

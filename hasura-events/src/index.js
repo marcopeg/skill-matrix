@@ -5,9 +5,11 @@ const forrest = require("@forrestjs/core");
 const serviceLogger = require("@forrestjs/service-logger");
 const serviceFastify = require("@forrestjs/service-fastify");
 const serviceHealthz = require("@forrestjs/service-fastify-healthz");
+const hasuraClient = require("./services/hasura-client");
 
 // Local Feature
-const api = require("./features/api");
+const ping = require("./features/ping");
+const testHasuraClient = require("./features/test-hasura-client");
 
 // Validate the environment
 const env = envalid.cleanEnv(process.env, {
@@ -35,6 +37,6 @@ forrest.run({
       token: env.HASURA_GRAPHQL_AUTH_TOKEN
     }
   },
-  services: [serviceLogger, serviceFastify, serviceHealthz],
-  features: [api]
+  services: [serviceLogger, hasuraClient, serviceFastify, serviceHealthz],
+  features: [ping, testHasuraClient]
 });

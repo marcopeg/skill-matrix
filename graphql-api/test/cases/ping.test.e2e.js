@@ -12,7 +12,7 @@ describe("Ping", () => {
         }
       `
     });
-    expect(res.data.ping_remote).toHaveProperty("message", "+ok");
+    expect(res.data.ping_remote).toHaveProperty("message", "ok");
     expect(res.data.ping_remote).toHaveProperty("timestamp");
   });
 });
