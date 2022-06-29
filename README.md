@@ -26,7 +26,7 @@ docker-compose up hasura-cli
 
 👉 Else you can enjoy a **cloud-based automated Workspace** and run it on GitPod.io:
 
-[![Open in GitPod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/forrestjs/skill-matrix)
+[![Open in GitPod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/marcopeg/skill-matrix)
 
 # Services
 
