@@ -62,11 +62,11 @@ init:
 	@echo "Applying Hasura metadata..."
 	@hasura metadata apply --project hasura-migrations
 	@echo "Seeding the main database from: \"$(from).sql\"..."
-	@hasura seed apply --project hasura-migrations --database-name default --file $(from).sql
+	@hasura seed apply --project hasura-migrations --database-name $(project) --file $(from).sql
 
 seed:
 	@echo "Seeding the main database from: \"$(from).sql\"..."
-	@hasura seed apply --project hasura-migrations --database-name default --file $(from).sql
+	@hasura seed apply --project hasura-migrations --database-name $(project) --file $(from).sql
 
 
 #
@@ -74,21 +74,21 @@ seed:
 #
 
 migrate:
-	@hasura migrate apply --project hasura-migrations --database-name default
+	@hasura migrate apply --project hasura-migrations --database-name $(project)
 	
 migrate-status:
-	@hasura migrate status --project hasura-migrations --database-name default
+	@hasura migrate status --project hasura-migrations --database-name $(project)
 
 
 migrate-up:
-	@hasura migrate apply --project hasura-migrations --database-name default --up $(steps)
+	@hasura migrate apply --project hasura-migrations --database-name $(project) --up $(steps)
 
 migrate-down:
-	@hasura migrate apply --project hasura-migrations --database-name default --down $(steps)
+	@hasura migrate apply --project hasura-migrations --database-name $(project) --down $(steps)
 
 migrate-redo:
-	@hasura migrate apply --project hasura-migrations --database-name default --down $(steps)
-	@hasura migrate apply --project hasura-migrations --database-name default --up $(steps)
+	@hasura migrate apply --project hasura-migrations --database-name $(project) --down $(steps)
+	@hasura migrate apply --project hasura-migrations --database-name $(project) --up $(steps)
 
 migrate-create:
 	@hasura migrate create \
