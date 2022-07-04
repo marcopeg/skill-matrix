@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS "public"."Invites" (
+ "user_id" INT NOT NULL,
+ "survey_id" INT NOT NULL
+);
+
+ALTER TABLE ONLY "public"."Invites" 
+ADD CONSTRAINT "users_pkey" 
+FOREIGN KEY (user_id) REFERENCES "Users"(user_id) 
+ON UPDATE CASCADE ON DELETE CASCADE NOT DEFERRABLE;
+
+ALTER TABLE ONLY "public"."Invites" 
+ADD CONSTRAINT "surveys_pkey" 
+FOREIGN KEY (survey_id) REFERENCES "Survey"(survey_id) 
+ON UPDATE CASCADE ON DELETE CASCADE NOT DEFERRABLE;

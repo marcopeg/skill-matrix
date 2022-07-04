@@ -1,0 +1,3 @@
+DROP TYPE type CASCADE;
+
+DROP TABLE IF EXISTS "public"."Questions" CASCADE;
