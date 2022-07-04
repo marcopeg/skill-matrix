@@ -28,7 +28,7 @@ export const AuthLogin = () => {
       }}
     >
       <Box sx={{ mb: 2 }}>
-        <Typography variant="h4">Form App</Typography>
+        <Typography variant="h4">Survey App</Typography>
       </Box>
       <Box sx={{ mb: 2 }}>
         <TextField

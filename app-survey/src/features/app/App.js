@@ -14,7 +14,7 @@ export const App = () => {
   const { isSuccess, data } = useQuery("PingAction", PING_ACTION_QUERY);
 
   return (
-    <Page withPadding title={"Form App"} actions={<Logout />}>
+    <Page withPadding title={"Survey App"} actions={<Logout />}>
       {isSuccess
         ? `Computer says: ${new Date(data.ping.timestamp)}`
         : "loading time..."}
