@@ -3,3 +3,9 @@ CREATE TABLE "public"."boards" (
   "name" TEXT NOT NULL, 
   PRIMARY KEY ("id") 
 );
+
+CREATE TABLE "public"."users" (
+  "id" SERIAL NOT NULL, 
+  "name" TEXT NOT NULL
+  PRIMARY KEY ("id") 
+);
