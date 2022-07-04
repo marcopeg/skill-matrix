@@ -61,10 +61,10 @@ tasks:
     command: npm test
     openIn: right
 
-  # App Form
+  # App Survey
   # ======================
-  - name: App Form
-    before: cd app-form
+  - name: App Survey
+    before: cd app-survey
     init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
     command: HELLO=world
       REACT_APP_HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
@@ -74,10 +74,10 @@ tasks:
       npm start
     openIn: right
 
-  # Unit Tests Form
+  # Unit Tests Survey
   # ======================
   - name: Unit Tests Form
-    before: cd app-form
+    before: cd app-survey
     init: echo "Awaiting NPM install..." && while ! find ./.gitpod.lock 2> /dev/null 1> /dev/null; do sleep 1; done
     command: npm test
     openIn: right
@@ -85,7 +85,7 @@ tasks:
 ports:
   - description: Hasura CLI
     port: 8080
-    onOpen: open-preview
+    onOpen: ignore
     visibility: public
   - description: Form App
     port: 3000
@@ -93,7 +93,7 @@ ports:
     visibility: public
   - description: Backoffice App
     port: 3010
-    onOpen: open-preview
+    onOpen: ignore
     visibility: public
   - port: 4010
     onOpen: ignore
