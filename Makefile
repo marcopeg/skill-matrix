@@ -42,7 +42,7 @@ logs:
 
 clear: stop
 	@echo "Destroy local data..."
-	@sudo rm -rf .docker-data
+	@docker run --rm -v $(PWD):/data alpine:3.16 rm -rf ./data/.docker-data
 
 restart: stop start
 reset: stop clear start
