@@ -23,15 +23,15 @@ services:
       hasura-engine:
         condition: service_healthy
 
-  app-form:
+  app-survey:
     build:
-      context: ./app-form
+      context: ./app-survey
       dockerfile: Dockerfile.dev
     ports:
       - "${APP_BACKOFFICE_PORT:-3000}:3000"
     volumes:
-      - ./app-form/public:/usr/src/app/public:delegated
-      - ./app-form/src:/usr/src/app/src:delegated
+      - ./app-survey/public:/usr/src/app/public:delegated
+      - ./app-survey/src:/usr/src/app/src:delegated
     environment:
       REACT_APP_HASURA_GRAPHQL_ENDPOINT: http://localhost:${HASURA_ENGINE_PORT:-8080}/v1/graphql
       CHOKIDAR_USEPOLLING: "true"
