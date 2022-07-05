@@ -1,0 +1,25 @@
+table:
+  name: Survey
+  schema: public
+array_relationships:
+  - name: Answers
+    using:
+      foreign_key_constraint_on:
+        column: survey_id
+        table:
+          name: Answers
+          schema: public
+  - name: Invites
+    using:
+      foreign_key_constraint_on:
+        column: survey_id
+        table:
+          name: Invites
+          schema: public
+  - name: Survey_Questions
+    using:
+      foreign_key_constraint_on:
+        column: survey_id
+        table:
+          name: Survey_Questions
+          schema: public

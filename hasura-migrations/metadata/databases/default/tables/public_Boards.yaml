@@ -1,0 +1,18 @@
+table:
+  name: Boards
+  schema: public
+array_relationships:
+  - name: Board_Admins
+    using:
+      foreign_key_constraint_on:
+        column: board_id
+        table:
+          name: Board_Admins
+          schema: public
+  - name: Questions
+    using:
+      foreign_key_constraint_on:
+        column: board_id
+        table:
+          name: Questions
+          schema: public

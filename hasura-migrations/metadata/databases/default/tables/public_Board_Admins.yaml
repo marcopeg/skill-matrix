@@ -1,0 +1,10 @@
+table:
+  name: Board_Admins
+  schema: public
+object_relationships:
+  - name: Board
+    using:
+      foreign_key_constraint_on: board_id
+  - name: User
+    using:
+      foreign_key_constraint_on: user_id

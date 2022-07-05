@@ -1,0 +1,10 @@
+table:
+  name: Invites
+  schema: public
+object_relationships:
+  - name: Survey
+    using:
+      foreign_key_constraint_on: survey_id
+  - name: User
+    using:
+      foreign_key_constraint_on: user_id
