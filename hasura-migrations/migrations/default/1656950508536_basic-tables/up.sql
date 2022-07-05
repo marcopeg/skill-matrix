@@ -54,26 +54,29 @@ CREATE TABLE "public"."boards_admins" (
 
 ---
 --- QUESTIONS
+--- This is a "append only" table, new versions of the same record are
+--- appended at the very bottom of the table with a new "created_at" timestamp.
 ---
+--- Fillfactor is 100 because there is never fragmentation due to UPDATE or DELETE statements:
+--- https://medium.com/nerd-for-tech/postgres-fillfactor-baf3117aca0a
+---
+---
+--- Drawback:
+--- If we perfome a huge amount of editing on the questions, this solution
+--- might not be performing very well at scale.
+--- Need some heavy testing.
 
 CREATE TABLE "public"."questions" (
   "id" SERIAL NOT NULL, 
   "board_id" INT NOT NULL,
   "type" TEXT NOT NULL,
   "data" JSON NOT NULL,
-  "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "is_deleted" BOOLEAN NOT NULL DEFAULT false,
-  CONSTRAINT "questions_pkey" PRIMARY KEY ("id"),
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp(),
+  CONSTRAINT "questions_pkey" PRIMARY KEY ("id", "created_at"),
   CONSTRAINT "questions_board_id_fkey" FOREIGN KEY("board_id") REFERENCES "boards"("id")
-);
+) WITH (fillfactor = 100);
 
-CREATE TRIGGER "set_public_questions_updated_at"
-BEFORE UPDATE ON "public"."questions"
-FOR EACH ROW
-EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
-
-COMMENT ON TRIGGER "set_public_questions_updated_at" ON "public"."questions" 
-IS 'Trigger to set value of column "updated_at" to current timestamp on row update';
 
 
 
@@ -103,6 +106,28 @@ EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
 COMMENT ON TRIGGER "set_public_surveys_updated_at" ON "public"."surveys" 
 IS 'Trigger to set value of column "updated_at" to current timestamp on row update';
 
+
+
+
+
+
+
+
+---
+--- SURVEYS QUESTIONS
+--- immutable snapshot of the question at the time of a survey
+---
+
+-- CREATE TABLE "public"."surveys_questions" (
+--   "id" SERIAL NOT NULL, 
+--   "board_id" INT NOT NULL,
+--   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+--   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+--   "opens_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+--   "closes_at" TIMESTAMPTZ NOT NULL DEFAULT now() + '1w'::interval,
+--   CONSTRAINT "surveys_pkey" PRIMARY KEY ("id"),
+--   CONSTRAINT "surveys_board_id_fkey" FOREIGN KEY("board_id") REFERENCES "boards"("id")
+-- );
 
 
 

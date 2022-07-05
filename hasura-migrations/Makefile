@@ -45,7 +45,7 @@ stop:
 
 clear: stop
 	@echo "Destroy local data..."
-	@rm -rf $(CURDIR)/$(pg_data)/pgtap
+	@docker run --rm -v $(PWD):/data alpine:3.16 rm -rf ./data/.docker-data/pgtap
 
 down: stop clear
 
@@ -68,9 +68,10 @@ reset:
 	@docker exec -i $(pg_name) psql -U postgres < ./pgtap/reset-db.sql
 
 schema: $(CURDIR)/migrations/$(project)/*
-	@echo $^/up.sql
-	@cat $^/up.sql
-	@docker exec -i $(pg_name) psql -U postgres test-db < $^/up.sql
+	@for file in $^ ; do \
+		echo "---> Apply:" $${file}/up.sql; \
+		docker exec -i $(pg_name) psql -U postgres test-db < $${file}/up.sql;	\
+	done
 
 run:
 	clear
