@@ -79,6 +79,36 @@ IS 'Trigger to set value of column "updated_at" to current timestamp on row upda
 
 
 
+
+---
+--- SURVEYS
+---
+
+CREATE TABLE "public"."surveys" (
+  "id" SERIAL NOT NULL, 
+  "board_id" INT NOT NULL,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "opens_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "closes_at" TIMESTAMPTZ NOT NULL DEFAULT now() + '1w'::interval,
+  CONSTRAINT "surveys_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "surveys_board_id_fkey" FOREIGN KEY("board_id") REFERENCES "boards"("id")
+);
+
+CREATE TRIGGER "set_public_surveys_updated_at"
+BEFORE UPDATE ON "public"."surveys"
+FOR EACH ROW
+EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
+
+COMMENT ON TRIGGER "set_public_surveys_updated_at" ON "public"."surveys" 
+IS 'Trigger to set value of column "updated_at" to current timestamp on row update';
+
+
+
+
+
+
+
 ---
 --- ANSWERS
 ---
