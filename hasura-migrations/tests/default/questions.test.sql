@@ -6,7 +6,9 @@ INSERT INTO "public"."boards" VALUES (1, 'foobar');
 
 
 -- Add some questions:
-INSERT INTO "public"."questions" VALUES 
+INSERT INTO "public"."questions" 
+  ("id", "board_id", "type", "data")
+VALUES 
   (1, 1, 'star', '{"v":1}')
 , (2, 1, 'star', '{"v":1}')
 ;
@@ -21,7 +23,11 @@ SELECT results_eq(
 
 
 -- Add a write-only modification to such question:
-INSERT INTO "public"."questions" VALUES (1, 1, 'star', '{"v":2}');
+INSERT INTO "public"."questions" 
+  ("id", "board_id", "type", "data")
+VALUES 
+  (1, 1, 'star', '{"v":2}');
+
 SELECT results_eq(
   'SELECT COUNT(*) FROM "public"."questions" WHERE "id" = 1',
   $$VALUES ( 2::bigint )$$,
@@ -34,7 +40,7 @@ SELECT results_eq(
     SELECT DISTINCT ON ("id") "id", ("data"->>'v')::int AS "v" 
     FROM "questions" 
     WHERE "id" = 1 
-    ORDER BY "id", "created_at" DESC
+    ORDER BY "id", "etag" DESC
   $$,
   $$VALUES ( 1, 2 )$$,
   'It should return the latest version of a given record'
