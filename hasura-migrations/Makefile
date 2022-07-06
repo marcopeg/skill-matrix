@@ -11,6 +11,7 @@ pg_data?=../.docker-data
 pg_port?=5432
 project?=default
 seed?=dummy
+test?=
 
 
 ###
@@ -81,7 +82,7 @@ run:
 		--link $(pg_name):db \
 		-v $(CURDIR)/tests/$(project)/:/$(project) \
 		pgtap \
-    	-h db -u postgres -w $(pg_password) -d test-db -t '/$(project)/*.sql'
+    	-h db -u postgres -w $(pg_password) -d test-db -t '/$(project)/$(test)*.sql'
 
 fill:
 	@docker exec -i $(pg_name) psql -U postgres test-db < ./seeds/$(project)/$(seed).sql
