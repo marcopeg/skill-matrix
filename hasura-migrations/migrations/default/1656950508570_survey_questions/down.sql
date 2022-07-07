@@ -1,0 +1,1 @@
+DROP VIEW "public"."surveys_questions";
