@@ -15,19 +15,19 @@ SELECT plan(1);
 -- ) q2;
 
 INSERT INTO "public"."boards" VALUES (1, 'b1');
-INSERT INTO "public"."questions" ("board_id", "id", "data") 
+INSERT INTO "public"."questions" ("board_id", "id", "data", "created_at") 
 VALUES 
-  (1, 1, '{"v":1}')
-, (1, 2, '{"v":1}')
-, (1, 1, '{"v":2}')
+  (1, 1, '{"v":1}', '2022-07-08 11:10')
+, (1, 2, '{"v":1}', '2022-07-08 11:10')
+, (1, 1, '{"v":2}', '2022-07-08 11:11')
 ;
 
 INSERT INTO "public"."surveys" ("id", "board_id") VALUES (1, 1);
 
 SELECT results_eq(
   $$SELECT ("cache"->>'questions')::text FROM "public"."surveys"$$,
-  $$VALUES ( '[{"id":1,"data":{"v":2}}, 
- {"id":2,"data":{"v":1}}]' )$$,
+  $$VALUES ( '[{"id":1,"created_at":"2022-07-08T11:11:00+00:00","data":{"v":2}}, 
+ {"id":2,"created_at":"2022-07-08T11:10:00+00:00","data":{"v":1}}]' )$$,
   'It should return only questions associated with a survey'
 );
 
