@@ -67,7 +67,7 @@ INSERT INTO "public"."surveys" VALUES
 --- INVITES
 ---
 
-INSERT INTO "public"."surveys_users" VALUES 
+INSERT INTO "public"."surveys_invites" VALUES 
   (1, 1)
 , (1, 2)
 , (2, 1)
