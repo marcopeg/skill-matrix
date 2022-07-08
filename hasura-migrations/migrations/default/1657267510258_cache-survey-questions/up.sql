@@ -23,9 +23,17 @@ BEGIN
     -- Convert the dataset to a json document
     SELECT json_build_object('questions', json_agg(q2)) FROM (
       -- Filter only the active questions
-      SELECT "id", "type", "data" FROM (
+      SELECT 
+        "id", 
+        -- "type", 
+        "data" 
+      FROM (
         -- Get latest questions for a board
-        SELECT DISTINCT ON ("id") "id", "type", "data", "is_deleted"
+        SELECT DISTINCT ON ("id") 
+          "id", 
+          -- "type", 
+          "data", 
+          "is_deleted"
         FROM "public"."questions" 
         WHERE "board_id" = NEW.board_id
         ORDER BY "id", "etag" DESC

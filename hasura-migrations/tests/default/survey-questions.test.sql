@@ -26,8 +26,8 @@ WHERE "survey_id" = $1;
 ---
 
 INSERT INTO "public"."boards" VALUES (1, 'b1');
-INSERT INTO "public"."questions" ("board_id", "id", "type", "data") 
-VALUES (1, 1, 'star', '{"v":1}');
+INSERT INTO "public"."questions" ("board_id", "id", "data") 
+VALUES (1, 1, '{"v":1}');
 
 INSERT INTO "public"."surveys" ("id", "board_id") VALUES (1, 1);
 
@@ -43,8 +43,8 @@ SELECT results_eq(
 --- GET THE VERSION THAT IS CLOSEST TO THE SURVEY
 ---
 
-INSERT INTO "public"."questions" ("board_id", "id", "type", "data") 
-VALUES (1, 1, 'star', '{"v":2}');
+INSERT INTO "public"."questions" ("board_id", "id", "data") 
+VALUES (1, 1, '{"v":2}');
 
 SELECT results_eq(
   'get_surveys',
@@ -58,8 +58,8 @@ SELECT results_eq(
 --- IT SHOULD ALWAYS GET THE LASTEST AVAILABLE VERSION BY CONTEXT
 ---
 
-INSERT INTO "public"."questions" ("board_id", "id", "type", "data")
-VALUES (1, 1, 'star', '{"v":3}'), (1, 1, 'star', '{"v":4}');
+INSERT INTO "public"."questions" ("board_id", "id", "data")
+VALUES (1, 1, '{"v":3}'), (1, 1, '{"v":4}');
 
 INSERT INTO "public"."surveys" ("id", "board_id")
 VALUES (2, 1);
@@ -79,8 +79,8 @@ SELECT results_eq(
 --- IT SHOULD COLLECT MULTIPLE QUESTIONS FOR A SURVEY
 ---
 
-INSERT INTO "public"."questions" ("board_id", "id", "type", "data")
-VALUES (1, 2, 'star', '{"v":1}');
+INSERT INTO "public"."questions" ("board_id", "id", "data")
+VALUES (1, 2, '{"v":1}');
 
 INSERT INTO "public"."surveys" ("id", "board_id")
 VALUES (3, 1);
@@ -111,8 +111,8 @@ SELECT results_eq(
 --- IT SHOULD NOT LIST DELETED QUESTIONS
 ---
 
-INSERT INTO "public"."questions" ("board_id", "id", "type", "data", "is_deleted")
-VALUES (1, 2, 'star', '{"v":2}', true);
+INSERT INTO "public"."questions" ("board_id", "id", "data", "is_deleted")
+VALUES (1, 2, '{"v":2}', true);
 
 INSERT INTO "public"."surveys" ("id", "board_id")
 VALUES (4, 1);
@@ -129,11 +129,11 @@ SELECT results_eq(
 --- IT SHOULD SKIP INTERMEDIATE VERSIONS
 ---
 
-INSERT INTO "public"."questions" ("board_id", "id", "type", "data")
-VALUES (1, 3, 'star', '{"v":1}');
+INSERT INTO "public"."questions" ("board_id", "id", "data")
+VALUES (1, 3, '{"v":1}');
 
-INSERT INTO "public"."questions" ("board_id", "id", "type", "data")
-VALUES (1, 3, 'star', '{"v":2}');
+INSERT INTO "public"."questions" ("board_id", "id", "data")
+VALUES (1, 3, '{"v":2}');
 
 INSERT INTO "public"."surveys" ("id", "board_id")
 VALUES (5, 1);
@@ -161,11 +161,11 @@ SELECT results_eq(
   'An existing survey should stay immutable to the creation of a new board'
 );
 
-INSERT INTO "public"."questions" ("board_id", "id", "type", "data")
+INSERT INTO "public"."questions" ("board_id", "id", "data")
 VALUES 
-  (2, 4, 'star', '{"v":1}')
-, (2, 5, 'star', '{"v":1}')
-, (2, 4, 'star', '{"v":2}')
+  (2, 4, '{"v":1}')
+, (2, 5, '{"v":1}')
+, (2, 4, '{"v":2}')
 ;
 
 INSERT INTO "public"."surveys" ("id", "board_id")

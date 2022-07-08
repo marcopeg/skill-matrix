@@ -10,7 +10,6 @@ SELECT
   "q"."survey_id",
   "q"."id" AS "question_id",
   "a"."id" AS "answer_id",
-  -- "q"."type" AS "question_type",
   "q"."data"::text AS "question_data",
   "a"."score" AS "answer_score",
   "a"."data"::text AS "answer_data",
@@ -35,7 +34,6 @@ FROM (
     ) "srv",
     jsonb_to_recordset("srv"."cache") AS "question" (
       "id" INT,
-      "type" TEXT,
       "data" JSON
     )
 ) "q"
@@ -46,9 +44,9 @@ ON "a"."user_id" = "q"."user_id" AND "a"."question_id" = "q"."id"
 INSERT INTO "public"."boards" VALUES (1, 'b1');
 
 INSERT INTO "public"."questions" 
-  ("board_id",  "id",   "type",   "data",     "etag") VALUES 
-  (1,           1,      'star',   '{"v":1}',  '2022-07-08 11:10')
-, (1,           2,      'star',   '{"v":1}',   '2022-07-08 11:10')
+  ("board_id",  "id",   "data",     "etag") VALUES 
+  (1,           1,      '{"v":1}',  '2022-07-08 11:10')
+, (1,           2,      '{"v":1}',  '2022-07-08 11:10')
 ;
 
 INSERT INTO "public"."surveys" 
