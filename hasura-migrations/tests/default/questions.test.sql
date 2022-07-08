@@ -7,10 +7,10 @@ INSERT INTO "public"."boards" VALUES (1, 'foobar');
 
 -- Add some questions:
 INSERT INTO "public"."questions" 
-  ("id", "board_id", "type", "data")
+  ("id", "board_id", "data")
 VALUES 
-  (1, 1, 'star', '{"v":1}')
-, (2, 1, 'star', '{"v":1}')
+  (1, 1, '{"v":1}')
+, (2, 1, '{"v":1}')
 ;
 
 
@@ -24,9 +24,9 @@ SELECT results_eq(
 
 -- Add a write-only modification to such question:
 INSERT INTO "public"."questions" 
-  ("id", "board_id", "type", "data")
+  ("id", "board_id", "data")
 VALUES 
-  (1, 1, 'star', '{"v":2}');
+  (1, 1, '{"v":2}');
 
 SELECT results_eq(
   'SELECT COUNT(*) FROM "public"."questions" WHERE "id" = 1',
