@@ -1,1 +1,1 @@
-DROP TABLE "public"."surveys_users" CASCADE;
+DROP TABLE "public"."surveys_invites" CASCADE;
