@@ -2,7 +2,7 @@ tasks:
   # Hasura Engine
   # ======================
   - name: Hasura Engine
-    init: curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
+    before: curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
     command: make start-be
     openIn: right
 
@@ -36,15 +36,14 @@ tasks:
   # SQL Unit Tests
   # ======================
   - name: SQL Unit Tests
-    init: make test-sql-start && sleep 20
+    before: make test-sql-start && sleep 20
     command: make test-sql
     openIn: right
 
   # App Backoffice
   # ======================
   - name: App Backoffice
-    before: cd app-backoffice
-    init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
+    before: cd app-backoffice && rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
     command: HELLO=world
       REACT_APP_HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
       DANGEROUSLY_DISABLE_HOST_CHECK=true
@@ -56,16 +55,14 @@ tasks:
   # Unit Tests Backoffice
   # ======================
   - name: Unit Tests Backoffice
-    before: cd app-backoffice
-    init: echo "Awaiting NPM install..." && while ! find ./.gitpod.lock 2> /dev/null 1> /dev/null; do sleep 1; done
+    before: cd app-backoffice && echo "Awaiting NPM install..." && while ! find ./.gitpod.lock 2> /dev/null 1> /dev/null; do sleep 1; done
     command: npm test
     openIn: right
 
   # App Survey
   # ======================
   - name: App Survey
-    before: cd app-survey
-    init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
+    before: cd app-survey && rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
     command: HELLO=world
       REACT_APP_HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
       DANGEROUSLY_DISABLE_HOST_CHECK=true
@@ -77,8 +74,7 @@ tasks:
   # Unit Tests Survey
   # ======================
   - name: Unit Tests Form
-    before: cd app-survey
-    init: echo "Awaiting NPM install..." && while ! find ./.gitpod.lock 2> /dev/null 1> /dev/null; do sleep 1; done
+    before: cd app-survey && echo "Awaiting NPM install..." && while ! find ./.gitpod.lock 2> /dev/null 1> /dev/null; do sleep 1; done
     command: npm test
     openIn: right
 
