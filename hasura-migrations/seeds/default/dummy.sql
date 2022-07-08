@@ -9,13 +9,12 @@ TRUNCATE "public"."boards_admins" CASCADE;
 
 INSERT INTO "public"."boards" VALUES (1, 'board1');
 
-INSERT INTO "public"."questions" ("board_id", "id", "type", "data")
-VALUES 
-  ( 1, 1, 'star', '{"__schema":"question:star@1", "title":"Question#1"}' )
-, ( 1, 2, 'star', '{"__schema":"question:star@1", "title":"Question#2"}' )
-, ( 1, 3, 'star', '{"__schema":"question:star@1", "title":"Question#3"}' )
+INSERT INTO "public"."questions" 
+  ("board_id",  "id",   "type",   "data",     "etag") VALUES 
+  (1,           1,      'star',   '{"__schema":"question:star@1", "title":"Question#1"}',  '2022-07-08 11:10')
+, (1,           2,      'star',   '{"__schema":"question:star@1", "title":"Question#2"}',  '2022-07-08 11:10')
+, (1,           3,      'star',   '{"__schema":"question:star@1", "title":"Question#3"}',  '2022-07-08 11:10')
 ;
-
 
 ---
 --- BOARD2
@@ -23,11 +22,11 @@ VALUES
 
 INSERT INTO "public"."boards" VALUES (2, 'board2');
 
-INSERT INTO "public"."questions" ("board_id", "id", "type", "data")
-VALUES 
-  ( 2, 4, 'star', '{"__schema":"question:star@1", "title":"Question#1"}' )
-, ( 2, 5, 'star', '{"__schema":"question:star@1", "title":"Question#2"}' )
-, ( 2, 6, 'star', '{"__schema":"question:star@1", "title":"Question#3"}' )
+INSERT INTO "public"."questions" 
+  ("board_id",  "id",   "type",   "data",     "etag") VALUES 
+  (2,           4,      'star',   '{"__schema":"question:star@1", "title":"Question#1"}',  '2022-07-08 11:10')
+, (2,           5,      'star',   '{"__schema":"question:star@1", "title":"Question#2"}',  '2022-07-08 11:10')
+, (2,           6,      'star',   '{"__schema":"question:star@1", "title":"Question#3"}',  '2022-07-08 11:10')
 ;
 
 
@@ -56,9 +55,10 @@ INSERT INTO "public"."boards_admins" VALUES
 --- SURVEYS
 ---
 
-INSERT INTO "public"."surveys" VALUES 
-  (1, 1)
-, (2, 2)
+INSERT INTO "public"."surveys" 
+  ("id",  "board_id", "created_at") VALUES 
+  (1,     1,          '2022-07-08 11:10')
+, (2,     2,          '2022-07-08 11:10')
 ;
 
 
@@ -67,11 +67,25 @@ INSERT INTO "public"."surveys" VALUES
 --- INVITES
 ---
 
-INSERT INTO "public"."surveys_invites" VALUES 
-  (1, 1)
-, (1, 2)
-, (2, 1)
-, (2, 2)
+INSERT INTO "public"."surveys_invites" 
+  ("survey_id", "user_id",  "created_at" ) VALUES 
+  (1,           1,          '2022-07-08 11:10')
+, (1,           2,          '2022-07-08 11:10')
+, (2,           1,          '2022-07-08 11:10')
+, (2,           2,          '2022-07-08 11:10')
+;
+
+
+
+
+
+---
+--- ANSWERS
+---
+
+INSERT INTO "public"."answers" 
+  ("board_id",  "survey_id",  "user_id",  "question_id",  "question_etag",                  "score",  "data", "notes") VALUES
+  (1,           1,            1,          1,              '2022-07-08 11:10',  10,       '{}',   'foo')
 ;
 
 
