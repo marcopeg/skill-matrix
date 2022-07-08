@@ -1,35 +1,7 @@
 BEGIN;
-SELECT plan(10);
+SELECT plan(5);
 
-
-PREPARE "get_surveys_query" AS
-SELECT DISTINCT ON ("s"."id", "q"."id")
-  "s"."board_id",
-  "s"."id" AS "survey_id",
-  "q"."id" AS "question_id",
-  ("data"->>'v')::int AS "question_v"
-FROM "public"."questions" AS "q"
-JOIN "public"."surveys" AS "s" 
-  ON "q"."board_id" = "s"."board_id"
-WHERE "q"."etag" <= "s"."created_at"
-ORDER BY "s"."id" DESC, "q"."id", "q"."etag" DESC
-;
-
-PREPARE "get_survey_query" (INT) AS
-SELECT DISTINCT ON ("s"."id", "q"."id")
-  "s"."board_id",
-  "s"."id" AS "survey_id",
-  "q"."id" AS "question_id",
-  ("data"->>'v')::int AS "question_v"
-FROM "public"."questions" AS "q"
-JOIN "public"."surveys" AS "s" 
-  ON "q"."board_id" = "s"."board_id"
-WHERE "q"."etag" <= "s"."created_at"
-  AND "s"."id" = $1
-ORDER BY "s"."id" DESC, "q"."id", "q"."etag" DESC
-;
-
-PREPARE "get_surveys_view" AS
+PREPARE "get_surveys" AS
 SELECT 
   "board_id",
   "survey_id",
@@ -37,7 +9,7 @@ SELECT
   ("data"->>'v')::int AS "question_v"
 FROM "public"."surveys_questions";
 
-PREPARE "get_survey_view" AS
+PREPARE "get_survey" AS
 SELECT 
   "board_id",
   "survey_id",
@@ -60,13 +32,7 @@ VALUES (1, 1, 'star', '{"v":1}');
 INSERT INTO "public"."surveys" ("id", "board_id") VALUES (1, 1);
 
 SELECT results_eq(
-  'get_surveys_query',
-  $$VALUES ( 1, 1, 1, 1 )$$,
-  'It should return only questions associated with a survey'
-);
-
-SELECT results_eq(
-  'get_surveys_view',
+  'get_surveys',
   $$VALUES ( 1, 1, 1, 1 )$$,
   'It should return only questions associated with a survey'
 );
@@ -81,13 +47,7 @@ INSERT INTO "public"."questions" ("board_id", "id", "type", "data")
 VALUES (1, 1, 'star', '{"v":2}');
 
 SELECT results_eq(
-  'get_surveys_query',
-  $$VALUES ( 1, 1, 1, 1 )$$,
-  'It should select the version that is closes to the survey'
-);
-
-SELECT results_eq(
-  'get_surveys_view',
+  'get_surveys',
   $$VALUES ( 1, 1, 1, 1 )$$,
   'It should select the version that is closes to the survey'
 );
@@ -105,16 +65,7 @@ INSERT INTO "public"."surveys" ("id", "board_id")
 VALUES (2, 1);
 
 SELECT results_eq(
-  'get_surveys_query',
-  $$VALUES 
-    ( 1, 2, 1, 4 )
-  , ( 1, 1, 1, 1 )
-  $$,
-  'It should select the version that is closes to the survey'
-);
-
-SELECT results_eq(
-  'get_surveys_view',
+  'get_surveys',
   $$VALUES 
     ( 1, 2, 1, 4 )
   , ( 1, 1, 1, 1 )
@@ -135,7 +86,7 @@ INSERT INTO "public"."surveys" ("id", "board_id")
 VALUES (3, 1);
 
 SELECT results_eq(
-  'EXECUTE get_survey_query( 3 )',
+  'EXECUTE get_survey( 3 )',
   $$VALUES 
     ( 1, 3, 1, 4 )
   , ( 1, 3, 2, 1 )
@@ -144,27 +95,7 @@ SELECT results_eq(
 );
 
 SELECT results_eq(
-  'EXECUTE get_survey_view( 3 )',
-  $$VALUES 
-    ( 1, 3, 1, 4 )
-  , ( 1, 3, 2, 1 )
-  $$,
-  'It should select the version that is closes to the survey'
-);
-
-SELECT results_eq(
-  'EXECUTE get_surveys_query',
-  $$VALUES 
-    ( 1, 3, 1, 4 )
-  , ( 1, 3, 2, 1 )
-  , ( 1, 2, 1, 4 )
-  , ( 1, 1, 1, 1 )
-  $$,
-  'It should select the version that is closes to the survey'
-);
-
-SELECT results_eq(
-  'EXECUTE get_surveys_view',
+  'EXECUTE get_surveys',
   $$VALUES 
     ( 1, 3, 1, 4 )
   , ( 1, 3, 2, 1 )
