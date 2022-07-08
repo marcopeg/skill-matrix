@@ -69,9 +69,9 @@ reset:
 	@docker exec -i $(pg_name) psql -U postgres < ./pgtap/reset-db.sql
 
 schema: $(CURDIR)/migrations/$(project)/*
-	@for file in $^ ; do \
-		echo "---> Apply:" $${file}/up.sql; \
-		docker exec -i $(pg_name) psql -U postgres test-db < $${file}/up.sql;	\
+	@for file in $(shell find $(CURDIR)/migrations -name 'up.sql') ; do \
+		echo "---> Apply:" $${file}; \
+		docker exec -i $(pg_name) psql -U postgres test-db < $${file};	\
 	done
 
 run:
