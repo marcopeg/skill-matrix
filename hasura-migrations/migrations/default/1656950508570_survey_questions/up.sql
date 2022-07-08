@@ -5,7 +5,7 @@ SELECT
   "survey_id",
   "board_id",
   "etag",
-  "type",
+  -- "type",
   "data"
 FROM (
   -- Join each question version with the related survey
@@ -14,7 +14,7 @@ FROM (
     "s"."id" AS "survey_id",
     "s"."board_id",
     "q"."etag",
-    "q"."type",
+    -- "q"."type",
     "q"."data",
     "q"."is_deleted"
   FROM "public"."questions" AS "q"
