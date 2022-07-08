@@ -34,6 +34,7 @@ FROM (
     ) "srv",
     jsonb_to_recordset("srv"."cache") AS "question" (
       "id" INT,
+      "created_at" TIMESTAMPTZ,
       "data" JSON
     )
 ) "q"
@@ -44,7 +45,7 @@ ON "a"."user_id" = "q"."user_id" AND "a"."question_id" = "q"."id"
 INSERT INTO "public"."boards" VALUES (1, 'b1');
 
 INSERT INTO "public"."questions" 
-  ("board_id",  "id",   "data",     "etag") VALUES 
+  ("board_id",  "id",   "data",     "created_at") VALUES 
   (1,           1,      '{"v":1}',  '2022-07-08 11:10')
 , (1,           2,      '{"v":1}',  '2022-07-08 11:10')
 ;

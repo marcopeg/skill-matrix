@@ -40,7 +40,7 @@ SELECT results_eq(
     SELECT DISTINCT ON ("id") "id", ("data"->>'v')::int AS "v" 
     FROM "questions" 
     WHERE "id" = 1 
-    ORDER BY "id", "etag" DESC
+    ORDER BY "id", "created_at" DESC
   $$,
   $$VALUES ( 1, 2 )$$,
   'It should return the latest version of a given record'
