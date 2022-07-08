@@ -68,12 +68,11 @@ CREATE TABLE "public"."boards_admins" (
 
 CREATE TABLE "public"."questions" (
   "id" SERIAL NOT NULL, 
-  "etag" TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp(),
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp(),
   "board_id" INT NOT NULL,
-  -- "type" TEXT NOT NULL,
   "data" JSON NOT NULL,
   "is_deleted" BOOLEAN NOT NULL DEFAULT false,
-  CONSTRAINT "questions_pkey" PRIMARY KEY ("id", "etag"),
+  CONSTRAINT "questions_pkey" PRIMARY KEY ("id", "created_at"),
   CONSTRAINT "questions_board_id_fkey" FOREIGN KEY("board_id") REFERENCES "boards"("id")
 ) WITH (fillfactor = 100);
 
@@ -129,8 +128,8 @@ CREATE TABLE "public"."answers" (
   CONSTRAINT "answers_pkey" PRIMARY KEY ("id"),
   CONSTRAINT "answers_board_id_fkey" FOREIGN KEY("board_id") REFERENCES "boards"("id"),
   CONSTRAINT "answers_user_id_fkey" FOREIGN KEY("user_id") REFERENCES "boards"("id"),
-  CONSTRAINT "answers_survey_id_fkey" FOREIGN KEY("survey_id") REFERENCES "surveys"("id"),
-  CONSTRAINT "answers_question_fkey" FOREIGN KEY("question_id", "question_etag") REFERENCES "questions"("id", "etag")
+  CONSTRAINT "answers_survey_id_fkey" FOREIGN KEY("survey_id") REFERENCES "surveys"("id")
+  -- CONSTRAINT "answers_question_fkey" FOREIGN KEY("question_id", "question_etag") REFERENCES "questions"("id", "etag")
 );
 
 CREATE TRIGGER "set_public_answers_updated_at"

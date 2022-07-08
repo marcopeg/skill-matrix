@@ -10,7 +10,7 @@ TRUNCATE "public"."boards_admins" CASCADE;
 INSERT INTO "public"."boards" VALUES (1, 'board1');
 
 INSERT INTO "public"."questions" 
-  ("board_id",  "id",   "data",                                                   "etag") VALUES 
+  ("board_id",  "id",   "data",                                                   "created_at") VALUES 
   (1,           1,      '{"__schema":"question:star@1", "title":"Question#1"}',   '2022-07-08 11:10')
 , (1,           2,      '{"__schema":"question:star@1", "title":"Question#2"}',   '2022-07-08 11:10')
 , (1,           3,      '{"__schema":"question:star@1", "title":"Question#3"}',   '2022-07-08 11:10')
@@ -23,7 +23,7 @@ INSERT INTO "public"."questions"
 INSERT INTO "public"."boards" VALUES (2, 'board2');
 
 INSERT INTO "public"."questions" 
-  ("board_id",  "id",   "data",                                                   "etag") VALUES 
+  ("board_id",  "id",   "data",                                                   "created_at") VALUES 
   (2,           4,      '{"__schema":"question:star@1", "title":"Question#1"}',   '2022-07-08 11:10')
 , (2,           5,      '{"__schema":"question:star@1", "title":"Question#2"}',   '2022-07-08 11:10')
 , (2,           6,      '{"__schema":"question:star@1", "title":"Question#3"}',   '2022-07-08 11:10')

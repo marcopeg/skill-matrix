@@ -25,18 +25,18 @@ BEGIN
       -- Filter only the active questions
       SELECT 
         "id", 
-        -- "type", 
+        "created_at",
         "data" 
       FROM (
         -- Get latest questions for a board
         SELECT DISTINCT ON ("id") 
           "id", 
-          -- "type", 
+          "created_at", 
           "data", 
           "is_deleted"
         FROM "public"."questions" 
         WHERE "board_id" = NEW.board_id
-        ORDER BY "id", "etag" DESC
+        ORDER BY "id", "created_at" DESC
       ) q1
       WHERE "is_deleted" IS FALSE
     ) q2
