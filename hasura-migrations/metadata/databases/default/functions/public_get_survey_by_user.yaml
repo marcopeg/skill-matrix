@@ -1,0 +1,6 @@
+function:
+  name: get_survey_by_user
+  schema: public
+configuration:
+  custom_root_fields: {}
+  session_argument: hasura_session
