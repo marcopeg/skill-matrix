@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION "public"."log_survey_by_user"(
   "hasura_session" JSON,
   "question_id" INT,
-  "score" SMALLINT,
+  "score" INT,
   "data" JSON DEFAULT '{}',
   "notes" TEXT DEFAULT ''
 )

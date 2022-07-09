@@ -7,7 +7,7 @@ CREATE TABLE "public"."survey_by_user" (
   "question_data" JSON NOT NULL,
   -- "answer_id" BIGINT NOT NULL,
   "answer_created_at" TIMESTAMPTZ NOT NULL,
-  "answer_score" SMALLINT NOT NULL,
+  "answer_score" INT NOT NULL,
   "answer_data" JSON NOT NULL,
   "answer_notes" TEXT NOT NULL
 );

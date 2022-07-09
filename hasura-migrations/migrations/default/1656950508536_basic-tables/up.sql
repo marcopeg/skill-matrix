@@ -119,7 +119,7 @@ CREATE TABLE "public"."answers" (
   "survey_id" INT NOT NULL,
   "question_id" INT NOT NULL,
   "question_created_at" TIMESTAMPTZ NOT NULL,
-  "score" SMALLINT NOT NULL,
+  "score" INT NOT NULL,
   "data" JSON NOT NULL DEFAULT '{}',
   "notes" TEXT,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp(),

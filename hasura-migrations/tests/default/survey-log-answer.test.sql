@@ -31,7 +31,7 @@ SELECT * FROM "public"."log_survey_by_user"(
     "x-hasura-survey-id": 1
   }'::json,
   1,
-  10::smallint
+  10
 );
 
 SELECT results_eq(
