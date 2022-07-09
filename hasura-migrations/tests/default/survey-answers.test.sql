@@ -1,19 +1,5 @@
 BEGIN;
-SELECT plan(2);
-
--- p1: user_id
--- p2: survey_id
-PREPARE "get_survey_questions_answers" (int, int) AS
-SELECT
-  "user_id",
-  "board_id",
-  "survey_id",
-  "question_id",
-  "answer_id",
-  "question_data"::text AS "question_data",
-  "answer_score" AS "answer_score",
-  "answer_data"::text AS "answer_data"
-  FROM "public"."get_survey_by_user"($2, $1);
+SELECT plan(5);
 
 INSERT INTO "public"."boards" VALUES (1, 'b1');
 
@@ -29,7 +15,15 @@ INSERT INTO "public"."surveys"
 
 INSERT INTO "public"."users" 
   ("id",  "name") VALUES 
-  (1,     'User1');
+  (1,     'User1')
+, (2,     'User2')
+;
+
+INSERT INTO "public"."surveys_invites" 
+  ("survey_id",   "user_id") VALUES 
+  (1,             1)
+, (1,             2)
+;
 
 INSERT INTO "public"."answers" 
   ("id",  "board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",     "score",  "data",      "notes") VALUES
@@ -37,10 +31,14 @@ INSERT INTO "public"."answers"
 ;
 
 SELECT results_eq(
-  $$EXECUTE get_survey_questions_answers(1, 1)$$,
+  $$SELECT
+      "question_id",
+      "answer_id"::text,
+      "answer_score"::text
+    FROM "public"."get_survey_by_user"(1, 1)$$,
   $$VALUES 
-    ( 1, 1, 1, 1, 1::bigint, '{"v": 1}', 10::smallint, '{"v":1}' )
-  , ( 1, 1, 1, 2, null, '{"v": 1}', null, null )
+    ( 1, '1', '10' )
+  , ( 2, null, null )
   $$,
   'It should join a survey cached questions with the related available answers'
 );
@@ -57,12 +55,41 @@ INSERT INTO "public"."answers"
 ;
 
 SELECT results_eq(
-  $$EXECUTE get_survey_questions_answers(1, 1)$$,
+  $$SELECT
+      "question_id",
+      "answer_id"::text,
+      "answer_score"::text
+    FROM "public"."get_survey_by_user"(1, 1)$$,
   $$VALUES 
-    ( 1, 1, 1, 1, 1::bigint, '{"v": 1}', 20::smallint, '{"v":2}' )
-  , ( 1, 1, 1, 2, null, '{"v": 1}', null, null )
+    ( 1, '1', '20' )
+  , ( 2, null, null )
   $$,
   'It should return the latest version of an answer'
+);
+
+SELECT results_eq(
+  $$SELECT
+      "question_id",
+      "answer_id"::text,
+      "answer_score"::text
+    FROM "public"."get_survey_by_user"(1, 2)$$,
+  $$VALUES 
+    ( 1, null, null )
+  , ( 2, null, null )
+  $$,
+  'It should return null values if no answers are given'
+);
+
+SELECT results_eq(
+  $$SELECT COUNT(*)::int FROM "public"."get_survey_by_user"(1, 3)$$,
+  $$VALUES ( 0 )$$,
+  'It should return no rows if a user is not invited to a survey'
+);
+
+SELECT results_eq(
+  $$SELECT COUNT(*)::int FROM "public"."get_survey_by_user"(3, 1)$$,
+  $$VALUES ( 0 )$$,
+  'It should return no rows if a survey does not exists'
 );
 
 

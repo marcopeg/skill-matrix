@@ -22,12 +22,12 @@ CREATE OR REPLACE FUNCTION "public"."get_survey_by_user"(
 RETURNS SETOF "public"."survey_by_user" AS $$
 BEGIN
   RETURN QUERY
-  SELECT DISTINCT ON ("a"."id")
-    "q"."user_id",
+  SELECT DISTINCT ON ("q"."id")
+    PAR_userId AS "user_id",
     "q"."board_id",
     "q"."survey_id",
     "q"."id" AS "question_id",
-    "a"."question_created_at" AS "question_created_at",
+    "q"."created_at" AS "question_created_at",
     "q"."data" AS "question_data",
     "a"."id" AS "answer_id",
     "a"."created_at" AS "answer_created_at",
@@ -36,7 +36,7 @@ BEGIN
     "a"."notes" AS "answer_notes"
   FROM (
     SELECT 
-      PAR_userId AS "user_id", 
+      -- PAR_userId AS "user_id", 
       "board_id", 
       "survey_id", 
       "question".*
@@ -46,7 +46,11 @@ BEGIN
           "id" AS "survey_id", 
           "board_id", 
           ("cache" ->> 'questions')::jsonb AS "cache"
-        FROM "public"."surveys"
+        FROM "public"."surveys" AS "s"
+        -- Check for a valid invite
+        JOIN "public"."surveys_invites" AS "i" 
+          ON "s"."id" = "i"."survey_id" 
+         AND "i"."user_id" = PAR_userId
         WHERE "id" = PAR_surveyId
       ) "srv",
       jsonb_to_recordset("srv"."cache") AS "question" (
@@ -56,10 +60,10 @@ BEGIN
       )
   ) "q"
   LEFT JOIN "public"."answers" AS "a" 
-    ON "a"."user_id" = "q"."user_id" 
+    ON "a"."user_id" = PAR_userId
     AND "a"."question_id" = "q"."id"
 
-  ORDER BY "a"."id"
+  ORDER BY "q"."id", "a"."id" DESC
   ;
 END;
 $$ IMMUTABLE LANGUAGE plpgsql;
