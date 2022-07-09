@@ -26,19 +26,18 @@ INSERT INTO "public"."surveys_invites"
 ;
 
 INSERT INTO "public"."answers" 
-  ("id",  "board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",     "score",  "data",      "notes") VALUES
-  (1,     1,           1,            1,          1,              '2022-07-08 11:10',        10,       '{"v":1}',   'foo')
+  ("board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",     "score",  "data",      "notes") VALUES
+  (1,           1,            1,          1,              '2022-07-08 11:10',        10,       '{"v":1}',   'foo')
 ;
 
 SELECT results_eq(
   $$SELECT
       "question_id",
-      "answer_id"::text,
       "answer_score"::text
     FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":1,"x-hasura-user-id":1}'::json)$$,
   $$VALUES 
-    ( 1, '1', '10' )
-  , ( 2, null, null )
+    ( 1, '10' )
+  , ( 2, null )
   $$,
   'It should join a survey cached questions with the related available answers'
 );
@@ -50,19 +49,18 @@ SELECT results_eq(
 ---
 
 INSERT INTO "public"."answers" 
-  ("id",  "board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",     "score",  "data",      "notes") VALUES
-  (1,     1,           1,            1,          1,              '2022-07-08 11:10',        20,       '{"v":2}',   'foo')
+  ("board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",     "score",  "data",      "notes") VALUES
+  (1,           1,            1,          1,              '2022-07-08 11:10',        20,       '{"v":2}',   'foo')
 ;
 
 SELECT results_eq(
   $$SELECT
       "question_id",
-      "answer_id"::text,
       "answer_score"::text
     FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":1,"x-hasura-user-id":1}'::json)$$,
   $$VALUES 
-    ( 1, '1', '20' )
-  , ( 2, null, null )
+    ( 1, '20' )
+  , ( 2, null )
   $$,
   'It should return the latest version of an answer'
 );
@@ -70,12 +68,11 @@ SELECT results_eq(
 SELECT results_eq(
   $$SELECT
       "question_id",
-      "answer_id"::text,
       "answer_score"::text
     FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":1,"x-hasura-user-id":2}'::json)$$,
   $$VALUES 
-    ( 1, null, null )
-  , ( 2, null, null )
+    ( 1, null )
+  , ( 2, null )
   $$,
   'It should return null values if no answers are given'
 );
