@@ -79,7 +79,6 @@ migrate:
 migrate-status:
 	@hasura migrate status --project hasura-migrations --database-name $(project)
 
-
 migrate-up:
 	@hasura migrate apply --project hasura-migrations --database-name $(project) --up $(steps)
 
@@ -90,6 +89,10 @@ migrate-redo:
 	@hasura migrate apply --project hasura-migrations --database-name $(project) --down $(steps)
 	@hasura migrate apply --project hasura-migrations --database-name $(project) --up $(steps)
 
+migrate-rebuild:
+	@hasura migrate apply --project hasura-migrations --database-name $(project) --down all
+	@hasura migrate apply --project hasura-migrations --database-name $(project)
+
 migrate-create:
 	@hasura migrate create \
 		"$(name)" \
@@ -97,6 +100,8 @@ migrate-create:
 		--down-sql "SELECT NOW();" \
 		--database-name default \
 		--project hasura-migrations
+
+
 
 #
 # Metadata Utilities

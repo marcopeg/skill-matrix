@@ -23,3 +23,6 @@ FROM (
 ) ds
 WHERE "is_deleted" IS FALSE
 ;
+
+COMMENT ON VIEW "public"."surveys_questions" IS 
+'Lists the proper question version for a specific survey based on "survey.created_at" date';
