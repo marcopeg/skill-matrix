@@ -1,10 +1,10 @@
 BEGIN;
-SELECT plan(1);
+SELECT plan(2);
 
 -- p1: user_id
 -- p2: survey_id
 PREPARE "get_survey_questions_answers" (int, int) AS
-SELECT
+SELECT DISTINCT ON ("a"."id")
   "q"."user_id",
   "q"."board_id",
   "q"."survey_id",
@@ -39,7 +39,10 @@ FROM (
     )
 ) "q"
 LEFT JOIN "public"."answers" AS "a" 
-ON "a"."user_id" = "q"."user_id" AND "a"."question_id" = "q"."id"
+   ON "a"."user_id" = "q"."user_id" 
+  AND "a"."question_id" = "q"."id"
+
+ORDER BY "a"."id"
 ;
 
 INSERT INTO "public"."boards" VALUES (1, 'b1');
@@ -63,7 +66,6 @@ INSERT INTO "public"."answers"
   (1,     1,           1,            1,          1,              '2022-07-08 11:10',        10,       '{"v":1}',   'foo')
 ;
 
-
 SELECT results_eq(
   $$EXECUTE get_survey_questions_answers(1, 1)$$,
   $$VALUES 
@@ -71,6 +73,26 @@ SELECT results_eq(
   , ( 1, 1, 1, 2, null, '{"v": 1}', null, null, null )
   $$,
   'It should join a survey cached questions with the related available answers'
+);
+
+
+---
+--- WRITE ONLY LOG
+--- Answers are never modified, only a new version gets appended
+---
+
+INSERT INTO "public"."answers" 
+  ("id",  "board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",     "score",  "data",      "notes") VALUES
+  (1,     1,           1,            1,          1,              '2022-07-08 11:10',        20,       '{"v":2}',   'foo')
+;
+
+SELECT results_eq(
+  $$EXECUTE get_survey_questions_answers(1, 1)$$,
+  $$VALUES 
+    ( 1, 1, 1, 1, 1::bigint, '{"v": 1}', 20::smallint, '{"v":2}', 'foo' )
+  , ( 1, 1, 1, 2, null, '{"v": 1}', null, null, null )
+  $$,
+  'It should return the latest version of an answer'
 );
 
 

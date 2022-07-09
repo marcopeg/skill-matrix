@@ -125,17 +125,17 @@ CREATE TABLE "public"."answers" (
   "notes" TEXT,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp(),
   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp(),
-  CONSTRAINT "answers_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "answers_pkey" PRIMARY KEY ("id", "created_at"),
   CONSTRAINT "answers_board_id_fkey" FOREIGN KEY("board_id") REFERENCES "boards"("id"),
   CONSTRAINT "answers_user_id_fkey" FOREIGN KEY("user_id") REFERENCES "boards"("id"),
   CONSTRAINT "answers_survey_id_fkey" FOREIGN KEY("survey_id") REFERENCES "surveys"("id"),
   CONSTRAINT "answers_question_fkey" FOREIGN KEY("question_id", "question_created_at") REFERENCES "questions"("id", "created_at")
-);
+) WITH (fillfactor = 100);
 
-CREATE TRIGGER "set_public_answers_updated_at"
-BEFORE UPDATE ON "public"."answers"
-FOR EACH ROW
-EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
+-- CREATE TRIGGER "set_public_answers_updated_at"
+-- BEFORE UPDATE ON "public"."answers"
+-- FOR EACH ROW
+-- EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
 
-COMMENT ON TRIGGER "set_public_answers_updated_at" ON "public"."answers" 
-IS 'Trigger to set value of column "updated_at" to current timestamp on row update';
+-- COMMENT ON TRIGGER "set_public_answers_updated_at" ON "public"."answers" 
+-- IS 'Trigger to set value of column "updated_at" to current timestamp on row update';
