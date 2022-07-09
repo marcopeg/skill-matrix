@@ -7,6 +7,5 @@ CREATE TABLE "public"."surveys_invites" (
   CONSTRAINT "surveys_invites_user_id_fkey" FOREIGN KEY("user_id") REFERENCES "users"("id")
 );
 
-COMMENT ON TABLE "public"."surveys_invites" IS 'Tracks the invites for a user to fill up a survey';
-
-COMMENT ON VIEW "public"."surveys_questions" IS 'Lists the proper question version for a specific survey based on "survey.created_at" date';
+COMMENT ON TABLE "public"."surveys_invites" IS 
+'Tracks the invites for a user to fill up a survey';
