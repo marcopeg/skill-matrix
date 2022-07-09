@@ -59,8 +59,8 @@ INSERT INTO "public"."users"
   (1,     'User1');
 
 INSERT INTO "public"."answers" 
-  ("id",  "board_id",  "survey_id",  "user_id",  "question_id",  "question_etag",     "score",  "data",      "notes") VALUES
-  (1,     1,           1,            1,          1,              '2022-07-08 11:10',  10,       '{"v":1}',   'foo')
+  ("id",  "board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",     "score",  "data",      "notes") VALUES
+  (1,     1,           1,            1,          1,              '2022-07-08 11:10',        10,       '{"v":1}',   'foo')
 ;
 
 

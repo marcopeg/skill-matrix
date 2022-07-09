@@ -84,8 +84,8 @@ INSERT INTO "public"."surveys_invites"
 ---
 
 INSERT INTO "public"."answers" 
-  ("board_id",  "survey_id",  "user_id",  "question_id",  "question_etag",                  "score",  "data", "notes") VALUES
-  (1,           1,            1,          1,              '2022-07-08 11:10',  10,       '{}',   'foo')
+  ("board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",    "score",  "data", "notes") VALUES
+  (1,           1,            1,          1,              '2022-07-08 11:10',       10,       '{}',   'foo')
 ;
 
 

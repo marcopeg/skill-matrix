@@ -119,7 +119,7 @@ CREATE TABLE "public"."answers" (
   "user_id" INT NOT NULL,
   "survey_id" INT NOT NULL,
   "question_id" INT NOT NULL,
-  "question_etag" TIMESTAMPTZ NOT NULL,
+  "question_created_at" TIMESTAMPTZ NOT NULL,
   "score" SMALLINT NOT NULL,
   "data" JSON NOT NULL DEFAULT '{}',
   "notes" TEXT,
@@ -128,8 +128,8 @@ CREATE TABLE "public"."answers" (
   CONSTRAINT "answers_pkey" PRIMARY KEY ("id"),
   CONSTRAINT "answers_board_id_fkey" FOREIGN KEY("board_id") REFERENCES "boards"("id"),
   CONSTRAINT "answers_user_id_fkey" FOREIGN KEY("user_id") REFERENCES "boards"("id"),
-  CONSTRAINT "answers_survey_id_fkey" FOREIGN KEY("survey_id") REFERENCES "surveys"("id")
-  -- CONSTRAINT "answers_question_fkey" FOREIGN KEY("question_id", "question_etag") REFERENCES "questions"("id", "etag")
+  CONSTRAINT "answers_survey_id_fkey" FOREIGN KEY("survey_id") REFERENCES "surveys"("id"),
+  CONSTRAINT "answers_question_fkey" FOREIGN KEY("question_id", "question_created_at") REFERENCES "questions"("id", "created_at")
 );
 
 CREATE TRIGGER "set_public_answers_updated_at"
