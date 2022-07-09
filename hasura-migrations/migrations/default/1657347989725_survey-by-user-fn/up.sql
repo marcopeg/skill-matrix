@@ -16,14 +16,14 @@ COMMENT ON TABLE "public"."survey_by_user" IS
 'Output data-type for function: "get_survey_by_user(surveyId, userId)"';
 
 CREATE OR REPLACE FUNCTION "public"."get_survey_by_user"(
-  PAR_surveyId INT,
-  PAR_userId INT
+  hasura_session JSON
 )
 RETURNS SETOF "public"."survey_by_user" AS $$
+# variable_conflict use_variable
 BEGIN
   RETURN QUERY
   SELECT DISTINCT ON ("q"."id")
-    PAR_userId AS "user_id",
+    (hasura_session ->> 'x-hasura-user-id')::int AS "user_id",
     "q"."board_id",
     "q"."survey_id",
     "q"."id" AS "question_id",
@@ -36,7 +36,6 @@ BEGIN
     "a"."notes" AS "answer_notes"
   FROM (
     SELECT 
-      -- PAR_userId AS "user_id", 
       "board_id", 
       "survey_id", 
       "question".*
@@ -50,8 +49,8 @@ BEGIN
         -- Check for a valid invite
         JOIN "public"."surveys_invites" AS "i" 
           ON "s"."id" = "i"."survey_id" 
-         AND "i"."user_id" = PAR_userId
-        WHERE "id" = PAR_surveyId
+         AND "i"."user_id" = (hasura_session ->> 'x-hasura-user-id')::int
+        WHERE "id" = (hasura_session ->> 'x-hasura-survey-id')::int
       ) "srv",
       jsonb_to_recordset("srv"."cache") AS "question" (
         "id" INT,
@@ -60,7 +59,7 @@ BEGIN
       )
   ) "q"
   LEFT JOIN "public"."answers" AS "a" 
-    ON "a"."user_id" = PAR_userId
+    ON "a"."user_id" = (hasura_session ->> 'x-hasura-user-id')::int
     AND "a"."question_id" = "q"."id"
 
   ORDER BY "q"."id", "a"."id" DESC

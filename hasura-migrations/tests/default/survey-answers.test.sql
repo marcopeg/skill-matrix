@@ -35,7 +35,7 @@ SELECT results_eq(
       "question_id",
       "answer_id"::text,
       "answer_score"::text
-    FROM "public"."get_survey_by_user"(1, 1)$$,
+    FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":1,"x-hasura-user-id":1}'::json)$$,
   $$VALUES 
     ( 1, '1', '10' )
   , ( 2, null, null )
@@ -59,7 +59,7 @@ SELECT results_eq(
       "question_id",
       "answer_id"::text,
       "answer_score"::text
-    FROM "public"."get_survey_by_user"(1, 1)$$,
+    FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":1,"x-hasura-user-id":1}'::json)$$,
   $$VALUES 
     ( 1, '1', '20' )
   , ( 2, null, null )
@@ -72,7 +72,7 @@ SELECT results_eq(
       "question_id",
       "answer_id"::text,
       "answer_score"::text
-    FROM "public"."get_survey_by_user"(1, 2)$$,
+    FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":1,"x-hasura-user-id":2}'::json)$$,
   $$VALUES 
     ( 1, null, null )
   , ( 2, null, null )
@@ -81,13 +81,13 @@ SELECT results_eq(
 );
 
 SELECT results_eq(
-  $$SELECT COUNT(*)::int FROM "public"."get_survey_by_user"(1, 3)$$,
+  $$SELECT COUNT(*)::int FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":1,"x-hasura-user-id":3}'::json)$$,
   $$VALUES ( 0 )$$,
   'It should return no rows if a user is not invited to a survey'
 );
 
 SELECT results_eq(
-  $$SELECT COUNT(*)::int FROM "public"."get_survey_by_user"(3, 1)$$,
+  $$SELECT COUNT(*)::int FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":3,"x-hasura-user-id":1}'::json)$$,
   $$VALUES ( 0 )$$,
   'It should return no rows if a survey does not exists'
 );
