@@ -15,6 +15,8 @@ CREATE TABLE "public"."survey_by_user" (
 COMMENT ON TABLE "public"."survey_by_user" IS 
 'Output data-type for function: "get_survey_by_user(surveyId, userId)"';
 
+
+
 CREATE OR REPLACE FUNCTION "public"."get_survey_by_user"(
   hasura_session JSON
 )
@@ -66,3 +68,5 @@ BEGIN
   ;
 END;
 $$ IMMUTABLE LANGUAGE plpgsql;
+
+
