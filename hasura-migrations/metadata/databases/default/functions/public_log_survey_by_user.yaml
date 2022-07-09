@@ -1,5 +1,5 @@
 function:
-  name: get_survey_by_user
+  name: log_survey_by_user
   schema: public
 configuration:
   custom_root_fields: {}

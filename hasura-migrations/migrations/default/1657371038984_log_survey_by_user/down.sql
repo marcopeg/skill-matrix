@@ -1,0 +1,1 @@
+DROP FUNCTION "public"."log_survey_by_user";
