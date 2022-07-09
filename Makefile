@@ -110,6 +110,9 @@ migrate-create:
 metadata-export:
 	@hasura metadata export --project hasura-migrations
 
+metadata-apply:
+	@hasura metadata apply --project hasura-migrations
+
 
 #
 # SQL Unit Test

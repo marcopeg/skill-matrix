@@ -113,6 +113,7 @@ services:
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_ADMIN_SECRET:-hasura}"
       HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "${HASURA_JWT_SECRET:-phxDHXJjRXEIuUtdTaqzGiW7yb4SaIgn}"}'
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
+      HASURA_GRAPHQL_INFER_FUNCTION_PERMISSIONS: "false"
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@hasura-db:5432/postgres
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_ENABLE_TELEMETRY: "false"

@@ -1,0 +1,2 @@
+- "!include public_get_survey_by_user.yaml"
+- "!include public_log_survey_by_user.yaml"

@@ -1,0 +1,26 @@
+table:
+  name: survey_by_user
+  schema: public
+select_permissions:
+  - role: survey
+    permission:
+      columns:
+        - user_id
+        - board_id
+        - survey_id
+        - question_id
+        - question_created_at
+        - question_data
+        # - answer_id
+        - answer_created_at
+        - answer_score
+        - answer_data
+        - answer_notes
+      filter:
+        _and:
+          - user_id:
+              _eq: x-hasura-user-id
+          - survey_id:
+              _eq: x-hasura-survey-id
+          - board_id:
+              _eq: x-hasura-board-id
