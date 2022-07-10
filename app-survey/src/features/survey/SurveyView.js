@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
 
 import { useSurvey } from "./use-survey";
+import { SurveyProgress } from "./SurveyProgress";
 
 export const SurveyView = () => {
   const { viewMode, isLoading, isReady, ...api } = useSurvey();
@@ -38,5 +39,10 @@ export const SurveyView = () => {
     );
 
   // Render current view mode and pass on the Survey APIs
-  return <viewMode.component {...api} />;
+  return (
+    <>
+      <SurveyProgress />
+      <viewMode.component {...api} />
+    </>
+  );
 };
