@@ -1,6 +1,7 @@
 import { HasuraClientProvider } from "./HasuraClientProvider";
 export { gql } from "graphql-request";
 export { useQuery } from "./use-query";
+export { useMutation } from "./use-mutation";
 export { HasuraClientProvider } from "./HasuraClientProvider";
 
 export const hasuraClient = () => {

@@ -1,6 +1,6 @@
 import { createContext, useState, createElement } from "react";
 import { useGetContext } from "@forrestjs/react-root";
-import { useQuery, gql } from "../../services/hasura-client";
+import { useQuery, useMutation, gql } from "../../services/hasura-client";
 import { SurveyQuestion } from "./SurveyQuestion";
 
 const LOAD_SURVEY = gql`
@@ -15,18 +15,45 @@ const LOAD_SURVEY = gql`
   }
 `;
 
+const LOG_ANSWER = gql`
+  mutation logAnswer(
+    $questionId: Int!
+    $score: Int!
+    $notes: String
+    $data: json
+  ) {
+    questions: log_survey_by_user(
+      args: {
+        question_id: $questionId
+        score: $score
+        notes: $notes
+        data: $data
+      }
+    ) {
+      id: question_id
+      schema: question_data
+      score: answer_score
+      notes: answer_notes
+      data: answer_data
+    }
+  }
+`;
+
 export const SurveyContext = createContext();
 
 export const SurveyProvider = ({ children }) => {
   const { isLoading, isSuccess, data } = useQuery("LoadSurvey", LOAD_SURVEY);
+  const log = useMutation(LOG_ANSWER);
 
   const availableViewModes = useGetContext("survey.render.modes.items");
   const [viewMode, setViewMode] = useState(
     availableViewModes.length ? availableViewModes[0] : null
   );
 
-  const logAnswer = () => {
-    console.log("@logAnswer");
+  const logAnswer = async (questionId, score, data, notes) => {
+    console.log("@logAnswer", questionId, score, data, notes);
+    const res = await log.mutateAsync({ questionId, score, data, notes });
+    console.log(res);
   };
 
   const renderQuestion = (question, props) =>
