@@ -4,7 +4,7 @@ import { useQuery, useMutation, gql } from "../../services/hasura-client";
 import { SurveyQuestion } from "./SurveyQuestion";
 
 const LOAD_SURVEY = gql`
-  query loadSurveyData {
+  query loadSurvey {
     questions: get_survey_by_user {
       id: question_id
       schema: question_data
@@ -43,18 +43,18 @@ export const SurveyContext = createContext();
 
 export const SurveyProvider = ({ children }) => {
   const { isLoading, isSuccess, data } = useQuery("LoadSurvey", LOAD_SURVEY);
-  const log = useMutation(LOG_ANSWER);
+
+  const { mutate: logAnswer } = useMutation(LOG_ANSWER, {
+    onError: () =>
+      alert(
+        "Could not save the last answer!\nPlease reload the page and try again."
+      )
+  });
 
   const availableViewModes = useGetContext("survey.render.modes.items");
   const [viewMode, setViewMode] = useState(
     availableViewModes.length ? availableViewModes[0] : null
   );
-
-  const logAnswer = async (questionId, score, data, notes) => {
-    console.log("@logAnswer", questionId, score, data, notes);
-    const res = await log.mutateAsync({ questionId, score, data, notes });
-    console.log(res);
-  };
 
   const renderQuestion = (question, props) =>
     createElement(SurveyQuestion, {
