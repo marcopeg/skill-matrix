@@ -11,6 +11,7 @@ import { hasuraClient } from "./services/hasura-client";
 import { layout } from "./features/layout";
 import { auth } from "./features/auth";
 import { app } from "./features/app";
+import { survey } from "./features/survey";
 
 forrest
   .run({
@@ -22,6 +23,6 @@ forrest
       }
     },
     services: [reactRoot, reactMUI, reactRouter, hasuraClient],
-    features: [layout, auth, app]
+    features: [layout, auth, app, survey]
   })
   .catch((err) => console.error(`Boot: ${err.message}`));
