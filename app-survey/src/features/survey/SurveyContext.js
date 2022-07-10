@@ -21,7 +21,7 @@ export const SurveyProvider = ({ children }) => {
 
   const availableViewModes = useGetContext("survey.render.modes.items");
   const [viewMode, setViewMode] = useState(
-    availableViewModes.length ? 0 : null
+    availableViewModes.length ? availableViewModes[0] : null
   );
 
   const logAnswer = () => {

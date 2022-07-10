@@ -12,6 +12,8 @@ import { layout } from "./features/layout";
 import { auth } from "./features/auth";
 import { app } from "./features/app";
 import { survey } from "./features/survey";
+import { surveyPageView } from "./features/survey-page-view";
+import { surveyItemView } from "./features/survey-item-view";
 
 forrest
   .run({
@@ -23,6 +25,6 @@ forrest
       }
     },
     services: [reactRoot, reactMUI, reactRouter, hasuraClient],
-    features: [layout, auth, app, survey]
+    features: [layout, auth, app, survey, surveyPageView, surveyItemView]
   })
   .catch((err) => console.error(`Boot: ${err.message}`));

@@ -4,9 +4,10 @@ import AlertTitle from "@mui/material/AlertTitle";
 import { useSurvey } from "./use-survey";
 
 export const SurveyView = () => {
-  const { availableViewModes } = useSurvey();
+  const { viewMode, ...api } = useSurvey();
 
-  if (!availableViewModes.length)
+  // No view mode is set - alert
+  if (!viewMode)
     return (
       <Alert severity="warning">
         <AlertTitle>
@@ -17,6 +18,6 @@ export const SurveyView = () => {
       </Alert>
     );
 
-  console.log("@availableViewModes", availableViewModes);
-  return "@currentViewMode";
+  // Render current view mode and pass on the Survey APIs
+  return <viewMode.component {...api} />;
 };
