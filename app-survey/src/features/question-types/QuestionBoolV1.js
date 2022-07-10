@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -6,34 +5,21 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 
-const noop = () => {};
+import { useQuestion } from "./use-question";
 
-export const QuestionBoolV1 = ({
-  question,
-  onConfirm = noop,
-  onChange = noop
-}) => {
+export const QuestionBoolV1 = ({ question, ...options }) => {
+  const { value, setValue, isConfirmed } = useQuestion(question, options);
   const { title } = question.schema;
-  const [value, setValue] = useState(question.score);
-  const [isConfirmed, setIsConfirmed] = useState(question.score !== null);
 
-  const apply = (evt) => {
+  const onClick = (evt) => {
     if (evt.target.value === undefined) return;
-    const nextValue = parseInt(evt.target.value, 10);
-
-    setIsConfirmed(value === nextValue);
-    if (value === nextValue) {
-      onConfirm(value);
-    } else {
-      setValue(nextValue);
-      onChange(nextValue);
-    }
+    setValue(parseInt(evt.target.value, 10));
   };
 
   return (
     <FormControl>
       <FormLabel>{title}</FormLabel>
-      <RadioGroup row value={value} onClick={apply}>
+      <RadioGroup row value={value} onClick={onClick}>
         <FormControlLabel
           value="100"
           control={
