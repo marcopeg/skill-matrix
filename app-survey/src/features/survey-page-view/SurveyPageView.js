@@ -8,7 +8,11 @@ export const SurveyPageView = ({ questions, renderQuestion }) => {
   return (
     <>
       <Stack divider={<Divider orientation="horizontal" flexItem />}>
-        {questions.map(renderQuestion)}
+        {questions.map(($) =>
+          renderQuestion($, {
+            onConfirm: (e) => console.log("confirm value", e)
+          })
+        )}
       </Stack>
     </>
   );

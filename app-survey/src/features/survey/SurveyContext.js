@@ -29,7 +29,7 @@ export const SurveyProvider = ({ children }) => {
     console.log("@logAnswer");
   };
 
-  const renderQuestion = (question, ...props) =>
+  const renderQuestion = (question, props) =>
     createElement(SurveyQuestion, {
       ...props,
       key: question.id,
