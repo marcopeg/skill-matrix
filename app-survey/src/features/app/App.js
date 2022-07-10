@@ -1,18 +1,25 @@
+import Stack from "@mui/material/Stack";
+import { useGetContext } from "@forrestjs/react-root";
+import { createComponents } from "../utils/create-components";
 import Page from "../../components/Page";
-import { useSurvey } from "./use-survey";
 import { Logout } from "./Logout";
-import { Question } from "./Question";
 
 export const App = () => {
-  const { isReady, currentQuestion, ...surveyApi } = useSurvey();
+  const toolbarItems = useGetContext("app.toolbar.items");
+  const viewItems = useGetContext("app.view.items");
 
   return (
-    <Page withPadding title={"Survey App"} actions={<Logout />}>
-      {isReady ? (
-        <Question {...surveyApi} {...currentQuestion} />
-      ) : (
-        "loading survey..."
-      )}
+    <Page
+      withPadding
+      title={"Survey App"}
+      actions={
+        <Stack direction="row" spacing={2}>
+          {createComponents(toolbarItems)}
+          <Logout />
+        </Stack>
+      }
+    >
+      {createComponents(viewItems)}
     </Page>
   );
 };
