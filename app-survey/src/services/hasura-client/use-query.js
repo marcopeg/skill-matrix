@@ -7,5 +7,5 @@ export const useQuery = (
   { variables = {}, ...options } = {}
 ) => {
   const { request } = useRequest(document, variables);
-  return useGraphQLQuery(key, request, options);
+  return useGraphQLQuery(key, () => request(), options);
 };

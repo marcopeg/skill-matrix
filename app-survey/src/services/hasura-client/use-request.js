@@ -4,15 +4,15 @@ import { request } from "graphql-request";
 
 import { HasuraClientContext } from "./HasuraClientProvider";
 
-export const useRequest = (document, variables = {}) => {
+export const useRequest = (document, configVariables = {}) => {
   const { endpoint: url, token } = useContext(HasuraClientContext);
 
   return {
-    request: () =>
+    request: (callVariables) =>
       request({
         url,
         document,
-        variables,
+        variables: callVariables || configVariables,
         requestHeaders: token
           ? {
               Authorization: `Bearer ${token}`
