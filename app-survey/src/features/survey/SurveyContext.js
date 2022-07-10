@@ -1,6 +1,11 @@
 import { createContext, useState, createElement } from "react";
 import { useGetContext } from "@forrestjs/react-root";
-import { useQuery, useMutation, gql } from "../../services/hasura-client";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  gql
+} from "../../services/hasura-client";
 import { SurveyQuestion } from "./SurveyQuestion";
 
 const LOAD_SURVEY = gql`
@@ -42,9 +47,19 @@ const LOG_ANSWER = gql`
 export const SurveyContext = createContext();
 
 export const SurveyProvider = ({ children }) => {
+  const queryClient = useQueryClient();
+
   const { isLoading, isSuccess, data } = useQuery("LoadSurvey", LOAD_SURVEY);
 
   const { mutate: logAnswer } = useMutation(LOG_ANSWER, {
+    onSuccess: (data) => {
+      const update = data.questions[0];
+      queryClient.setQueryData("LoadSurvey", ({ questions }) => ({
+        questions: questions.map((record) =>
+          record.id === update.id ? update : record
+        )
+      }));
+    },
     onError: () =>
       alert(
         "Could not save the last answer!\nPlease reload the page and try again."
