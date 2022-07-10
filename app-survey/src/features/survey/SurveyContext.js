@@ -1,6 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useState, createElement } from "react";
 import { useGetContext } from "@forrestjs/react-root";
 import { useQuery, gql } from "../../services/hasura-client";
+import { SurveyQuestion } from "./SurveyQuestion";
 
 const LOAD_SURVEY = gql`
   query loadSurveyData {
@@ -28,6 +29,13 @@ export const SurveyProvider = ({ children }) => {
     console.log("@logAnswer");
   };
 
+  const renderQuestion = (question, ...props) =>
+    createElement(SurveyQuestion, {
+      ...props,
+      key: question.id,
+      question
+    });
+
   return (
     <SurveyContext.Provider
       value={{
@@ -36,6 +44,7 @@ export const SurveyProvider = ({ children }) => {
         isReady: isSuccess && data,
         questions: isSuccess ? data.questions : null,
         logAnswer,
+        renderQuestion,
 
         // Support for changing the view mode
         availableViewModes,

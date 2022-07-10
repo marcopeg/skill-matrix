@@ -6,7 +6,8 @@ import { SurveyView } from "./SurveyView";
 
 export const survey = ({ registerTargets }) => {
   registerTargets({
-    SURVEY_RENDER_MODE: "survey/render/mode"
+    SURVEY_RENDER_MODE: "survey/render/mode",
+    SURVEY_QUESTION_TYPE: "survey/question/type"
   });
 
   return [
