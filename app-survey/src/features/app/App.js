@@ -1,23 +1,25 @@
-import { useQuery, gql } from "../../services/hasura-client";
+import Stack from "@mui/material/Stack";
+import { useGetContext } from "@forrestjs/react-root";
+import { createComponents } from "../utils/create-components";
 import Page from "../../components/Page";
 import { Logout } from "./Logout";
 
-const PING_ACTION_QUERY = gql`
-  query {
-    ping: ping_action {
-      timestamp
-    }
-  }
-`;
-
 export const App = () => {
-  const { isSuccess, data } = useQuery("PingAction", PING_ACTION_QUERY);
+  const toolbarItems = useGetContext("app.toolbar.items");
+  const viewItems = useGetContext("app.view.items");
 
   return (
-    <Page withPadding title={"Survey App"} actions={<Logout />}>
-      {isSuccess
-        ? `Computer says: ${new Date(data.ping.timestamp)}`
-        : "loading time..."}
+    <Page
+      withPadding
+      title={"Survey App"}
+      actions={
+        <Stack direction="row" spacing={2}>
+          {createComponents(toolbarItems)}
+          <Logout />
+        </Stack>
+      }
+    >
+      {createComponents(viewItems)}
     </Page>
   );
 };
