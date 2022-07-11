@@ -3,6 +3,7 @@ import { onInitFeature } from "./init-feature";
 import { SurveyProvider } from "./SurveyContext";
 import { SurveySelect } from "./SurveySelect";
 import { SurveyView } from "./SurveyView";
+import { SurveyProgress } from "./SurveyProgress";
 
 export const survey = ({ registerTargets }) => {
   registerTargets({
@@ -31,6 +32,10 @@ export const survey = ({ registerTargets }) => {
     {
       target: "$APP_TOOLBAR",
       handler: { component: SurveySelect }
+    },
+    {
+      target: "$APP_TOOLBAR",
+      handler: { component: SurveyProgress }
     },
     {
       target: "$APP_VIEW",

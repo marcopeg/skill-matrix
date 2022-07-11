@@ -1,30 +1,39 @@
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { useSurvey } from "./use-survey";
 
 export const SurveyProgress = () => {
-  const { questions } = useSurvey();
-
-  const answered = questions.filter(($) => $.score !== null);
-  console.log(questions, answered);
-  // return `progress ${answered.length}/${questions.length} ${
-  //   answered.length / questions.length
-  // }`;
+  const { progress } = useSurvey();
 
   return (
     <Box
       sx={{
-        width: "100%",
-        backgroundColor: "success.light"
+        position: "relative",
+        display: "inline-flex"
       }}
     >
+      <CircularProgress variant="determinate" value={progress} />
       <Box
         sx={{
-          width: `${(answered.length / questions.length) * 100}%`,
-          height: 2,
-          backgroundColor: "success.dark"
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: "absolute",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
         }}
-      />
+      >
+        <Typography
+          variant="caption"
+          component="div"
+          color="text.secondary"
+          sx={{ fontSize: 11 }}
+        >{`${Math.round(progress)}%`}</Typography>
+      </Box>
     </Box>
   );
 };

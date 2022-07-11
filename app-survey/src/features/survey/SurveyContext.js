@@ -1,4 +1,4 @@
-import { createContext, useState, createElement } from "react";
+import { createContext, useState } from "react";
 import { useGetContext } from "@forrestjs/react-root";
 import {
   useQuery,
@@ -6,7 +6,6 @@ import {
   useQueryClient,
   gql
 } from "../../services/hasura-client";
-import { SurveyQuestion } from "./SurveyQuestion";
 
 const LOAD_SURVEY = gql`
   query loadSurvey {
@@ -47,11 +46,10 @@ const LOG_ANSWER = gql`
 export const SurveyContext = createContext();
 
 export const SurveyProvider = ({ children }) => {
+  // Data fetching
+  const query = useQuery("LoadSurvey", LOAD_SURVEY);
   const queryClient = useQueryClient();
-
-  const { isLoading, isSuccess, data } = useQuery("LoadSurvey", LOAD_SURVEY);
-
-  const { mutate: logAnswer } = useMutation(LOG_ANSWER, {
+  const mutation = useMutation(LOG_ANSWER, {
     onSuccess: (data) => {
       const update = data.questions[0];
       queryClient.setQueryData("LoadSurvey", ({ questions }) => ({
@@ -66,32 +64,23 @@ export const SurveyProvider = ({ children }) => {
       )
   });
 
+  // View Mode Controls
   const availableViewModes = useGetContext("survey.render.modes.items");
-  const [viewMode, setViewMode] = useState(
+  const [currentViewMode, setViewMode] = useState(
     availableViewModes.length ? availableViewModes[0] : null
   );
-
-  const renderQuestion = (question, props) =>
-    createElement(SurveyQuestion, {
-      ...props,
-      key: question.id,
-      question
-    });
 
   return (
     <SurveyContext.Provider
       value={{
-        // API Interaction
-        isLoading,
-        isReady: isSuccess && data,
-        questions: isSuccess ? data.questions : null,
-        logAnswer,
-        renderQuestion,
-
-        // Support for changing the view mode
+        query,
+        mutation,
         availableViewModes,
-        viewMode,
-        setViewMode
+        viewMode: {
+          current: currentViewMode,
+          items: availableViewModes,
+          set: setViewMode
+        }
       }}
     >
       {children}
