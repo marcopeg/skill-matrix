@@ -1,0 +1,11 @@
+[
+  {
+    "command": "core.undo",
+    "keybinding": "ctrl+w"
+  },
+  {
+    "key": "ctrl+s",
+    "command": "workbench.action.tasks.runTask",
+    "args": "seed"
+  }
+]

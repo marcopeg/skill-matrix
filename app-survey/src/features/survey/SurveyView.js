@@ -3,10 +3,23 @@ import AlertTitle from "@mui/material/AlertTitle";
 import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
 
+import { useGetContext } from "@forrestjs/react-root";
 import { useSurvey } from "./use-survey";
 
 export const SurveyView = () => {
-  const { viewMode, isLoading, isReady, ...api } = useSurvey();
+  const {
+    viewMode,
+    isLoading,
+    isReady,
+    isBeginning,
+    isCompleted,
+    showIntro,
+    akIntro,
+    ...api
+  } = useSurvey();
+
+  const IntroView = useGetContext("survey.intro.component");
+  const CompletedView = useGetContext("survey.completed.component");
 
   // No view mode is set - alert
   if (!viewMode)
@@ -36,6 +49,9 @@ export const SurveyView = () => {
         Something went wrong while fetching your data!
       </Alert>
     );
+
+  if (showIntro) return <IntroView {...api} ak={akIntro} />;
+  if (isCompleted) return <CompletedView {...api} />;
 
   // Render current view mode and pass on the Survey APIs
   return <viewMode.component {...api} />;

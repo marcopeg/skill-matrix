@@ -7,6 +7,9 @@ import { useSurvey } from "./use-survey";
 export const SurveyProgress = () => {
   const { progress } = useSurvey();
 
+  // Hide selector if the survey is completed.
+  if (progress === 100) return null;
+
   return (
     <Box
       sx={{

@@ -39,6 +39,17 @@
         "close": true,
         "focus": true
       }
+    },
+    {
+      "label": "seed",
+      "type": "shell",
+      "command": "make seed",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never",
+        "panel": "new",
+        "close": true
+      }
     }
   ]
 }

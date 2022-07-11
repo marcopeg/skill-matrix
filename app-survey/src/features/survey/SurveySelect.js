@@ -3,8 +3,11 @@ import IconButton from "@mui/material/IconButton";
 import { useSurvey } from "./use-survey";
 
 export const SurveySelect = () => {
-  const { availableViewModes, viewMode, setViewMode } = useSurvey();
+  const { availableViewModes, viewMode, setViewMode, progress } = useSurvey();
   if (availableViewModes.length < 2) return null;
+
+  // Hide selector if the survey is completed.
+  if (progress === 100) return null;
 
   return (
     <Stack direction="row" spacing={2}>
