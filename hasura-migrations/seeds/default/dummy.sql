@@ -13,21 +13,28 @@ INSERT INTO "public"."questions"
   ("board_id",  "id",   "data",                                                   "created_at") VALUES 
   (1,           1,      '{"__schema":"question:star@1", "title":"Question#1"}',   '2022-07-08 11:10')
 , (1,           2,      '{"__schema":"question:bool@1", "title":"Question#2"}',   '2022-07-08 11:10')
-, (1,           3,      '{"__schema":"question:multi@1", "title":"Question#3"}',  '2022-07-08 11:10')
+, (1,           3,      '{"__schema":"question:star@1", "title":"Question#3", "stars": 10}',   '2022-07-08 11:10')
+, (1,           4,      '{"__schema":"question:star@1", "title":"Question#4", "stars": 3}',   '2022-07-08 11:10')
+, (1,           5,      '{"__schema":"question:star@1", "title":"Question#5"}',   '2022-07-08 11:10')
+, (1,           6,      '{"__schema":"question:star@1", "title":"Question#6"}',   '2022-07-08 11:10')
+, (1,           7,      '{"__schema":"question:star@1", "title":"Question#7"}',   '2022-07-08 11:10')
+, (1,           8,      '{"__schema":"question:star@1", "title":"Question#8"}',   '2022-07-08 11:10')
+, (1,           9,      '{"__schema":"question:star@1", "title":"Question#9"}',   '2022-07-08 11:10')
+, (1,           10,      '{"__schema":"question:star@1", "title":"Question#10"}',   '2022-07-08 11:10')
 ;
 
 ---
 --- BOARD2
 ---
 
-INSERT INTO "public"."boards" VALUES (2, 'board2');
+-- INSERT INTO "public"."boards" VALUES (2, 'board2');
 
-INSERT INTO "public"."questions" 
-  ("board_id",  "id",   "data",                                                   "created_at") VALUES 
-  (2,           4,      '{"__schema":"question:star@1", "title":"Question#1"}',   '2022-07-08 11:10')
-, (2,           5,      '{"__schema":"question:bool@1", "title":"Question#2"}',   '2022-07-08 11:10')
-, (2,           6,      '{"__schema":"question:multi@1", "title":"Question#3"}',  '2022-07-08 11:10')
-;
+-- INSERT INTO "public"."questions" 
+--   ("board_id",  "id",   "data",                                                   "created_at") VALUES 
+--   (2,           4,      '{"__schema":"question:star@1", "title":"Question#1"}',   '2022-07-08 11:10')
+-- , (2,           5,      '{"__schema":"question:bool@1", "title":"Question#2"}',   '2022-07-08 11:10')
+-- , (2,           6,      '{"__schema":"question:multi@1", "title":"Question#3"}',  '2022-07-08 11:10')
+-- ;
 
 
 ---
@@ -46,8 +53,8 @@ INSERT INTO "public"."users" VALUES
 
 INSERT INTO "public"."boards_admins" VALUES 
   (1, 1)
-, (2, 1)
-, (2, 2)
+-- , (2, 1)
+-- , (2, 2)
 ;
 
 
@@ -58,7 +65,7 @@ INSERT INTO "public"."boards_admins" VALUES
 INSERT INTO "public"."surveys" 
   ("id",  "board_id", "created_at") VALUES 
   (1,     1,          '2022-07-08 11:10')
-, (2,     2,          '2022-07-08 11:10')
+-- , (2,     2,          '2022-07-08 11:10')
 ;
 
 
@@ -71,8 +78,8 @@ INSERT INTO "public"."surveys_invites"
   ("survey_id", "user_id",  "created_at" ) VALUES 
   (1,           1,          '2022-07-08 11:10')
 , (1,           2,          '2022-07-08 11:10')
-, (2,           1,          '2022-07-08 11:10')
-, (2,           2,          '2022-07-08 11:10')
+-- , (2,           1,          '2022-07-08 11:10')
+-- , (2,           2,          '2022-07-08 11:10')
 ;
 
 
@@ -82,10 +89,10 @@ INSERT INTO "public"."surveys_invites"
 --- ANSWERS
 ---
 
-INSERT INTO "public"."answers" 
-  ("board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",    "score",  "data", "notes") VALUES
-  (1,           1,            1,          1,              '2022-07-08 11:10',       20,       '{}',   'foo')
-;
+-- INSERT INTO "public"."answers" 
+--   ("board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",    "score",  "data", "notes") VALUES
+--   (1,           1,            1,          1,              '2022-07-08 11:10',       20,       '{}',   'foo')
+-- ;
 
 
 
