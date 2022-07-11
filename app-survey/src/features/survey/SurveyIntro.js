@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 
 export const SurveyIntro = ({ ak, questions }) => {
   return (
-    <Box onClick={ak}>
+    <Box>
       <Typography variant="h4">Welcome to the Survey</Typography>
       <Typography variant="body1">
         There are {questions.length} questions to fill up.
