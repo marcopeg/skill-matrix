@@ -9,7 +9,11 @@ export const useScrollToActiveQuestion = (activeQuestion) => {
     console.log("@scrollTo", activeQuestion);
 
     const el = document.getElementById(`question-${activeQuestion.id}`);
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    el.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest"
+    });
   };
 
   // Scroll to the next question that needs an answer:
