@@ -8,8 +8,6 @@ export const SurveyPageView = (props) => {
   const { questions, renderQuestion, logAnswer, scrollToActiveQuestion } =
     useSurveyPageView(props);
 
-  console.log(questions);
-
   return (
     <>
       <Stack divider={<Divider orientation="horizontal" flexItem />}>
@@ -23,7 +21,7 @@ export const SurveyPageView = (props) => {
                 ? {
                     borderColor: "primary.main"
                   }
-                : question.score !== null
+                : question.hasAnswer
                 ? {
                     borderColor: "success.main"
                   }

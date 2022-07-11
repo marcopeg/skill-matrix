@@ -5,11 +5,19 @@ import { SurveyQuestion } from "./SurveyQuestion";
 
 export const useSurvey = () => {
   const { query, mutation, viewMode } = useContext(SurveyContext);
-  const { isSuccess, data } = query;
+  const { isLoading, isSuccess, data } = query;
 
   const isReady = isSuccess && data;
-  const questions = isSuccess ? data.questions : null;
 
+  // Decorate the list of questions with custom properties
+  const questions = isSuccess
+    ? data.questions.map((question) => ({
+        ...question,
+        hasAnswer: question.score !== null
+      }))
+    : null;
+
+  // Calculate survey progress
   const _answered = ($) => $.score !== null;
   const progress = isReady
     ? (questions.filter(_answered).length / questions.length) * 100
@@ -24,6 +32,7 @@ export const useSurvey = () => {
 
   return {
     // Survey Data
+    isLoading,
     isReady,
     questions,
     progress,
