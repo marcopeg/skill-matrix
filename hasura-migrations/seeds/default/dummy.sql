@@ -9,19 +9,59 @@ TRUNCATE "public"."boards_admins" CASCADE;
 
 INSERT INTO "public"."boards" VALUES (1, 'board1');
 
-INSERT INTO "public"."questions" 
-  ("board_id",  "id",   "data",                                                   "created_at") VALUES 
-  (1,           1,      '{"__schema":"question:star@1", "title":"Question#1"}',   '2022-07-08 11:10')
-, (1,           2,      '{"__schema":"question:bool@1", "title":"Question#2"}',   '2022-07-08 11:10')
-, (1,           3,      '{"__schema":"question:star@1", "title":"Question#3", "stars": 10}',   '2022-07-08 11:10')
-, (1,           4,      '{"__schema":"question:star@1", "title":"Question#4", "stars": 3}',   '2022-07-08 11:10')
-, (1,           5,      '{"__schema":"question:star@1", "title":"Question#5"}',   '2022-07-08 11:10')
-, (1,           6,      '{"__schema":"question:star@1", "title":"Question#6"}',   '2022-07-08 11:10')
-, (1,           7,      '{"__schema":"question:star@1", "title":"Question#7"}',   '2022-07-08 11:10')
-, (1,           8,      '{"__schema":"question:star@1", "title":"Question#8"}',   '2022-07-08 11:10')
-, (1,           9,      '{"__schema":"question:star@1", "title":"Question#9"}',   '2022-07-08 11:10')
-, (1,           10,      '{"__schema":"question:star@1", "title":"Question#10"}',   '2022-07-08 11:10')
+INSERT INTO "public"."questions" ("id", "board_id", "created_at", "data") VALUES 
+  ( 1, 1, '2022-07-08 11:10', '
+  {
+    "__schema":"question:star@1", 
+    "title": "Star rating question"
+  }')
+, ( 2, 1, '2022-07-08 11:10', '
+  {
+    "__schema":"question:star@1", 
+    "title": "Star rating - with custom stars",
+    "stars": 10
+  }')
+, ( 3, 1, '2022-07-08 11:10', '
+  {
+    "__schema":"question:bool@1", 
+    "title":"Boolean question"
+  }')
+, ( 4, 1, '2022-07-08 11:10', '
+  {
+    "__schema":"question:scale@1", 
+    "title":"Numeric Scale question"
+  }')
+, ( 5, 1, '2022-07-08 11:10', '
+  {
+    "__schema":"question:scale@1", 
+    "title":"Numeric Scale question - with custom span & vertical direction",
+    "span": 3,
+    "direction": "column"
+  }')
+, ( 6, 1, '2022-07-08 11:10', '
+  {
+    "__schema":"question:multi@1", 
+    "title":"Multiple choiche",
+    "values": [
+      { "value": 10,  "label": "Option n.1" }
+    , { "value": 20,  "label": "Option n.2" }
+    , { "value": 30,  "label": "Option n.3" }
+    ]
+  }')
+, ( 7, 1, '2022-07-08 11:10', '
+  {
+    "__schema":"question:multi@1", 
+    "title":"Multiple choiche - inline",
+    "direction": "row",
+    "display": "{label} ({value})",
+    "values": [
+      { "value": 10,  "label": "Option n.1" }
+    , { "value": 20,  "label": "Option n.2" }
+    , { "value": 30,  "label": "Option n.3" }
+    ]
+  }')
 ;
+    
 
 ---
 --- BOARD2
@@ -89,11 +129,11 @@ INSERT INTO "public"."surveys_invites"
 --- ANSWERS
 ---
 
--- INSERT INTO "public"."answers" 
---   ("board_id",  "survey_id",  "user_id",  "question_id",  "question_created_at",    "score",  "data", "notes") VALUES
---   (1,           1,            1,          1,              '2022-07-08 11:10',       20,       '{}',   'foo')
--- ;
-
+-- SELECT * FROM "public"."log_survey_by_user"('{"x-hasura-user-id": 1, "x-hasura-survey-id": 1}'::json, 1, 20);
+-- SELECT * FROM "public"."log_survey_by_user"('{"x-hasura-user-id": 1, "x-hasura-survey-id": 1}'::json, 2, 20);
+-- SELECT * FROM "public"."log_survey_by_user"('{"x-hasura-user-id": 1, "x-hasura-survey-id": 1}'::json, 3, 20);
+-- SELECT * FROM "public"."log_survey_by_user"('{"x-hasura-user-id": 1, "x-hasura-survey-id": 1}'::json, 4, 20);
+-- SELECT * FROM "public"."log_survey_by_user"('{"x-hasura-user-id": 1, "x-hasura-survey-id": 1}'::json, 5, 70);
 
 
 ---
