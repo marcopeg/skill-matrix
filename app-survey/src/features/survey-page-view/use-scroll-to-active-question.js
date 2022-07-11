@@ -6,8 +6,6 @@ export const useScrollToActiveQuestion = (activeQuestion) => {
   const scrollToActiveQuestion = () => {
     if (!activeQuestion) return;
 
-    console.log("@scrollTo", activeQuestion);
-
     const el = document.getElementById(`question-${activeQuestion.id}`);
     el.scrollIntoView({
       behavior: "smooth",

@@ -8,7 +8,9 @@ import { SurveyProgress } from "./SurveyProgress";
 export const survey = ({ registerTargets }) => {
   registerTargets({
     SURVEY_RENDER_MODE: "survey/render/mode",
-    SURVEY_QUESTION_TYPE: "survey/question/type"
+    SURVEY_QUESTION_TYPE: "survey/question/type",
+    SURVEY_INTRO: "survey/intro",
+    SURVEY_COMPLETED: "survey/completed"
   });
 
   return [
