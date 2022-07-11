@@ -1,5 +1,6 @@
 import { QuestionStarV1 } from "./QuestionStarV1";
 import { QuestionBoolV1 } from "./QuestionBoolV1";
+import { QuestionScaleV1 } from "./QuestionScaleV1";
 
 export const questionTypes = () => [
   {
@@ -14,6 +15,13 @@ export const questionTypes = () => [
     handler: {
       type: "question:bool@1",
       component: QuestionBoolV1
+    }
+  },
+  {
+    target: "$SURVEY_QUESTION_TYPE",
+    handler: {
+      type: "question:scale@1",
+      component: QuestionScaleV1
     }
   }
 ];
