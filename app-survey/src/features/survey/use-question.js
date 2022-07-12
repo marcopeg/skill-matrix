@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSurvey } from "./use-survey";
 
 const noop = () => {};
@@ -7,6 +7,7 @@ export const useQuestion = (
   question,
   { onConfirm = noop, onChange = noop, delayConfirm = 100 } = {}
 ) => {
+  const delayRef = useRef();
   const { logAnswer } = useSurvey();
 
   const [state, setState] = useState({
@@ -41,17 +42,21 @@ export const useQuestion = (
   const confirm = () => {
     // Persist the answer and delay a bit the visual effects
     logAnswer(state, {
-      onSuccess: () =>
-        setTimeout(() => {
+      onSuccess: () => {
+        delayRef.current = setTimeout(() => {
           // Update flags
           setIsConfirmed(true);
           setCanConfirm(false);
 
           // Propagate event
           onConfirm(state);
-        }, delayConfirm)
+        }, delayConfirm);
+      }
     });
   };
+
+  // Avoid memory leak on unmounting the questionnaire once it is completed.
+  useEffect(() => () => clearTimeout(delayRef.current), []);
 
   return {
     ...state,
