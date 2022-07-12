@@ -23,6 +23,11 @@ export const useSurvey = () => {
   const questions = isSuccess
     ? data.questions.map((question) => ({
         ...question,
+        // Fix default values
+        notes: question.notes || "",
+        data: question.data || {},
+
+        // Decorate props
         hasAnswer: question.score !== null
       }))
     : null;

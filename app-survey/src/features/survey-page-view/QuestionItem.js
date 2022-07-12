@@ -6,66 +6,30 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import SendIcon from "@mui/icons-material/Send";
 
+import { useQuestion } from "../survey/use-question";
+
 export const QuestionItem = ({
   question,
   renderQuestion,
-  logAnswer,
-  onConfirm: propagateOnConfirm
+  onChange,
+  onConfirm
 }) => {
-  const [canConfirm, setCanConfirmed] = useState(false);
-  const [localScore, setLocalScore] = useState(question.score);
-
-  const onChange = (nextValue) => {
-    setCanConfirmed(true);
-    setLocalScore(nextValue);
-  };
-
-  const onConfirm = (score, data = {}, notes = "") => {
-    setCanConfirmed(false);
-
-    // Submit the answer's value:
-    logAnswer({
-      questionId: question.id,
-      score,
-      notes,
-      data
-    });
-
-    // Propagate event out
-    propagateOnConfirm(question, score, data, notes);
-  };
-
-  const handleConfirm = () => onConfirm(localScore);
+  const api = useQuestion(question, { onChange, onConfirm });
 
   return (
     <Box sx={{ pt: 15, pb: 15, pl: 2, pr: 2 }}>
-      {renderQuestion(question, {
-        onConfirm,
-        onChange
-      })}
-      <Stack
-        sx={{
-          display: "flex",
-          height: canConfirm ? 100 : 0,
-          overflow: "hidden",
-          transition: "all .3s ease-in-out"
-        }}
-      >
-        <Divider sx={{ pt: 4, mb: 1 }} />
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          spacing={4}
-        >
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        {renderQuestion(question, api)}
+
+        {api.canConfirm && (
           <Button
             variant="contained"
             endIcon={<SendIcon />}
-            onClick={handleConfirm}
+            onClick={api.confirm}
           >
             Confirm
           </Button>
-        </Stack>
+        )}
       </Stack>
     </Box>
   );

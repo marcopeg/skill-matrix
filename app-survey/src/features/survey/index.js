@@ -5,6 +5,8 @@ import { SurveySelect } from "./SurveySelect";
 import { SurveyView } from "./SurveyView";
 import { SurveyProgress } from "./SurveyProgress";
 
+export { useQuestion } from "./use-question";
+
 export const survey = ({ registerTargets }) => {
   registerTargets({
     SURVEY_RENDER_MODE: "survey/render/mode",

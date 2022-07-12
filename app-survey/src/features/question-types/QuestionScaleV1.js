@@ -4,10 +4,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-import { useQuestion } from "./use-question";
-
-export const QuestionScaleV1 = ({ question, ...options }) => {
-  const { value, setValue, isConfirmed } = useQuestion(question, options);
+export const QuestionScaleV1 = ({ question, score, setScore, isConfirmed }) => {
   const {
     title,
     span = 5,
@@ -31,9 +28,9 @@ export const QuestionScaleV1 = ({ question, ...options }) => {
           <Button
             key={item}
             variant="outlined"
-            onClick={() => setValue(item)}
+            onClick={() => setScore(item)}
             {...(isConfirmed ? { color: "success" } : { color: "primary" })}
-            {...(value === item
+            {...(score === item
               ? {
                   variant: "contained",
                   color: isConfirmed ? "success" : "primary"
@@ -44,7 +41,7 @@ export const QuestionScaleV1 = ({ question, ...options }) => {
           </Button>
         ))}
       </Stack>
-      {value !== null && !isConfirmed && (
+      {score !== null && !isConfirmed && (
         <FormHelperText>
           Click again on the star to confirm your choice!
         </FormHelperText>
