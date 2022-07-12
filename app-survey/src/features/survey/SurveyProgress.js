@@ -30,12 +30,10 @@ export const SurveyProgress = () => {
           justifyContent: "center"
         }}
       >
-        <Typography
-          variant="caption"
-          component="div"
-          color="text.secondary"
-          sx={{ fontSize: 11 }}
-        >{`${Math.round(progress)}%`}</Typography>
+        <Typography variant="caption">
+          {Math.round(progress)}
+          <small>%</small>
+        </Typography>
       </Box>
     </Box>
   );

@@ -13,9 +13,11 @@ export const SurveySelect = () => {
     <Stack direction="row" spacing={2}>
       {availableViewModes.map((item) => (
         <IconButton
-          {...(item.id === viewMode.id ? { color: "primary" } : {})}
           key={item.id}
           onClick={() => setViewMode(item)}
+          sx={{
+            ...(item.id === viewMode.id ? { color: "primary.main" } : {})
+          }}
         >
           <item.icon />
         </IconButton>
