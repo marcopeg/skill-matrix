@@ -50,6 +50,50 @@
         "panel": "new",
         "close": true
       }
+    },
+    {
+      "label": "test-sql-start",
+      "type": "shell",
+      "command": "make test-sql-start",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never",
+        "panel": "new",
+        "close": true
+      }
+    },
+    {
+      "label": "test-sql",
+      "type": "shell",
+      "command": "make test-sql",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "close": true
+      }
+    },
+    {
+      "label": "migrate-rebuild",
+      "type": "shell",
+      "command": "make migrate-rebuild",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never",
+        "panel": "new",
+        "close": true
+      }
+    },
+    {
+      "label": "state-rebuild",
+      "type": "shell",
+      "command": "make migrate-rebuild && make seed",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never",
+        "panel": "new",
+        "close": true
+      }
     }
   ]
 }
