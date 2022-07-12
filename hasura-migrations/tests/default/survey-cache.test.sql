@@ -26,8 +26,8 @@ INSERT INTO "public"."surveys" ("id", "board_id") VALUES (1, 1);
 
 SELECT results_eq(
   $$SELECT ("cache"->>'questions')::text FROM "public"."surveys"$$,
-  $$VALUES ( '[{"id":1,"created_at":"2022-07-08T11:11:00+00:00","data":{"v":2}}, 
- {"id":2,"created_at":"2022-07-08T11:10:00+00:00","data":{"v":1}}]' )$$,
+  $$VALUES ( '[{"id":1,"created_at":"2022-07-08T11:11:00+00:00","data":{"v":2},"priority":0}, 
+ {"id":2,"created_at":"2022-07-08T11:10:00+00:00","data":{"v":1},"priority":0}]' )$$,
   'It should return only questions associated with a survey'
 );
 

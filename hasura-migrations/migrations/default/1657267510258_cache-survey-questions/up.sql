@@ -26,13 +26,15 @@ BEGIN
       SELECT 
         "id", 
         "created_at",
-        "data" 
+        "data",
+        "priority" 
       FROM (
         -- Get latest questions for a board
         SELECT DISTINCT ON ("id") 
           "id", 
           "created_at", 
           "data", 
+          "priority",
           "is_deleted"
         FROM "public"."questions" 
         WHERE "board_id" = NEW.board_id

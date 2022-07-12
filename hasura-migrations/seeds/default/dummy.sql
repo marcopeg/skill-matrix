@@ -9,36 +9,36 @@ TRUNCATE "public"."boards_admins" CASCADE;
 
 INSERT INTO "public"."boards" VALUES (1, 'board1');
 
-INSERT INTO "public"."questions" ("id", "board_id", "created_at", "data") VALUES 
-  ( 1, 1, '2022-07-08 11:10', '
+INSERT INTO "public"."questions" ("id", "board_id", "priority", "created_at", "data") VALUES 
+  ( 1, 1, 90, '2022-07-08 11:10', '
   {
     "__schema":"question:star@1", 
     "title": "Star rating question"
   }')
-, ( 2, 1, '2022-07-08 11:10', '
+, ( 2, 1, 100, '2022-07-08 11:10', '
   {
     "__schema":"question:star@1", 
     "title": "Star rating - with custom stars",
     "stars": 10
   }')
-, ( 3, 1, '2022-07-08 11:10', '
+, ( 3, 1, 80, '2022-07-08 11:10', '
   {
     "__schema":"question:bool@1", 
     "title":"Boolean question"
   }')
-, ( 4, 1, '2022-07-08 11:10', '
+, ( 4, 1, 70, '2022-07-08 11:10', '
   {
     "__schema":"question:scale@1", 
     "title":"Numeric Scale question"
   }')
-, ( 5, 1, '2022-07-08 11:10', '
+, ( 5, 1, 60, '2022-07-08 11:10', '
   {
     "__schema":"question:scale@1", 
     "title":"Numeric Scale question - with custom span & vertical direction",
     "span": 3,
     "direction": "column"
   }')
-, ( 6, 1, '2022-07-08 11:10', '
+, ( 6, 1, 50, '2022-07-08 11:10', '
   {
     "__schema":"question:multi@1", 
     "title":"Multiple choiche",
@@ -48,7 +48,7 @@ INSERT INTO "public"."questions" ("id", "board_id", "created_at", "data") VALUES
     , { "value": 30,  "label": "Option n.3" }
     ]
   }')
-, ( 7, 1, '2022-07-08 11:10', '
+, ( 7, 1, 40, '2022-07-08 11:10', '
   {
     "__schema":"question:multi@1", 
     "title":"Multiple choiche - inline",
