@@ -35,6 +35,9 @@ export const useQuestion = (
     }
   };
 
+  const setNotes = (nextNotes) =>
+    setState((oldState) => ({ ...oldState, notes: nextNotes }));
+
   const confirm = () => {
     // Persist the answer and delay a bit the visual effects
     logAnswer(state, {
@@ -53,6 +56,7 @@ export const useQuestion = (
   return {
     ...state,
     setScore,
+    setNotes,
     isConfirmed,
     canConfirm,
     confirm

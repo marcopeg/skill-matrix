@@ -3,6 +3,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import SendIcon from "@mui/icons-material/Send";
+import TextField from "@mui/material/TextField";
 
 import { useQuestion } from "../survey/use-question";
 
@@ -23,14 +24,27 @@ export const QuestionItem = ({
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         {renderQuestion(question, api)}
 
-        {api.canConfirm && (
-          <Button
-            variant="contained"
-            endIcon={<SendIcon />}
-            onClick={api.confirm}
-          >
-            Confirm
-          </Button>
+        {(api.canConfirm || api.isConfirmed) && (
+          <Stack sx={{ minWidth: 300 }}>
+            <TextField
+              multiline
+              label="Notes:"
+              value={api.notes}
+              onChange={(e) => api.setNotes(e.target.value)}
+              size="small"
+              maxRows={4}
+              sx={{ mb: 1 }}
+              {...(api.isConfirmed ? { color: "success" } : {})}
+            />
+            <Button
+              variant="contained"
+              endIcon={<SendIcon />}
+              onClick={api.confirm}
+              {...(api.isConfirmed ? { color: "success" } : {})}
+            >
+              Confirm
+            </Button>
+          </Stack>
         )}
       </Stack>
     </Box>
