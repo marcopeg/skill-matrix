@@ -2,9 +2,13 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
+import Page from "../../components/Page";
 
 import { useGetContext } from "@forrestjs/react-root";
 import { useSurvey } from "./use-survey";
+
+import { SurveySelect } from "./SurveySelect";
+import { SurveyProgress } from "./SurveyProgress";
 
 export const SurveyView = () => {
   const {
@@ -54,5 +58,12 @@ export const SurveyView = () => {
   if (isCompleted) return <CompletedView {...api} />;
 
   // Render current view mode and pass on the Survey APIs
-  return <viewMode.component {...api} />;
+  return (
+    <Page
+      title={viewMode.title || "Fill the Survey"}
+      headerActions={[<SurveySelect key="a1" />, <SurveyProgress key="a2" />]}
+    >
+      <viewMode.component {...api} />
+    </Page>
+  );
 };
