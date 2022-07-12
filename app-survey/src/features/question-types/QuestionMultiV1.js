@@ -1,12 +1,9 @@
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import FormHelperText from "@mui/material/FormHelperText";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
 export const QuestionMultiV1 = ({ question, score, setScore, isConfirmed }) => {
   const {
-    title,
     values = [],
     direction = "column",
     display = "{label}"
@@ -14,7 +11,6 @@ export const QuestionMultiV1 = ({ question, score, setScore, isConfirmed }) => {
 
   return (
     <FormControl>
-      <FormLabel>{title}</FormLabel>
       <Stack direction={direction} spacing={2}>
         {values.map((item) => (
           <Button
@@ -35,11 +31,6 @@ export const QuestionMultiV1 = ({ question, score, setScore, isConfirmed }) => {
           </Button>
         ))}
       </Stack>
-      {score !== null && !isConfirmed && (
-        <FormHelperText>
-          Click again on the star to confirm your choice!
-        </FormHelperText>
-      )}
     </FormControl>
   );
 };
