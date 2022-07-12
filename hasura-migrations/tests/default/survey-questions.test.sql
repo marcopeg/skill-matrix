@@ -1,5 +1,5 @@
 BEGIN;
-SELECT plan(9);
+SELECT plan(10);
 
 PREPARE "get_surveys" AS
 SELECT 
@@ -179,6 +179,33 @@ SELECT results_eq(
   $$,
   'It should list questions for a survey related to a new board'
 );
+
+
+
+---
+--- IT SHOULD HANDLE QUESTION'S PRIORITY
+---
+
+INSERT INTO "public"."boards" VALUES (3, 'b3');
+
+INSERT INTO "public"."questions" ("board_id", "id", "data", "priority")
+VALUES 
+  (3, 6, '{"v":1}', 1)
+, (3, 7, '{"v":1}', 2)
+;
+
+INSERT INTO "public"."surveys" ("id", "board_id")
+VALUES (7, 3);
+
+SELECT results_eq(
+  'EXECUTE get_survey(7)',
+  $$VALUES 
+    ( 3, 7, 7, 1 )
+  , ( 3, 7, 6, 1 )
+  $$,
+  'It should respect the question priority'
+);
+
 
 
 SELECT * FROM finish();
