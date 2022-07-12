@@ -3,8 +3,8 @@ import forrest from "@forrestjs/core";
 
 // Import Services:
 import reactRoot from "@forrestjs/react-root";
-import reactRouter from "@forrestjs/react-router";
 import reactMUI from "@forrestjs/react-mui";
+import reactRouter from "@forrestjs/react-router";
 import { hasuraClient } from "./services/hasura-client";
 
 // Import Features:

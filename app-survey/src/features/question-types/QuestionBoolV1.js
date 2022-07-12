@@ -5,21 +5,18 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 
-import { useQuestion } from "./use-question";
-
-export const QuestionBoolV1 = ({ question, ...options }) => {
-  const { value, setValue, isConfirmed } = useQuestion(question, options);
+export const QuestionBoolV1 = ({ question, score, setScore, isConfirmed }) => {
   const { title } = question.schema;
 
   const onClick = (evt) => {
     if (evt.target.value === undefined) return;
-    setValue(parseInt(evt.target.value, 10));
+    setScore(parseInt(evt.target.value, 10));
   };
 
   return (
     <FormControl>
       <FormLabel>{title}</FormLabel>
-      <RadioGroup row value={value} onClick={onClick}>
+      <RadioGroup row value={score} onClick={onClick}>
         <FormControlLabel
           value="100"
           control={
@@ -39,7 +36,7 @@ export const QuestionBoolV1 = ({ question, ...options }) => {
           label="False"
         />
       </RadioGroup>
-      {value !== null && !isConfirmed && (
+      {score !== null && !isConfirmed && (
         <FormHelperText>
           Click again on the star to confirm your choice!
         </FormHelperText>

@@ -121,7 +121,7 @@ CREATE TABLE "public"."answers" (
   "question_created_at" TIMESTAMPTZ NOT NULL,
   "score" INT NOT NULL,
   "data" JSON NOT NULL DEFAULT '{}',
-  "notes" TEXT,
+  "notes" TEXT NOT NULL DEFAULT '',
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp(),
   CONSTRAINT "answers_pkey" PRIMARY KEY ("question_id", "created_at"),
   CONSTRAINT "answers_board_id_fkey" FOREIGN KEY("board_id") REFERENCES "boards"("id"),

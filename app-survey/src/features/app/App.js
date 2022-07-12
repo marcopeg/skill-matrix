@@ -10,9 +10,8 @@ export const App = () => {
 
   return (
     <Page
-      withPadding
       title={"Survey App"}
-      actions={
+      headerActions={
         <Stack direction="row" spacing={2}>
           {createComponents(toolbarItems)}
           <Logout />

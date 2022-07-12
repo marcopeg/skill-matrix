@@ -6,10 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineOutlinedIcon from "@mui/icons-material/StarOutlineOutlined";
 
-import { useQuestion } from "./use-question";
-
-export const QuestionStarV1 = ({ question, ...options }) => {
-  const { value, setValue, isConfirmed } = useQuestion(question, options);
+export const QuestionStarV1 = ({ question, score, setScore, isConfirmed }) => {
   const { title, stars = 5, startAtZero = false } = question.schema;
 
   const starItems = Array(stars)
@@ -25,8 +22,8 @@ export const QuestionStarV1 = ({ question, ...options }) => {
       <FormLabel>{title}</FormLabel>
       <Stack direction="row">
         {starItems.map((item) => (
-          <IconButton key={item} onClick={() => setValue(item)}>
-            {value === null || value < item ? (
+          <IconButton key={item} onClick={() => setScore(item)}>
+            {score === null || score < item ? (
               <StarOutlineOutlinedIcon />
             ) : (
               <StarIcon
@@ -36,7 +33,7 @@ export const QuestionStarV1 = ({ question, ...options }) => {
           </IconButton>
         ))}
       </Stack>
-      {value !== null && !isConfirmed && (
+      {score !== null && !isConfirmed && (
         <FormHelperText>
           Click again on the star to confirm your choice!
         </FormHelperText>
