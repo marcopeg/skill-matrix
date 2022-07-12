@@ -4,7 +4,6 @@ import { useEffect, useCallback } from "react";
 
 export const useScrollToActiveQuestion = (activeQuestion) => {
   const scrollToActiveQuestion = useCallback(() => {
-    console.log("@scroll");
     if (!activeQuestion) return;
 
     const el = document.getElementById(`question-${activeQuestion.id}`);
