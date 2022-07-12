@@ -3,7 +3,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 
-export const QuestionBoolV1 = ({ question, score, setScore, isConfirmed }) => {
+export const QuestionBoolV1 = ({ score, setScore, isConfirmed }) => {
   const onClick = (evt) => {
     if (evt.target.value === undefined) return;
     setScore(parseInt(evt.target.value, 10));
