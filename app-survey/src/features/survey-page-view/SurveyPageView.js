@@ -1,6 +1,8 @@
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
 
 import { useSurveyPageView } from "./use-survey-page-view";
 
@@ -32,6 +34,8 @@ export const SurveyPageView = (props) => {
           <Box
             id={`question-${question.id}`}
             sx={{
+              display: "flex",
+              flexDirection: "column",
               pt: 15,
               pb: 15,
               pl: 2,
@@ -56,6 +60,9 @@ export const SurveyPageView = (props) => {
               }
               // onChange: (e) => console.log("change value", e)
             })}
+            <Box>
+              <Button endIcon={<SendIcon />}>Confirm</Button>
+            </Box>
           </Box>
         </Box>
       ))}
