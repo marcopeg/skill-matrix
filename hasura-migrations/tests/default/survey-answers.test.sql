@@ -4,9 +4,9 @@ SELECT plan(5);
 INSERT INTO "public"."boards" VALUES (1, 'b1');
 
 INSERT INTO "public"."questions" 
-  ("board_id",  "id",   "data",     "created_at") VALUES 
-  (1,           1,      '{"v":1}',  '2022-07-08 11:10')
-, (1,           2,      '{"v":1}',  '2022-07-08 11:10')
+  ("board_id",  "id",   "data",     "created_at",         "priority") VALUES 
+  (1,           1,      '{"v":1}',  '2022-07-08 11:10',   1)
+, (1,           2,      '{"v":1}',  '2022-07-08 11:10',   2)
 ;
 
 INSERT INTO "public"."surveys" 
@@ -36,8 +36,8 @@ SELECT results_eq(
       "answer_score"::text
     FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":1,"x-hasura-user-id":1}'::json)$$,
   $$VALUES 
-    ( 1, '10' )
-  , ( 2, null )
+    ( 2, null )
+  , ( 1, '10' )
   $$,
   'It should join a survey cached questions with the related available answers'
 );
@@ -59,8 +59,8 @@ SELECT results_eq(
       "answer_score"::text
     FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":1,"x-hasura-user-id":1}'::json)$$,
   $$VALUES 
-    ( 1, '20' )
-  , ( 2, null )
+    ( 2, null )
+  , ( 1, '20' )
   $$,
   'It should return the latest version of an answer'
 );
@@ -71,8 +71,8 @@ SELECT results_eq(
       "answer_score"::text
     FROM "public"."get_survey_by_user"('{"x-hasura-survey-id":1,"x-hasura-user-id":2}'::json)$$,
   $$VALUES 
-    ( 1, null )
-  , ( 2, null )
+    ( 2, null )
+  , ( 1, null )
   $$,
   'It should return null values if no answers are given'
 );
@@ -88,6 +88,11 @@ SELECT results_eq(
   $$VALUES ( 0 )$$,
   'It should return no rows if a survey does not exists'
 );
+
+
+
+
+
 
 
 SELECT * FROM finish();

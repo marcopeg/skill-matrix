@@ -14,6 +14,7 @@ FROM (
     "s"."board_id",
     "q"."created_at",
     "q"."data",
+    "q"."priority",
     "q"."is_deleted"
   FROM "public"."questions" AS "q"
   JOIN "public"."surveys" AS "s" 
@@ -22,6 +23,7 @@ FROM (
   ORDER BY "s"."id" DESC, "q"."id", "q"."created_at" DESC
 ) ds
 WHERE "is_deleted" IS FALSE
+ORDER BY "priority" DESC
 ;
 
 COMMENT ON VIEW "public"."surveys_questions" IS 

@@ -21,7 +21,11 @@ export const QuestionItem = ({
       <Typography variant="h2" sx={{ mb: 2, fontSize: 20 }}>
         {title}
       </Typography>
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="flex-start"
+      >
         {renderQuestion(question, api)}
 
         {(api.canConfirm || api.isConfirmed) && (

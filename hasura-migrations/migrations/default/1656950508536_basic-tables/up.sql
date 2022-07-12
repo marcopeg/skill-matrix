@@ -71,6 +71,7 @@ CREATE TABLE "public"."questions" (
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp(),
   "board_id" INT NOT NULL,
   "data" JSON NOT NULL,
+  "priority" INT NOT NULL DEFAULT 0,
   "is_deleted" BOOLEAN NOT NULL DEFAULT false,
   CONSTRAINT "questions_pkey" PRIMARY KEY ("id", "created_at"),
   CONSTRAINT "questions_board_id_fkey" FOREIGN KEY("board_id") REFERENCES "boards"("id")
