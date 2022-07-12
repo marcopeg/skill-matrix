@@ -1,11 +1,11 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Page from "../../components/Page";
 
 export const SurveyIntro = ({ ak, questions }) => {
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="h4">Welcome to the Survey</Typography>
+    <Page withPadding title="Welcome to the Survey">
       <Typography variant="body1">
         There are {questions.length} questions to fill up.
       </Typography>
@@ -24,6 +24,6 @@ export const SurveyIntro = ({ ak, questions }) => {
           you have time to continue.
         </i>
       </Typography>
-    </Box>
+    </Page>
   );
 };

@@ -1,19 +1,22 @@
 import Box from "@mui/material/Box";
+import { grey } from "@mui/material/colors";
 
 export const PageWrapper = (props) => (
   <Box
     {...props}
     sx={{
       display: "flex",
-      justifyContent: "center",
-      alignItems: "flex-start",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "center",
       height: "100vh",
-      backgroundColor: "primary.light",
-      border: "1px solid white",
-      borderColor: "primary.light",
-      overflow: "scroll",
-      pt: 2,
-      pb: 2
+      backgroundColor: grey[200],
+      // border: "4px solid white",
+      // borderColor: "primary.light",
+      // borderColor: "red",
+      overflow: "hidden"
+      // pt: 2,
+      // pb: 2
     }}
   />
 );

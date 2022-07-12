@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
@@ -34,7 +35,11 @@ export const PageHeader = ({
       </Box>
     )}
 
-    {actions && <Box sx={{ ml: 4 }}>{actions}</Box>}
+    {actions && (
+      <Stack direction="row" spacing={2}>
+        {actions}
+      </Stack>
+    )}
   </Box>
 );
 
@@ -66,10 +71,9 @@ export const Page = ({
       ref={containerRef}
       {...props}
       sx={{
+        height: "100%",
         display: "flex",
-        flexDirection: "column",
-        width: "95vw",
-        minHeight: "100%"
+        flexDirection: "column"
       }}
     >
       {(title || headerActions) && (
