@@ -25,7 +25,7 @@ export const AuthInfo = ({ children }) => {
 
   if (isFetched && isError) {
     return (
-      <Alert severity="error" onClose={logout} sx={{ mb: "60vh" }}>
+      <Alert severity="error" onClose={logout} sx={{ mt: 5 }}>
         <AlertTitle>Auth Error</AlertTitle>
         {error.response.errors[0].message}
       </Alert>
