@@ -1,3 +1,5 @@
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -14,11 +16,24 @@ export const QuestionItem = ({
   onChange,
   onConfirm
 }) => {
+  const theme = useTheme();
+  const isBigScreen = useMediaQuery(theme.breakpoints.up("sm"));
+
   const api = useQuestion(question, { onChange, onConfirm });
   const { title } = question.schema;
 
+  const vSpace = isBigScreen ? 15 : 5;
+  const hSpace = 2;
+
   return (
-    <Box sx={{ pt: 15, pb: 15, pl: 2, pr: 2 }}>
+    <Box
+      sx={{
+        pt: vSpace,
+        pb: vSpace,
+        pl: hSpace,
+        pr: hSpace
+      }}
+    >
       <Typography variant="h2" sx={{ mb: 2, fontSize: 20 }}>
         {title}
       </Typography>
@@ -28,7 +43,7 @@ export const QuestionItem = ({
         </Grid>
         <Grid item lg={4} md={6} xs={12} sx={{ mt: { xs: 4, md: 0 } }}>
           {(api.canConfirm || api.isConfirmed) && (
-            <Stack sx={{ flex: 1, minWidth: 300, maxWidth: 600 }}>
+            <Stack sx={{ flex: 1 }}>
               <TextField
                 multiline
                 label="Notes:"

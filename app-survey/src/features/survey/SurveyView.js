@@ -28,7 +28,7 @@ export const SurveyView = () => {
   const CompletedView = useGetContext("survey.completed.component");
 
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
+  const isBigScreen = useMediaQuery(theme.breakpoints.up("sm"));
 
   // No view mode is set - alert
   if (!viewMode)
@@ -67,12 +67,12 @@ export const SurveyView = () => {
     <Page
       title={viewMode.title || "Fill the Survey"}
       headerActions={
-        isSmallScreen
+        isBigScreen
           ? [<SurveySelect key="a1" />, <SurveyProgress key="a2" />]
           : null
       }
       footerActions={
-        isSmallScreen
+        isBigScreen
           ? null
           : [<SurveySelect key="a1" />, <SurveyProgress key="a2" />]
       }
