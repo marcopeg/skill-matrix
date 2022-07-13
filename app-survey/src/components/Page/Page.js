@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -13,33 +14,32 @@ export const PageHeader = ({
   <Box
     ref={forwardRef}
     sx={{
-      display: "flex",
       ...(position === "top"
         ? { borderBottom: "2px solid black" }
         : { borderTop: "2px solid black" }),
       borderColor: "primary.light",
-      p: 2
+      p: { xs: 1, sm: 2 }
     }}
   >
-    {children && (
-      <Box
-        sx={{
-          flex: 1
-        }}
-      >
-        {typeof children === "string" ? (
-          <Typography variant="h5">{children}</Typography>
-        ) : (
-          children
-        )}
-      </Box>
-    )}
+    <Grid container justifyContent={"space-between"}>
+      {children && (
+        <Grid item>
+          {typeof children === "string" ? (
+            <Typography variant="h5">{children}</Typography>
+          ) : (
+            children
+          )}
+        </Grid>
+      )}
 
-    {actions && (
-      <Stack direction="row" spacing={2}>
-        {actions}
-      </Stack>
-    )}
+      {actions && (
+        <Grid item sx={{ mt: { xs: 2, sm: 0 } }}>
+          <Stack direction="row" spacing={2}>
+            {actions}
+          </Stack>
+        </Grid>
+      )}
+    </Grid>
   </Box>
 );
 
