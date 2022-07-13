@@ -15,9 +15,9 @@ export const useScrollToActiveQuestion = (activeQuestion) => {
   }, [activeQuestion]);
 
   // Scroll to the next question that needs an answer:
-  useEffect(() => {
-    scrollToActiveQuestion();
-  }, [activeQuestion, scrollToActiveQuestion]);
+  // useEffect(() => {
+  //   scrollToActiveQuestion();
+  // }, [activeQuestion, scrollToActiveQuestion]);
 
   return {
     scrollToActiveQuestion
