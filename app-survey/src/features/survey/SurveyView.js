@@ -1,3 +1,5 @@
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -24,6 +26,9 @@ export const SurveyView = () => {
 
   const IntroView = useGetContext("survey.intro.component");
   const CompletedView = useGetContext("survey.completed.component");
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.up("xs"));
 
   // No view mode is set - alert
   if (!viewMode)
@@ -61,7 +66,16 @@ export const SurveyView = () => {
   return (
     <Page
       title={viewMode.title || "Fill the Survey"}
-      headerActions={[<SurveySelect key="a1" />, <SurveyProgress key="a2" />]}
+      headerActions={
+        isSmallScreen
+          ? null
+          : [<SurveySelect key="a1" />, <SurveyProgress key="a2" />]
+      }
+      footerActions={
+        isSmallScreen
+          ? [<SurveySelect key="a1" />, <SurveyProgress key="a2" />]
+          : null
+      }
     >
       <viewMode.component {...api} />
     </Page>
