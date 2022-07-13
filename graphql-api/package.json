@@ -16,11 +16,11 @@
   "author": "Marco Pegoraro",
   "license": "MIT",
   "dependencies": {
-    "@forrestjs/core": "^4.5.1",
-    "@forrestjs/service-logger": "^4.5.1",
-    "@forrestjs/service-fastify": "^4.5.1",
-    "@forrestjs/service-fastify-gql": "^4.5.1",
-    "@forrestjs/service-fastify-healthz": "^4.5.1",
+    "@forrestjs/core": "^4.5.3",
+    "@forrestjs/service-logger": "^4.5.3",
+    "@forrestjs/service-fastify": "^4.5.3",
+    "@forrestjs/service-fastify-gql": "^4.5.3",
+    "@forrestjs/service-fastify-healthz": "^4.5.3",
     "envalid": "^7.3.1"
   },
   "devDependencies": {

@@ -46,6 +46,9 @@ clear: stop
 
 restart: stop start
 reset: stop clear start
+build:
+	@docker-compose build --no-cache
+rebuild: stop clear build
 
 install-cli:
 	@curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
