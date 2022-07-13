@@ -1,5 +1,5 @@
 import FormControl from "@mui/material/FormControl";
-import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineOutlinedIcon from "@mui/icons-material/StarOutlineOutlined";
@@ -17,7 +17,7 @@ export const QuestionStarV1 = ({ question, score, setScore, isConfirmed }) => {
 
   return (
     <FormControl>
-      <Stack direction="row">
+      <Box>
         {starItems.map((item) => (
           <IconButton key={item} onClick={() => setScore(item)}>
             {score === null || score < item ? (
@@ -29,7 +29,7 @@ export const QuestionStarV1 = ({ question, score, setScore, isConfirmed }) => {
             )}
           </IconButton>
         ))}
-      </Stack>
+      </Box>
     </FormControl>
   );
 };

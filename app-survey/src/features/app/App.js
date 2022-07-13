@@ -1,4 +1,6 @@
 import { styled } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import AppBar from "@mui/material/AppBar";
@@ -15,6 +17,11 @@ export const App = () => {
   const toolbarItems = useGetContext("app.toolbar.items");
   const viewItems = useGetContext("app.view.items");
   const appTitle = useGetContext("app.title");
+
+  const theme = useTheme();
+  const isBigScreen = useMediaQuery(theme.breakpoints.up("sm"));
+  const vSpace = isBigScreen ? 4 : 0;
+  const hSpace = isBigScreen ? 3 : 0;
 
   return (
     <>
@@ -33,19 +40,21 @@ export const App = () => {
         </Toolbar>
       </AppBar>
       <Offset />
-      <Box
+      <Stack
         sx={{
+          alignItems: "center",
+          justifyContent: "flex-start",
           flex: 1,
           width: "100%",
           overflow: "scroll",
-          pt: 4,
-          pb: 4,
-          pl: 3,
-          pr: 3
+          pt: vSpace,
+          pb: vSpace,
+          pl: hSpace,
+          pr: hSpace
         }}
       >
         {createComponents(viewItems)}
-      </Box>
+      </Stack>
     </>
   );
 };
