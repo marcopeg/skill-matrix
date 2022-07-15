@@ -59,3 +59,4 @@ FOR EACH ROW
 EXECUTE PROCEDURE "public"."i18n_update_cache_fn"();
 COMMENT ON TRIGGER "i18n_update_cache_trg" ON "public"."i18n_publish" 
 IS 'Update translations documents';
+
