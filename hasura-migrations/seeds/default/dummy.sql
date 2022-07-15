@@ -1,6 +1,9 @@
 TRUNCATE "public"."boards" CASCADE;
 TRUNCATE "public"."users" CASCADE;
 TRUNCATE "public"."boards_admins" CASCADE;
+TRUNCATE "public"."i18n_values" CASCADE;
+TRUNCATE "public"."i18n_keys" CASCADE;
+TRUNCATE "public"."i18n_languages" CASCADE;
 
 
 ---
@@ -134,6 +137,40 @@ INSERT INTO "public"."surveys_invites"
 -- SELECT * FROM "public"."log_survey_by_user"('{"x-hasura-user-id": 1, "x-hasura-survey-id": 1}'::json, 3, 20);
 -- SELECT * FROM "public"."log_survey_by_user"('{"x-hasura-user-id": 1, "x-hasura-survey-id": 1}'::json, 4, 20);
 -- SELECT * FROM "public"."log_survey_by_user"('{"x-hasura-user-id": 1, "x-hasura-survey-id": 1}'::json, 5, 70);
+
+
+
+
+---
+--- I18N
+---
+
+INSERT INTO "public"."i18n_languages"
+  ("id", "name", "label") VALUES
+  ('en', 'English', 'lang.english')
+, ('it', 'Italiano', 'lang.italian')
+;
+
+INSERT INTO "public"."i18n_keys"
+  ("id",  "key") VALUES
+  (1,     'lang.english')
+, (2,     'lang.italian')
+, (3,     'users.form.fields.name')
+, (4,     'users.form.fields.surname')
+;
+
+INSERT INTO "public"."i18n_values"
+  ("id", "language_id", "key_id", "value") VALUES
+  (1, 'en', 1, 'English')
+, (2, 'en', 2, 'Italian')
+, (3, 'en', 3, 'Name:')
+, (4, 'en', 4, 'Surname:')
+, (5, 'it', 3, 'Nome:')
+, (6, 'it', 4, 'Cognome:')
+;
+
+
+
 
 
 ---
