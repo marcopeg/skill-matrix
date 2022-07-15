@@ -160,29 +160,17 @@ INSERT INTO "public"."i18n_keys"
 , (4,     'users.form.fields.surname')
 ;
 
--- INSERT INTO "public"."i18n_values"
---   ("id", "language_id", "key_id", "value") VALUES
---   (1, 'en', 1, 'English')
--- , (2, 'en', 2, 'Italian')
--- , (3, 'en', 3, 'Name:')
--- , (4, 'en', 4, 'Surname:')
--- , (5, 'it', 3, 'Nome:')
--- , (6, 'it', 4, 'Cognome:')
--- ;
-
 INSERT INTO "public"."i18n_values"
   ("language_id", "key_id", "value", "created_at") VALUES
-  ('en', 1, 'English', clock_timestamp())
-, ('en', 2, 'Italian', clock_timestamp())
-, ('en', 3, 'Name:', clock_timestamp())
-, ('en', 4, 'Surname:', clock_timestamp())
-, ('it', 3, 'Nome:', clock_timestamp())
-, ('it', 4, 'Cognome:', clock_timestamp())
-, ('it', 4, 'Cognome**:', clock_timestamp())
+  ('en', 1, 'English', '2022-07-15 18:01:31')
+, ('en', 2, 'Italian', '2022-07-15 18:01:32')
+, ('en', 3, 'Name:', '2022-07-15 18:01:33')
+, ('en', 4, 'Surname:', '2022-07-15 18:01:34')
+, ('it', 3, 'Nome:', '2022-07-15 18:01:35')
+, ('it', 4, 'Cognome:', '2022-07-15 18:01:36')
 ;
 
-
-
+INSERT INTO "public"."i18n_publish" VALUES (now(), '2022-07-15 18:01:36');
 
 
 ---

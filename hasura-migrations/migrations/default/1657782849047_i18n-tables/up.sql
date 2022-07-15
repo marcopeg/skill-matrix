@@ -39,18 +39,6 @@ CREATE TABLE "public"."i18n_keys" (
   "updated_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()'
 );
 
--- CREATE TABLE "public"."i18n_values" (
---   "id"            SERIAL PRIMARY KEY,
---   "language_id"   VARCHAR(2),
---   "key_id"        INT,
---   "value"         TEXT,
---   "created_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()',
---   "updated_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()',
---   CONSTRAINT "i18n_values_unique_translation" UNIQUE ("language_id", "key_id"),
---   CONSTRAINT "i18n_language_id_fkey" FOREIGN KEY("language_id") REFERENCES "i18n_languages"("id"),
---   CONSTRAINT "i18n_key_id_fkey" FOREIGN KEY("key_id") REFERENCES "i18n_keys"("id")
--- );
-
 CREATE TABLE "public"."i18n_values" (
   "language_id"   VARCHAR(2),
   "key_id"        INT,
@@ -65,48 +53,14 @@ CREATE TABLE "public"."i18n_values" (
 
 
 
-
-
-
-
 CREATE VIEW "public"."i18n_translations_values" AS
 SELECT 
 DISTINCT ON ("v"."language_id", "v"."key_id") 
    "v"."language_id" AS "language_id",
    "k"."key",
    "v"."value",
-   "v"."updated_at"
+   "v"."created_at"
 FROM "public"."i18n_values"  AS "v"
 LEFT JOIN "public"."i18n_keys" AS "k" ON "v"."key_id" = "k"."id"
 ORDER BY "v"."language_id", "v"."key_id", "v"."created_at" DESC;
 
-CREATE MATERIALIZED VIEW "public"."i18n_translations_documents" AS
-SELECT
-  "language_id", 
-  "public"."i18n_jsonb_set_agg"(to_jsonb(value), string_to_array(key, '.')) AS "value"
-FROM     "public"."i18n_translations_values"
-GROUP BY "language_id";
-
-
-
-
-
-
-CREATE TABLE "public"."i18n_publish" (
-  "created_at" TIMESTAMPTZ DEFAULT 'now()' PRIMARY KEY
-);
-
-CREATE OR REPLACE FUNCTION "public"."i18n_update_cache_fn"()
-RETURNS TRIGGER AS $$
-BEGIN
-  REFRESH MATERIALIZED VIEW "public"."i18n_translations_documents";
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER "i18n_update_cache_trg"
-AFTER INSERT ON "public"."i18n_publish"
-FOR EACH ROW
-EXECUTE PROCEDURE "public"."i18n_update_cache_fn"();
-COMMENT ON TRIGGER "i18n_update_cache_trg" ON "public"."i18n_publish" 
-IS 'Update translations documents';
