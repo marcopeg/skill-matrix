@@ -1,4 +1,7 @@
-DROP VIEW "public"."i18n_translations_documents";
+DROP TRIGGER "i18n_update_cache_trg" ON "public"."i18n_publish";
+DROP FUNCTION "public"."i18n_update_cache_fn"();
+DROP TABLE "public"."i18n_publish" CASCADE;
+DROP MATERIALIZED VIEW "public"."i18n_translations_documents";
 DROP VIEW "public"."i18n_translations_values";
 DROP AGGREGATE "public"."i18n_jsonb_set_agg"(jsonb, text[]);
 DROP FUNCTION "public"."i18n_jsonb_set_rec";

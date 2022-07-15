@@ -57,6 +57,7 @@ CREATE TABLE "public"."i18n_values" (
 
 
 
+
 CREATE VIEW "public"."i18n_translations_values" AS
 SELECT
   "v"."id",
@@ -67,9 +68,33 @@ SELECT
 FROM "public"."i18n_values" AS "v"
 LEFT JOIN "public"."i18n_keys" AS "k" ON "v"."key_id" = "k"."id";
 
-CREATE VIEW "public"."i18n_translations_documents" AS
+CREATE MATERIALIZED VIEW "public"."i18n_translations_documents" AS
 SELECT
   "language_id", 
-  "public"."i18n_jsonb_set_agg"(to_jsonb(value), string_to_array(key, '.'))
+  "public"."i18n_jsonb_set_agg"(to_jsonb(value), string_to_array(key, '.')) AS "value"
 FROM     "public"."i18n_translations_values"
 GROUP BY "language_id";
+
+
+
+
+
+
+CREATE TABLE "public"."i18n_publish" (
+  "created_at" TIMESTAMPTZ DEFAULT 'now()' PRIMARY KEY
+);
+
+CREATE OR REPLACE FUNCTION "public"."i18n_update_cache_fn"()
+RETURNS TRIGGER AS $$
+BEGIN
+  REFRESH MATERIALIZED VIEW "public"."i18n_translations_documents";
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER "i18n_update_cache_trg"
+AFTER INSERT ON "public"."i18n_publish"
+FOR EACH ROW
+EXECUTE PROCEDURE "public"."i18n_update_cache_fn"();
+COMMENT ON TRIGGER "i18n_update_cache_trg" ON "public"."i18n_publish" 
+IS 'Update translations documents';
