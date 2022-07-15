@@ -1,0 +1,3 @@
+table:
+  name: i18n_translations_values
+  schema: public

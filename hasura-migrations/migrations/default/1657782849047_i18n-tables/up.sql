@@ -32,6 +32,12 @@ CREATE TABLE "public"."i18n_languages" (
   "updated_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()'
 );
 
+CREATE TRIGGER "set_i18n_languages_updated_at"
+BEFORE UPDATE ON "public"."i18n_languages"
+FOR EACH ROW
+EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
+
+
 CREATE TABLE "public"."i18n_keys" (
   "id"            SERIAL PRIMARY KEY,
   "key"           TEXT NOT NULL UNIQUE,
@@ -44,7 +50,6 @@ CREATE TABLE "public"."i18n_values" (
   "key_id"        INT,
   "value"         TEXT,
   "created_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()',
-  "updated_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()',
   CONSTRAINT "i18n_values_unique_translation" UNIQUE ("language_id", "key_id", "created_at"),
   CONSTRAINT "i18n_language_id_fkey" FOREIGN KEY("language_id") REFERENCES "i18n_languages"("id"),
   CONSTRAINT "i18n_key_id_fkey" FOREIGN KEY("key_id") REFERENCES "i18n_keys"("id")

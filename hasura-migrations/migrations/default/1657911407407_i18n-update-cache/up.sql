@@ -33,7 +33,7 @@ BEGIN
           "v"."language_id" AS "language_id",
           "k"."key",
           "v"."value",
-          "v"."updated_at"
+          "v"."created_at"
         FROM "public"."i18n_values"  AS "v"
         LEFT JOIN "public"."i18n_keys" AS "k" ON "v"."key_id" = "k"."id"
         WHERE "v"."created_at" <= %L

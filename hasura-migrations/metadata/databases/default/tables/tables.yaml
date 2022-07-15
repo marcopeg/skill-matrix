@@ -1,1 +1,6 @@
+- "!include public_i18n_languages.yaml"
+- "!include public_i18n_publish.yaml"
+- "!include public_i18n_translations_documents.yaml"
+- "!include public_i18n_translations_values.yaml"
+- "!include public_i18n_values.yaml"
 - "!include public_survey_by_user.yaml"

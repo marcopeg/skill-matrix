@@ -1,0 +1,13 @@
+table:
+  name: i18n_values
+  schema: public
+insert_permissions:
+  - role: backoffice
+    permission:
+      check: {}
+      set:
+        created_at: now()
+      columns:
+        - key_id
+        - language_id
+        - value
