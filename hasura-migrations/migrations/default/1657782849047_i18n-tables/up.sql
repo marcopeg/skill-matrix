@@ -69,3 +69,15 @@ FROM "public"."i18n_values"  AS "v"
 LEFT JOIN "public"."i18n_keys" AS "k" ON "v"."key_id" = "k"."id"
 ORDER BY "v"."language_id", "v"."key_id", "v"."created_at" DESC;
 
+
+CREATE VIEW "public"."i18n_translations_keys" AS
+SELECT
+	"public"."i18n_jsonb_set_agg"(to_jsonb(value), string_to_array(key, '.')) AS "data"
+FROM (
+	SELECT 
+		'*' AS "language_id", 
+		"key", 
+		'' AS "value" 
+	FROM "public"."i18n_keys"
+      ) "q"
+GROUP BY "language_id";

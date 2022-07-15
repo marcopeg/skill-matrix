@@ -2,13 +2,13 @@ table:
   name: i18n_publish
   schema: public
 insert_permissions:
-  - role: backend
+  - role: backoffice
     permission:
       check: {}
       columns:
         - publishes_at
 select_permissions:
-  - role: backend
+  - role: backoffice
     permission:
       columns:
         - created_at
