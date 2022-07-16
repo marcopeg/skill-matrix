@@ -23,7 +23,8 @@ forrest
   .run({
     settings: {
       i18n: {
-        ns: ["translation", "survey"],
+        // ns: ["translation", "survey"],
+        fallbackLng: false,
         backend: {
           loadPath:
             process.env.REACT_APP_I18N_LOAD_PAGH ||

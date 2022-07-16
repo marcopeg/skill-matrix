@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import Page from "../../components/Page";
 
 export const SurveyIntro = ({ ak, questions }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("survey");
 
   const _t = (k) =>
     t(`survey:${k}`, {

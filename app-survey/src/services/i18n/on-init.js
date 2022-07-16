@@ -4,7 +4,11 @@ import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
 export const onInit = async ({ getConfig, setContext }) => {
-  const { backend = {}, ...options } = getConfig("i18n", {});
+  const {
+    backend = {},
+    suspenseFallback = null,
+    ...options
+  } = getConfig("i18n", {});
 
   await i18next
     .use(LanguageDetector)
@@ -12,11 +16,6 @@ export const onInit = async ({ getConfig, setContext }) => {
     .use(initReactI18next)
     .init({
       debug: process.env.NODE_ENV === "development",
-      load: "languageOnly",
-      fallbackLng: false,
-      interpolation: {
-        escapeValue: false
-      },
       ...options,
       backend: {
         allowMultiLoading: false,
@@ -24,5 +23,6 @@ export const onInit = async ({ getConfig, setContext }) => {
       }
     });
 
-  setContext("i18next", i18next);
+  setContext("i18next.instance", i18next);
+  setContext("i18next.suspenseFallback", suspenseFallback);
 };
