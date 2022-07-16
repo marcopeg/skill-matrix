@@ -6,6 +6,7 @@ import reactRoot from "@forrestjs/react-root";
 import reactMUI from "@forrestjs/react-mui";
 import reactRouter from "@forrestjs/react-router";
 import { hasuraClient } from "./services/hasura-client";
+import { i18n } from "./services/i18n";
 
 // Import Features:
 import { layout } from "./features/layout";
@@ -25,7 +26,7 @@ forrest
           `http://localhost:8080/v1/graphql`
       }
     },
-    services: [reactRoot, reactMUI, reactRouter, hasuraClient],
+    services: [reactRoot, reactMUI, reactRouter, hasuraClient, i18n],
     features: [
       layout,
       auth,

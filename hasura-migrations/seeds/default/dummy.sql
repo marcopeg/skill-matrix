@@ -154,20 +154,20 @@ INSERT INTO "public"."i18n_languages"
 
 INSERT INTO "public"."i18n_keys"
   ("id",  "key") VALUES
-  (1,     'lang.english')
-, (2,     'lang.italian')
-, (3,     'users.form.fields.name')
-, (4,     'users.form.fields.surname')
+  (1,     'survey.intro.title')
+, (2,     'survey.intro.questions')
+, (3,     'survey.intro.time')
+, (4,     'survey.intro.start')
+, (5,     'survey.intro.resume')
 ;
 
 INSERT INTO "public"."i18n_values"
   ("language_id", "key_id", "value", "created_at") VALUES
-  ('en', 1, 'English', '2022-07-15 18:01:31')
-, ('en', 2, 'Italian', '2022-07-15 18:01:32')
-, ('en', 3, 'Name:', '2022-07-15 18:01:33')
-, ('en', 4, 'Surname:', '2022-07-15 18:01:34')
-, ('it', 3, 'Nome:', '2022-07-15 18:01:35')
-, ('it', 4, 'Cognome:', '2022-07-15 18:01:36')
+  ('en', 1, 'Welcome to the survey', '2022-07-15 18:01:31')
+, ('en', 2, 'There are {{ questions_length }} questions in this survey', '2022-07-15 18:01:32')
+, ('en', 3, 'The process is going to take approximately {{ total_time }} seconds.', '2022-07-15 18:01:33')
+, ('en', 4, 'Start!', '2022-07-15 18:01:33')
+, ('en', 5, 'You can stop the process at any point in time and come back to it when you have time to continue.', '2022-07-15 18:01:33')
 ;
 
 INSERT INTO "public"."i18n_publish" VALUES (now(), '2022-07-15 18:01:36');
@@ -191,4 +191,8 @@ SELECT setval('surveys_id_seq', COALESCE((
 
 SELECT setval('users_id_seq', COALESCE((
   SELECT MAX(id) + 1 FROM "public"."users"
+), 1), false);
+
+SELECT setval('users_id_seq', COALESCE((
+  SELECT MAX(id) + 1 FROM "public"."i18n_keys"
 ), 1), false);

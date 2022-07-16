@@ -1,28 +1,29 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useTranslation } from "react-i18next";
 import Page from "../../components/Page";
 
 export const SurveyIntro = ({ ak, questions }) => {
+  const { t } = useTranslation();
+
+  const _t = (k) =>
+    t(k, {
+      questions_length: questions.length,
+      total_time: questions.length * 30
+    });
+
   return (
-    <Page withPadding title="Welcome to the Survey">
-      <Typography variant="body1">
-        There are {questions.length} questions to fill up.
-      </Typography>
-      <Typography variant="body1">
-        The process is going to take approximately {questions.length * 30}{" "}
-        seconds.
-      </Typography>
+    <Page withPadding title={_t("survey.intro.title")}>
+      <Typography variant="body1">{_t("survey.intro.questions")}</Typography>
+      <Typography variant="body1">{_t("survey.intro.time")}</Typography>
       <Box sx={{ mt: 4 }}>
         <Button fullWidth variant="contained" onClick={ak}>
-          Start!
+          {_t("survey.intro.start")}
         </Button>
       </Box>
       <Typography variant="body1">
-        <i>
-          You can stop the process at any point in time and come back to it when
-          you have time to continue.
-        </i>
+        <i>{_t("survey.intro.resume")}</i>
       </Typography>
     </Page>
   );
