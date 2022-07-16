@@ -17,13 +17,30 @@ import { surveyPageView } from "./features/survey-page-view";
 import { surveyItemView } from "./features/survey-item-view";
 import { questionTypes } from "./features/question-types";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL || `http://localhost:8080`;
+
 forrest
   .run({
     settings: {
+      i18n: {
+        ns: ["translation", "survey"],
+        backend: {
+          loadPath:
+            process.env.REACT_APP_I18N_LOAD_PAGH ||
+            `${BASE_URL}/api/rest/locales/{{lng}}/{{ns}}`,
+          parse: (data) => {
+            try {
+              return JSON.parse(data).hits[0].records;
+            } catch (err) {
+              return {};
+            }
+          }
+        }
+      },
       hasuraClient: {
         endpoint:
           process.env.REACT_APP_HASURA_GRAPHQL_ENDPOINT ||
-          `http://localhost:8080/v1/graphql`
+          `${BASE_URL}/v1/graphql`
       }
     },
     services: [reactRoot, reactMUI, reactRouter, hasuraClient, i18n],

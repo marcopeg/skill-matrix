@@ -25,29 +25,31 @@ BEGIN
     CREATE MATERIALIZED VIEW "public"."i18n_translations_documents" AS 
     SELECT * FROM (
       SELECT
-        "language_id", 
+        "language_id",
+        "namespace",
         "public"."i18n_jsonb_set_agg"(to_jsonb(value), string_to_array(key, ''.'')) AS "value"
       FROM (
         SELECT 
-        DISTINCT ON ("v"."language_id", "v"."key_id") 
+        DISTINCT ON ("v"."language_id", "k"."namespace", "k"."id") 
           "v"."language_id" AS "language_id",
+          "k"."namespace",
           "k"."key",
           "v"."value",
           "v"."created_at"
         FROM "public"."i18n_values"  AS "v"
         LEFT JOIN "public"."i18n_keys" AS "k" ON "v"."key_id" = "k"."id"
         WHERE "v"."created_at" <= %L
-        ORDER BY "v"."language_id", "v"."key_id", "v"."created_at" DESC
+        ORDER BY "v"."language_id", "k"."namespace", "k"."id", "v"."created_at" DESC
       ) "q"
-      GROUP BY "language_id"
+      GROUP BY "language_id", "namespace"
     ) "wrapper"
-  JOIN (
-    SELECT
-      "publishes_at" AS "created_at" 
-    FROM "public"."i18n_publish"
-    ORDER BY "publishes_at" DESC
-    LIMIT 1
-  ) "etag" ON 1 = 1
+    JOIN (
+      SELECT
+        "publishes_at" AS "created_at" 
+      FROM "public"."i18n_publish"
+      ORDER BY "publishes_at" DESC
+      LIMIT 1
+    ) "etag" ON 1 = 1
   ', NEW."publishes_at");
   RETURN NEW;
 END;

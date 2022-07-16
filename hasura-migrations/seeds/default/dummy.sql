@@ -153,21 +153,25 @@ INSERT INTO "public"."i18n_languages"
 ;
 
 INSERT INTO "public"."i18n_keys"
-  ("id",  "key") VALUES
-  (1,     'survey.intro.title')
-, (2,     'survey.intro.questions')
-, (3,     'survey.intro.time')
-, (4,     'survey.intro.start')
-, (5,     'survey.intro.resume')
+  ("id",  "namespace",    "key") VALUES
+  (1,     'translation',  'title')
+, (2,     'survey',  'intro.title')
+, (3,     'survey',  'intro.questions')
+, (4,     'survey',  'intro.time')
+, (5,     'survey',  'intro.start')
+, (6,     'survey',  'intro.resume')
 ;
 
 INSERT INTO "public"."i18n_values"
   ("language_id", "key_id", "value", "created_at") VALUES
-  ('en', 1, 'Welcome to the survey', '2022-07-15 18:01:31')
-, ('en', 2, 'There are {{ questions_length }} questions in this survey', '2022-07-15 18:01:32')
-, ('en', 3, 'The process is going to take approximately {{ total_time }} seconds.', '2022-07-15 18:01:33')
-, ('en', 4, 'Start!', '2022-07-15 18:01:33')
-, ('en', 5, 'You can stop the process at any point in time and come back to it when you have time to continue.', '2022-07-15 18:01:33')
+  ('en', 1, 'SurveyAPP', '2022-07-15 18:01:31')
+, ('en', 2, 'Welcome to the survey', '2022-07-15 18:01:31')
+, ('en', 3, 'There are {{ questions_length }} questions in this survey', '2022-07-15 18:01:32')
+, ('en', 4, 'The process is going to take approximately {{ total_time }} seconds.', '2022-07-15 18:01:33')
+, ('en', 5, 'Start!', '2022-07-15 18:01:33')
+, ('en', 6, 'You can stop the process at any point in time and come back to it when you have time to continue.', '2022-07-15 18:01:33')
+, ('it', 1, 'App Questionario', '2022-07-15 18:01:31')
+, ('it', 2, 'Benvenuto nel Questionario', '2022-07-15 18:01:31')
 ;
 
 INSERT INTO "public"."i18n_publish" VALUES (now(), '2022-07-15 18:01:36');

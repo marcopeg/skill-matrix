@@ -25,7 +25,7 @@ CREATE AGGREGATE "public"."i18n_jsonb_set_agg"(jsonb, text[]) (
 
 
 CREATE TABLE "public"."i18n_languages" (
-  "id"            VARCHAR(2) PRIMARY KEY,
+  "id"            VARCHAR(5) PRIMARY KEY,
   "name"          TEXT NOT NULL,
   "label"         TEXT,
   "created_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()',
@@ -40,13 +40,15 @@ EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
 
 CREATE TABLE "public"."i18n_keys" (
   "id"            SERIAL PRIMARY KEY,
-  "key"           TEXT NOT NULL UNIQUE,
+  "namespace"     TEXT NOT NULL DEFAULT 'translation',
+  "key"           TEXT NOT NULL,
   "created_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()',
-  "updated_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()'
+  "updated_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()',
+  CONSTRAINT "i18n_keys_unique_key" UNIQUE ("namespace", "key")
 );
 
 CREATE TABLE "public"."i18n_values" (
-  "language_id"   VARCHAR(2),
+  "language_id"   VARCHAR(5),
   "key_id"        INT,
   "value"         TEXT,
   "created_at"    TIMESTAMPTZ NOT NULL DEFAULT 'now()',
@@ -60,24 +62,27 @@ CREATE TABLE "public"."i18n_values" (
 
 CREATE VIEW "public"."i18n_translations_values" AS
 SELECT 
-DISTINCT ON ("v"."language_id", "v"."key_id") 
+DISTINCT ON ("v"."language_id", "k"."namespace", "k"."id") 
    "v"."language_id" AS "language_id",
    "k"."key",
+   "k"."namespace",
    "v"."value",
    "v"."created_at"
 FROM "public"."i18n_values"  AS "v"
 LEFT JOIN "public"."i18n_keys" AS "k" ON "v"."key_id" = "k"."id"
-ORDER BY "v"."language_id", "v"."key_id", "v"."created_at" DESC;
+ORDER BY "v"."language_id", "k"."namespace", "k"."id", "v"."created_at" DESC;
 
 
 CREATE VIEW "public"."i18n_translations_keys" AS
 SELECT
+	"q"."namespace",
 	"public"."i18n_jsonb_set_agg"(to_jsonb(value), string_to_array(key, '.')) AS "data"
 FROM (
 	SELECT 
 		'*' AS "language_id", 
+		"namespace",
 		"key", 
 		'' AS "value" 
 	FROM "public"."i18n_keys"
       ) "q"
-GROUP BY "language_id";
+GROUP BY "language_id", "namespace";

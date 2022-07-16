@@ -1,1 +1,9 @@
-[]
+- comment: get a single translation by language and namespace
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: getTranslation
+  methods:
+    - GET
+  name: getTranslation
+  url: locales/:lng/:ns

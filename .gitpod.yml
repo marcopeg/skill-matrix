@@ -64,7 +64,7 @@ tasks:
   - name: App Survey
     before: cd app-survey && rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
     command: HELLO=world
-      REACT_APP_HASURA_GRAPHQL_ENDPOINT=$(gp url 8080)/v1/graphql
+      REACT_APP_BASE_URL=$(gp url 8080)
       DANGEROUSLY_DISABLE_HOST_CHECK=true
       CHOKIDAR_USEPOLLING=true
       WDS_SOCKET_PORT=0
