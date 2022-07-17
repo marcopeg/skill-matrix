@@ -23,7 +23,7 @@ forrest
   .run({
     settings: {
       i18n: {
-        // ns: ["translation", "survey"],
+        ns: ["translation", "survey"],
         fallbackLng: false,
         backend: {
           loadPath:
