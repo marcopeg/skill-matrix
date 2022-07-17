@@ -25,7 +25,7 @@ forrest
     settings: {
       i18n: {
         ns: ["translation", "survey"],
-        fallbackLng: false,
+        fallbackLng: "en",
         backend: {
           loadPath:
             process.env.REACT_APP_I18N_LOAD_PAGH ||

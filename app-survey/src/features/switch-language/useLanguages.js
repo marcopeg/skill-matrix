@@ -20,7 +20,7 @@ export const useLanguages = () => {
   return {
     isLoading,
     isSuccess,
-    value: isSuccess ? i18n.language : "",
+    value: isSuccess ? i18n.language.substring(0, 2) : "",
     setValue: i18n.changeLanguage,
     items: isSuccess
       ? data.items.map((item) => ({
