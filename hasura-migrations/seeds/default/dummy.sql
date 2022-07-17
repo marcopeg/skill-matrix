@@ -147,19 +147,21 @@ INSERT INTO "public"."surveys_invites"
 ---
 
 INSERT INTO "public"."i18n_languages"
-  ("id", "name", "label") VALUES
-  ('en', 'English', 'lang.english')
-, ('it', 'Italiano', 'lang.italian')
+  ("id", "name",      "label") VALUES
+  ('en', 'English',   'english')
+, ('it', 'Italiano',  'italian')
 ;
 
 INSERT INTO "public"."i18n_keys"
   ("id",  "namespace",    "key") VALUES
   (1,     'translation',  'title')
-, (2,     'survey',  'intro.title')
-, (3,     'survey',  'intro.questions')
-, (4,     'survey',  'intro.time')
-, (5,     'survey',  'intro.start')
-, (6,     'survey',  'intro.resume')
+, (2,     'survey',       'intro.title')
+, (3,     'survey',       'intro.questions')
+, (4,     'survey',       'intro.time')
+, (5,     'survey',       'intro.start')
+, (6,     'survey',       'intro.resume')
+, (7,     'lang',         'english')
+, (8,     'lang',         'italian')
 ;
 
 INSERT INTO "public"."i18n_values"
@@ -172,6 +174,10 @@ INSERT INTO "public"."i18n_values"
 , ('en', 6, 'You can stop the process at any point in time and come back to it when you have time to continue.', '2022-07-15 18:01:33')
 , ('it', 1, 'App Questionario', '2022-07-15 18:01:31')
 , ('it', 2, 'Benvenuto nel Questionario', '2022-07-15 18:01:31')
+, ('en', 7, 'English', '2022-07-15 18:01:31')
+, ('en', 8, 'Italian', '2022-07-15 18:01:31')
+, ('it', 7, 'Inglese', '2022-07-15 18:01:31')
+, ('it', 8, 'Italiano', '2022-07-15 18:01:31')
 ;
 
 INSERT INTO "public"."i18n_publish" VALUES (now(), '2022-07-15 18:01:36');

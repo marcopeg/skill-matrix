@@ -16,6 +16,7 @@ import { survey } from "./features/survey";
 import { surveyPageView } from "./features/survey-page-view";
 import { surveyItemView } from "./features/survey-item-view";
 import { questionTypes } from "./features/question-types";
+import { switchLanguage } from "./features/switch-language";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || `http://localhost:8080`;
 
@@ -52,7 +53,8 @@ forrest
       survey,
       surveyPageView,
       surveyItemView,
-      questionTypes
+      questionTypes,
+      switchLanguage
     ]
   })
   .catch((err) => console.error(`Boot: ${err.message}`));
