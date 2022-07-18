@@ -1,9 +1,18 @@
+- comment: It allows i18next to automatically send up untranslated keys
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: i18Next Push Key
+  methods:
+    - POST
+  name: i18Next Push Key
+  url: i18next/keys
 - comment: get a single translation by language and namespace
   definition:
     query:
       collection_name: allowed-queries
-      query_name: getTranslation
+      query_name: i18Next Get Translation
   methods:
     - GET
-  name: getTranslation
-  url: locales/:lng/:ns
+  name: i18Next Get Translation
+  url: i18next/locales/:lng/:ns

@@ -6,7 +6,8 @@ import reactRoot from "@forrestjs/react-root";
 import reactMUI from "@forrestjs/react-mui";
 import reactRouter from "@forrestjs/react-router";
 import { hasuraClient } from "./services/hasura-client";
-import { i18n } from "./services/i18n";
+import { i18Next } from "./services/i18next";
+import { i18NextHasura } from "./services/i18next-hasura";
 
 // Import Features:
 import { layout } from "./features/layout";
@@ -23,21 +24,13 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || `http://localhost:8080`;
 forrest
   .run({
     settings: {
-      i18n: {
+      i18Next: {
         ns: ["translation", "survey"],
         fallbackLng: "en",
-        backend: {
-          loadPath:
-            process.env.REACT_APP_I18N_LOAD_PAGH ||
-            `${BASE_URL}/api/rest/locales/{{lng}}/{{ns}}`,
-          parse: (data) => {
-            try {
-              return JSON.parse(data).hits[0].records;
-            } catch (err) {
-              return {};
-            }
-          }
-        }
+        saveMissing: true
+      },
+      i18NextHasura: {
+        restUrl: `${BASE_URL}/api/rest`
       },
       hasuraClient: {
         endpoint:
@@ -45,7 +38,14 @@ forrest
           `${BASE_URL}/v1/graphql`
       }
     },
-    services: [reactRoot, reactMUI, reactRouter, hasuraClient, i18n],
+    services: [
+      reactRoot,
+      reactMUI,
+      reactRouter,
+      hasuraClient,
+      i18Next,
+      i18NextHasura
+    ],
     features: [
       layout,
       auth,

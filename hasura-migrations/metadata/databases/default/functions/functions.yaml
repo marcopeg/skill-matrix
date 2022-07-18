@@ -1,2 +1,3 @@
 - "!include public_get_survey_by_user.yaml"
+- "!include public_i18n_upsert_key.yaml"
 - "!include public_log_survey_by_user.yaml"
