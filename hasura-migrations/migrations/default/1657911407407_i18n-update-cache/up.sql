@@ -62,3 +62,5 @@ EXECUTE PROCEDURE "public"."i18n_update_cache_fn"();
 COMMENT ON TRIGGER "i18n_update_cache_trg" ON "public"."i18n_publish" 
 IS 'Update translations documents';
 
+--- Generate the first cache:
+INSERT INTO "public"."i18n_publish" VALUES (now());
