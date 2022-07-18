@@ -26,10 +26,10 @@ forrest
     settings: {
       i18Next: {
         ns: ["translation", "survey"],
-        fallbackLng: "en",
-        saveMissing: true
+        fallbackLng: "en"
       },
       i18NextHasura: {
+        saveMissing: true,
         restUrl: `${BASE_URL}/api/rest`
       },
       hasuraClient: {
