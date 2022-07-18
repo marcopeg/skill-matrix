@@ -110,4 +110,4 @@ vscode:
     - wayou.vscode-todo-highlight
     - EditorConfig.EditorConfig
     - ms-azuretools.vscode-docker
-    - spmeesseman.vscode-taskexplorer
+    - cnshenj.vscode-task-manager
