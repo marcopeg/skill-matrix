@@ -203,6 +203,6 @@ SELECT setval('users_id_seq', COALESCE((
   SELECT MAX(id) + 1 FROM "public"."users"
 ), 1), false);
 
-SELECT setval('users_id_seq', COALESCE((
+SELECT setval('i18n_keys_id_seq', COALESCE((
   SELECT MAX(id) + 1 FROM "public"."i18n_keys"
 ), 1), false);

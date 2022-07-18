@@ -26,16 +26,24 @@ forrest
       i18n: {
         ns: ["translation", "survey"],
         fallbackLng: "en",
+        saveMissing: true,
         backend: {
           loadPath:
-            process.env.REACT_APP_I18N_LOAD_PAGH ||
-            `${BASE_URL}/api/rest/locales/{{lng}}/{{ns}}`,
+            process.env.REACT_APP_I18NEXT_LOAD_PATH ||
+            `${BASE_URL}/api/rest/i18next/locales/{{lng}}/{{ns}}`,
+          addPath:
+            process.env.REACT_APP_I18NEXT_ADD_PATH ||
+            `${BASE_URL}/api/rest/i18next/keys`,
           parse: (data) => {
             try {
               return JSON.parse(data).hits[0].records;
             } catch (err) {
               return {};
             }
+          },
+          parsePayload: (namespace, key, fallbackValue) => {
+            console.log("-----", namespace, key, fallbackValue);
+            return { namespace, key };
           }
         }
       },

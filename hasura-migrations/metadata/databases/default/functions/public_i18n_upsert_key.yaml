@@ -1,0 +1,8 @@
+function:
+  name: i18n_upsert_key
+  schema: public
+configuration:
+  custom_root_fields: {}
+  exposed_as: mutation
+permissions:
+  - role: anonymous
