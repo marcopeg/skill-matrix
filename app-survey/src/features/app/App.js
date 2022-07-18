@@ -1,7 +1,7 @@
 import { styled } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Box from "@mui/material/Box";
+import { useTranslation } from "react-i18next";
 import Stack from "@mui/material/Stack";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,6 +14,7 @@ import { Logout } from "./Logout";
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 export const App = () => {
+  const { t } = useTranslation();
   const toolbarItems = useGetContext("app.toolbar.items");
   const viewItems = useGetContext("app.view.items");
   const appTitle = useGetContext("app.title");
@@ -27,7 +28,7 @@ export const App = () => {
     <>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography>{appTitle}</Typography>
+          <Typography>{t("title", appTitle)}</Typography>
           <Stack
             spacing={2}
             direction="row"

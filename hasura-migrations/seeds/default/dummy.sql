@@ -1,6 +1,10 @@
 TRUNCATE "public"."boards" CASCADE;
 TRUNCATE "public"."users" CASCADE;
 TRUNCATE "public"."boards_admins" CASCADE;
+TRUNCATE "public"."i18n_values" CASCADE;
+TRUNCATE "public"."i18n_keys" CASCADE;
+TRUNCATE "public"."i18n_languages" CASCADE;
+TRUNCATE "public"."i18n_publish" CASCADE;
 
 
 ---
@@ -136,6 +140,49 @@ INSERT INTO "public"."surveys_invites"
 -- SELECT * FROM "public"."log_survey_by_user"('{"x-hasura-user-id": 1, "x-hasura-survey-id": 1}'::json, 5, 70);
 
 
+
+
+---
+--- I18N
+---
+
+INSERT INTO "public"."i18n_languages"
+  ("id", "name",      "label") VALUES
+  ('en', 'English',   'english')
+, ('it', 'Italiano',  'italian')
+;
+
+INSERT INTO "public"."i18n_keys"
+  ("id",  "namespace",    "key") VALUES
+  (1,     'translation',  'title')
+, (2,     'survey',       'intro.title')
+, (3,     'survey',       'intro.questions')
+, (4,     'survey',       'intro.time')
+, (5,     'survey',       'intro.start')
+, (6,     'survey',       'intro.resume')
+, (7,     'lang',         'english')
+, (8,     'lang',         'italian')
+;
+
+INSERT INTO "public"."i18n_values"
+  ("language_id", "key_id", "value", "created_at") VALUES
+  ('en', 1, 'SurveyAPP', '2022-07-15 18:01:31')
+, ('en', 2, 'Welcome to the survey', '2022-07-15 18:01:31')
+, ('en', 3, 'There are {{ questions_length }} questions in this survey', '2022-07-15 18:01:32')
+, ('en', 4, 'The process is going to take approximately {{ total_time }} seconds.', '2022-07-15 18:01:33')
+, ('en', 5, 'Start!', '2022-07-15 18:01:33')
+, ('en', 6, 'You can stop the process at any point in time and come back to it when you have time to continue.', '2022-07-15 18:01:33')
+, ('it', 1, 'App Questionario', '2022-07-15 18:01:31')
+, ('it', 2, 'Benvenuto nel Questionario', '2022-07-15 18:01:31')
+, ('en', 7, 'English', '2022-07-15 18:01:31')
+, ('en', 8, 'Italian', '2022-07-15 18:01:31')
+, ('it', 7, 'Inglese', '2022-07-15 18:01:31')
+, ('it', 8, 'Italiano', '2022-07-15 18:01:31')
+;
+
+INSERT INTO "public"."i18n_publish" VALUES (now(), '2022-07-15 18:01:36');
+
+
 ---
 --- RESET SERIES VALUES
 ---
@@ -154,4 +201,8 @@ SELECT setval('surveys_id_seq', COALESCE((
 
 SELECT setval('users_id_seq', COALESCE((
   SELECT MAX(id) + 1 FROM "public"."users"
+), 1), false);
+
+SELECT setval('users_id_seq', COALESCE((
+  SELECT MAX(id) + 1 FROM "public"."i18n_keys"
 ), 1), false);

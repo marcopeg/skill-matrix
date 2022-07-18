@@ -1,0 +1,17 @@
+table:
+  name: i18n_publish
+  schema: public
+insert_permissions:
+  - role: backoffice
+    permission:
+      check: {}
+      columns:
+        - publishes_at
+select_permissions:
+  - role: backoffice
+    permission:
+      columns:
+        - created_at
+        - publishes_at
+      filter: {}
+      limit: 1

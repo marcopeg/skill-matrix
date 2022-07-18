@@ -1,0 +1,21 @@
+table:
+  name: i18n_translations_documents
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - language_id
+        - value
+        - namespace
+        - created_at
+      filter: {}
+      limit: 1
+  - role: survey
+    permission:
+      columns:
+        - created_at
+        - language_id
+        - namespace
+        - value
+      filter: {}

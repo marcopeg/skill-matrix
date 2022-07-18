@@ -1,1 +1,11 @@
-[]
+- name: allowed-queries
+  definition:
+    queries:
+      - name: getTranslation
+        query: |
+          query getTranslation ($lng: String!, $ns: String!) {
+          	hits: i18n_translations_documents(where: {language_id:{_eq:$lng},namespace:{_eq:$ns}}) {
+          		records: value
+          		created_at
+          	}
+          }

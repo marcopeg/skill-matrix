@@ -1,0 +1,41 @@
+table:
+  name: i18n_languages
+  schema: public
+insert_permissions:
+  - role: backoffice
+    permission:
+      check: {}
+      columns:
+        - id
+        - label
+        - name
+select_permissions:
+  - role: backoffice
+    permission:
+      columns:
+        - id
+        - label
+        - name
+        - created_at
+        - updated_at
+      filter: {}
+  - role: survey
+    permission:
+      columns:
+        - id
+        - label
+        - name
+      filter: {}
+update_permissions:
+  - role: backoffice
+    permission:
+      columns:
+        - label
+        - name
+      filter: {}
+      check: null
+delete_permissions:
+  - role: backoffice
+    permission:
+      backend_only: false
+      filter: {}

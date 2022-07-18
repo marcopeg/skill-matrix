@@ -1,0 +1,9 @@
+table:
+  name: i18n_translations_keys
+  schema: public
+select_permissions:
+  - role: backoffice
+    permission:
+      columns:
+        - data
+      filter: {}
