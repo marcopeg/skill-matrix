@@ -62,6 +62,7 @@ export const Page = ({
   children,
   ...props
 }) => {
+  const loopRef = useRef();
   const containerRef = useRef();
   const headerRef = useRef();
   const footerRef = useRef();
@@ -70,14 +71,25 @@ export const Page = ({
   const theme = useTheme();
   const maxWidth = theme.breakpoints.values.md;
 
-  // Calculate body's height:
+  // Calculate Page's body's height:
   const [bodyHeight, setBodyHeight] = useState(null);
   useEffect(() => {
-    setBodyHeight(
-      containerRef.current.offsetHeight -
-        (headerRef.current ? headerRef.current.offsetHeight : 0) -
-        (footerRef.current ? footerRef.current.offsetHeight : 0)
-    );
+    const loop = () => {
+      if (!containerRef.current.offsetHeight) {
+        loopRef.current = setTimeout(loop);
+        return;
+      }
+
+      setBodyHeight(
+        containerRef.current.offsetHeight -
+          (headerRef.current ? headerRef.current.offsetHeight : 0) -
+          (footerRef.current ? footerRef.current.offsetHeight : 0)
+      );
+    };
+
+    loop();
+
+    return () => clearTimeout(loopRef.current);
   }, []);
 
   return (
