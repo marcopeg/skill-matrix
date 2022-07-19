@@ -14,13 +14,7 @@ export const i18NextHasura = () => [
           allowMultiLoading: false,
           loadPath: `${restUrl}/i18next/locales/{{lng}}/{{ns}}`,
           addPath: `${restUrl}/i18next/keys`,
-          parse: (data) => {
-            try {
-              return JSON.parse(data).hits[0].records;
-            } catch (err) {
-              return {};
-            }
-          },
+          parse: (data) => JSON.parse(data).hits[0].records,
           parsePayload: (namespace, key) => ({ namespace, key })
         }
       };

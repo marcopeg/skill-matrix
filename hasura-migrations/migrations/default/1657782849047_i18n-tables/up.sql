@@ -84,5 +84,5 @@ FROM (
 		"key", 
 		'' AS "value" 
 	FROM "public"."i18n_keys"
-      ) "q"
+) "q"
 GROUP BY "language_id", "namespace";
